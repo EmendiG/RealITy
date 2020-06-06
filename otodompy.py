@@ -76,7 +76,7 @@ def soupa(url):
     """Wiekszosc parsera"""
     user_agent = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:53.0) Gecko/20100101 Firefox/53.0'
     headers = {'User-Agent': user_agent, 'Referer': 'https://google.com'}
-    page = requests.get(url, headers=headers, proxies=proxies) #
+    page = requests.get(url, headers=headers) #proxies=proxies
     soup = BeautifulSoup(page.content, 'lxml')
     if type(soup.find("div", attrs={"class": "css-eij48e"})) == type(None):
         soup = 'niekonektet'

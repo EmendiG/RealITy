@@ -10,19 +10,17 @@ import unicodedata
 """
     Gratka
             """
-
-miasta = ['warszawa', 'krakow', 'lodz', 'wroclaw', 'poznan', 'gdansk', 'szczecin', 'bydgoszcz', 'lublin', 'bialystok']
-
+miasta = ['warszawa', 'krakow','lodz', 'wroclaw', 'poznan', 'gdansk', 'szczecin', 'bydgoszcz', 'lublin', 'bialystok']
 
 def get_urls(Pages, wybrane_miasto):
     start_URL = 'https://gratka.pl/nieruchomosci/mieszkania/'
     mid_URL = '/sprzedaz?page='
-    end_URL = '&cena-calkowita:min=120000&cena-za-m2:max=45000&sort=cheap'
+    end_URL = '&cena-calkowita:min=120000&cena-za-m2:max=45000&rynek=pierwotny&sort=cheap'
     urls = []
 
     for i in range(1, Pages + 1, 1):
         url =  start_URL + miasta[wybrane_miasto] + mid_URL + str(i) + end_URL
-        user_agent = 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_9_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/35.0.1916.47 Safari/537.36'
+        user_agent = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:53.0) Gecko/20100101 Firefox/53.0'
         headers = {'User-Agent': user_agent}
         page = requests.get(url, headers=headers)
         soup = BeautifulSoup(page.content, 'lxml')
@@ -39,7 +37,7 @@ def get_urls(Pages, wybrane_miasto):
 def write_urls(wybrane_miasto):
     start_URL = 'https://gratka.pl/nieruchomosci/mieszkania/'
     mid_URL = '/sprzedaz?page=2'
-    end_URL = '&cena-calkowita:min=120000&cena-za-m2:max=45000&sort=cheap'
+    end_URL = '&cena-calkowita:min=120000&cena-za-m2:max=45000&rynek=pierwotny&sort=cheap'  #&rynek=pierwotny
     url = start_URL + miasta[wybrane_miasto] + mid_URL + end_URL
     user_agent = 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_9_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/35.0.1916.47 Safari/537.36'
     headers = {'User-Agent': user_agent}
@@ -48,7 +46,7 @@ def write_urls(wybrane_miasto):
     Pages = soup.findAll("div", attrs={"class": "pagination"})[0].find('span', attrs={'class': 'pagination__separator'}).findNext().contents[0]
     Pages = int(Pages)
 
-    with open('urls_gratka_{}.csv'.format(miasta[wybrane_miasto]), 'r+', newline='', encoding="utf-8") as csvfile:
+    with open('urls_gratka_{}.csv'.format(miasta[wybrane_miasto]), 'w+', newline='', encoding="utf-8") as csvfile:
         old_csv = csv.reader(csvfile, delimiter=' ')
         old_list = []
         for row in old_csv:
