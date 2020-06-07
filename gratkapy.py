@@ -12,10 +12,11 @@ import unicodedata
             """
 miasta = ['warszawa', 'krakow','lodz', 'wroclaw', 'poznan', 'gdansk', 'szczecin', 'bydgoszcz', 'lublin', 'bialystok']
 
+
 def get_urls(Pages, wybrane_miasto):
     start_URL = 'https://gratka.pl/nieruchomosci/mieszkania/'
     mid_URL = '/sprzedaz?page='
-    end_URL = '&cena-calkowita:min=120000&cena-za-m2:max=45000&rynek=pierwotny&sort=cheap'
+    end_URL = '&cena-calkowita:min=120000&cena-za-m2:max=45000&sort=cheap'
     urls = []
 
     for i in range(1, Pages + 1, 1):
@@ -37,7 +38,7 @@ def get_urls(Pages, wybrane_miasto):
 def write_urls(wybrane_miasto):
     start_URL = 'https://gratka.pl/nieruchomosci/mieszkania/'
     mid_URL = '/sprzedaz?page=2'
-    end_URL = '&cena-calkowita:min=120000&cena-za-m2:max=45000&rynek=pierwotny&sort=cheap'  #&rynek=pierwotny
+    end_URL = '&cena-calkowita:min=120000&cena-za-m2:max=45000&sort=cheap'  #&rynek=pierwotny
     url = start_URL + miasta[wybrane_miasto] + mid_URL + end_URL
     user_agent = 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_9_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/35.0.1916.47 Safari/537.36'
     headers = {'User-Agent': user_agent}
@@ -117,6 +118,14 @@ def get_price_per_metr(soup):
     price_per_metr = round(float(price_per_meter_prep[:-4]), 0)
     return price_per_metr
 
+
+def get_rynek(soup):
+    try:
+        match = [scrip for scrip in soup.body.findAll('script') if str(scrip).find('<script>PPDataLayer.push') == 0]
+        rynek = json.loads(str(match[0])[25:(len(str(match[0])) - 11)])['rynek']
+        return rynek
+    except:
+        return('NaN')
 
 def get_dzielnia_ulica(soup):
     #parses = soup.find("div", attrs={"id": "leftColumn", "class": "small-12 large-8 column"}).find_all("script")
@@ -246,14 +255,12 @@ def get_url(soup):
     return urll
 
 
-def wyprintuj_mnie(dzielnia, ident, price, area,  price_per_meter, lengthehe, lat, lon, typzabudowy, rokbudowy, liczbapokoi, maxliczbapieter, pietro, parking, kuchnia, wlasnosc, stan, material, okna, opis, urll):
-    print("\nDzielnia: ", dzielnia.rjust(lengthehe - 11))
-    #print("Ulica: ", ulica.rjust(lengthehe - 8))
+def wyprintuj_mnie( ident, price, area,  price_per_meter, lengthehe, lat, lon, typzabudowy, rokbudowy, liczbapokoi,
+                   maxliczbapieter, pietro, parking, kuchnia, wlasnosc, stan, material, okna, rynek, opis):
     print("ID: ", str(ident).rjust(lengthehe - 5))
     print("Price: ", str(price).rjust(lengthehe - 8))
     print("Area: ", str(area).rjust(lengthehe - 7))
     print("Price per meter: ", str(round(price_per_meter, 0)).rjust(lengthehe - 18))
-    #print("2nd Price per meter: ", str(round(price_per_metr, 0)).rjust(lengthehe - 22))
     print("*" * lengthehe)
     print("Lati: ", str(lat).rjust(lengthehe - 7))
     print("Long: ", str(lon).rjust(lengthehe - 7))
@@ -268,18 +275,18 @@ def wyprintuj_mnie(dzielnia, ident, price, area,  price_per_meter, lengthehe, la
     print("Stan: ", str(stan).rjust(lengthehe - 7))
     print("Materiał: ", str(material).rjust(lengthehe - 11))
     print("Okna: ", str(okna).rjust(lengthehe - 7))
+    print("Rynek: ", str(rynek).rjust(lengthehe - 8))
     print(opis)
-    #print(urll)
 
 
 def getthat(url):
     soup = soupa(url)
     span = soup.find('ul', attrs={'class': 'parameters__rolled'}).findAll('span')
-    #zupa = zupka(url)
     lon = get_lon_lat(soup)[0]
     lat = get_lon_lat(soup)[1]
     price = get_price(soup)
     area = get_area(soup)
+    rynek = get_rynek(soup)
     typzabudowy = get_typzabudowy(span)
     rokbudowy = get_rokbudowy(span)
     liczbapokoi = get_liczbapokoi(span)
@@ -293,13 +300,10 @@ def getthat(url):
     okna = get_okna(span)
     ident = get_id(soup)
     price_per_meter = round(price / area, 0)
-    dzielnia = get_dzielnia_ulica(soup)
-    #ulica = get_dzielnia_ulica(soup)[1]
     #price_per_metr = get_price_per_metr(soup)
     opis = get_opis(soup)
-    urll = get_url(soup)
-    lengthehe = len(urll)
-    #wyprintuj_mnie(dzielnia, ident, price, area, price_per_meter, lengthehe, lat, lon, typzabudowy, rokbudowy, liczbapokoi, maxliczbapieter, pietro, parking, kuchnia, wlasnosc, stan, material, okna, opis, urll)
-    return price, area, price_per_meter, lat, lon, ident, typzabudowy, rokbudowy, liczbapokoi, maxliczbapieter, pietro, parking, kuchnia, wlasnosc, stan, material, okna, opis
+    lengthehe = len(url)
+    #wyprintuj_mnie(dzielnia, ident, price, area, price_per_meter, lengthehe, lat, lon, typzabudowy, rokbudowy, liczbapokoi, maxliczbapieter, pietro, parking, kuchnia, wlasnosc, stan, material, okna, rynek, opis, urll)
+    return price, area, price_per_meter, lat, lon, ident, typzabudowy, rokbudowy, liczbapokoi, maxliczbapieter, pietro, parking, kuchnia, wlasnosc, stan, material, okna, rynek, opis
 
 

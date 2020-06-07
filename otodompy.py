@@ -270,7 +270,8 @@ def get_opis(zoup):
     return opis
 
 
-def wyprintuj_mnie( ident, price, area,  price_per_meter, lengthehe, lat, lon, typzabudowy, rokbudowy, liczbapokoi, maxliczbapieter, pietro, parking, kuchnia, wlasnosc, stan, material, okna, rynek, opis):
+def wyprintuj_mnie( ident, price, area,  price_per_meter, lengthehe, lat, lon, typzabudowy, rokbudowy, liczbapokoi,
+                    maxliczbapieter, pietro, parking, kuchnia, wlasnosc, stan, material, okna, rynek, opis):
     print("ID: ", str(ident).rjust(lengthehe - 5))
     print("Price: ", str(price).rjust(lengthehe - 8))
     print("Area: ", str(area).rjust(lengthehe - 7))
@@ -303,7 +304,7 @@ def getthat(url):
         area = get_area(soup)
         ident = get_id(soup)
         price_per_meter = round(price / area, 0)
-        price_per_metr = get_price_per_metr(soup)
+        #price_per_metr = get_price_per_metr(soup)
         rynek = get_rynek(li)
         typzabudowy = get_typzabudowy(li)
         rokbudowy = get_rokbudowy(li)

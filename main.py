@@ -3,7 +3,7 @@ import slownik
 from sqlalchemy import create_engine
 from sqlalchemy import Table, Column, Integer, Text, MetaData, Float
 
-serwis = 'otodom'  # 'gratka'
+serwis = 'otodom'  # 'gratka', 'otodom'
 
 if serwis == 'otodom':
     import otodompy as serwer
@@ -17,13 +17,13 @@ db_dane = {'name':'RealITy', 'password':'Reality1!', 'hostname':'127.0.0.1', 'db
 db_connection_str = 'mysql+pymysql://{name}:{password}@{hostname}/{db_name}'.format(**db_dane)
 db_connection = create_engine(db_connection_str).execution_options(autocommit=True)
 metadata = MetaData()
-users = Table('oferty3', metadata,
+users = Table('oferty_{}'.format(serwis), metadata,
                 Column('id', Integer, primary_key=True, autoincrement=True),
-                Column('Price', Text),
-                Column('Area', Text),
+                Column('Price', Float),
+                Column('Area', Float),
                 Column('Price_per_metr', Float),
-                Column('Latitude', Text),
-                Column('Longitude', Text),
+                Column('Latitude', Float),
+                Column('Longitude', Float),
                 Column('Ident', Text),
                 Column('Typ_zabudowy', Text),
                 Column('Rok_zabudowy', Text),
@@ -45,14 +45,14 @@ metadata.create_all(db_connection)
 
 
 def get_data(miasto):
-    urls_file = csv.reader(open("{}/urls_otodom_{}.csv".format(serwis, miasto), "r", encoding="utf-8"))
+    urls_file = csv.reader(open("{}/urls_{}_{}.csv".format(serwis, serwis, miasto), "r", encoding="utf-8"))
     urls = []
     for row in urls_file:
         urls.append(row[0])
 
     conn = db_connection.connect()
     for n, url in enumerate(urls):
-        if n <11: # and miasto == 'warszawa':
+        if n: # and miasto == 'warszawa':
             try:
                 url = urls[n]
                 print(n)
@@ -110,9 +110,7 @@ def get_data(miasto):
                                  Link=url,
                                  Miasto=miasto
                                  )
-            except:
-                pass
+            except Exception as e:
+                print(e)
     conn.close()
 
-
-get_data('warszawa')
