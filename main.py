@@ -16,8 +16,6 @@ miasta = ['warszawa', 'krakow','lodz', 'wroclaw', 'poznan', 'gdansk', 'szczecin'
 db_dane = {'name':'RealITy', 'password':'Reality1!', 'hostname':'127.0.0.1', 'db_name':'realestate_zero'}
 db_connection_str = 'mysql+pymysql://{name}:{password}@{hostname}/{db_name}'.format(**db_dane)
 db_connection = create_engine(db_connection_str).execution_options(autocommit=True)
-
-
 metadata = MetaData()
 users = Table('oferty3', metadata,
                 Column('id', Integer, primary_key=True, autoincrement=True),
@@ -45,6 +43,7 @@ users = Table('oferty3', metadata,
               )
 metadata.create_all(db_connection)
 
+
 def get_data(miasto):
     urls_file = csv.reader(open("{}/urls_otodom_{}.csv".format(serwis, miasto), "r", encoding="utf-8"))
     urls = []
@@ -53,7 +52,7 @@ def get_data(miasto):
 
     conn = db_connection.connect()
     for n, url in enumerate(urls):
-        if n<7: # and miasto == 'warszawa':
+        if n <11: # and miasto == 'warszawa':
             try:
                 url = urls[n]
                 print(n)
