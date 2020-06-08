@@ -2,63 +2,73 @@ import csv
 import slownik
 from sqlalchemy import create_engine
 from sqlalchemy import Table, Column, Integer, Text, MetaData, Float
+import mysql_modifier
 
-serwis = 'otodom'  # 'gratka', 'otodom'
-
-if serwis == 'otodom':
-    import otodompy as serwer
-elif serwis == 'gratka':
-    import gratkapy as serwer
-
-miasta = ['warszawa', 'krakow','lodz', 'wroclaw', 'poznan', 'gdansk', 'szczecin', 'bydgoszcz', 'lublin', 'bialystok']
+miasta = ['warszawa', 'krakow', 'lodz', 'wroclaw', 'poznan', 'gdansk', 'szczecin', 'bydgoszcz', 'lublin', 'bialystok']
 
 
-db_dane = {'name':'RealITy', 'password':'Reality1!', 'hostname':'127.0.0.1', 'db_name':'realestate_zero'}
-db_connection_str = 'mysql+pymysql://{name}:{password}@{hostname}/{db_name}'.format(**db_dane)
-db_connection = create_engine(db_connection_str).execution_options(autocommit=True)
-metadata = MetaData()
-users = Table('oferty_{}'.format(serwis), metadata,
-                Column('id', Integer, primary_key=True, autoincrement=True),
-                Column('Price', Float),
-                Column('Area', Float),
-                Column('Price_per_metr', Float),
-                Column('Latitude', Float),
-                Column('Longitude', Float),
-                Column('Ident', Text),
-                Column('Typ_zabudowy', Text),
-                Column('Rok_zabudowy', Text),
-                Column('Liczba_pokoi', Text),
-                Column('Max_liczba_pieter', Text),
-                Column('Pietro', Text),
-                Column('Parking', Text),
-                Column('Kuchnia', Text),
-                Column('Wlasnosc', Text),
-                Column('Stan', Text),
-                Column('Material', Text),
-                Column('Okna', Text),
-                Column('Rynek', Text),
-                Column('Opis', Text),
-                Column('Link', Text),
-                Column('Miasto', Text),
-              )
-metadata.create_all(db_connection)
+class Strona():
+    def __init__(self, serwis):
+        self.serwis = serwis
+
+    def wybor(self):
+        if self.serwis == 'otodom':
+            import otodompy as serwer
+            return serwer
+        elif self.serwis == 'gratka':
+            import gratkapy as serwer
+            return serwer
+
+    def mysql_dbMaker(self):
+        db_connection = mysql_modifier.connect_to_MYSQL()
+        metadata = MetaData()
+        users = Table('oferty_{}'.format(self.serwis), metadata,
+                      Column('index', Integer, primary_key=True, autoincrement=True),
+                      Column('Price', Float),
+                      Column('Area', Float),
+                      Column('Price_per_metr', Float),
+                      Column('Latitude', Float),
+                      Column('Longitude', Float),
+                      Column('Ident', Text),
+                      Column('Typ_zabudowy', Text),
+                      Column('Rok_zabudowy', Text),
+                      Column('Liczba_pokoi', Text),
+                      Column('Max_liczba_pieter', Text),
+                      Column('Pietro', Text),
+                      Column('Parking', Text),
+                      Column('Kuchnia', Text),
+                      Column('Wlasnosc', Text),
+                      Column('Stan', Text),
+                      Column('Material', Text),
+                      Column('Okna', Text),
+                      Column('Rynek', Text),
+                      Column('Opis', Text),
+                      Column('Link', Text),
+                      Column('Miasto', Text),
+                      )
+        metadata.create_all(db_connection)
+        return users
 
 
-def get_data(miasto):
-    urls_file = csv.reader(open("{}/urls_{}_{}.csv".format(serwis, serwis, miasto), "r", encoding="utf-8"))
+def get_data(miasto, serwis):
+    urls_file = csv.reader(open("{0}/urls_{0}_{1}.csv".format(serwis, miasto), "r", encoding="utf-8"))
     urls = []
     for row in urls_file:
         urls.append(row[0])
 
+    serwer = Strona(serwis).wybor()
+    db_connection = mysql_modifier.connect_to_MYSQL()
+    users = Strona(serwis).mysql_dbMaker()
     conn = db_connection.connect()
+
     for n, url in enumerate(urls):
-        if n: # and miasto == 'warszawa':
+        if 70 < n < 90:  # and miasto == 'warszawa':
             try:
                 url = urls[n]
                 print(n)
                 print(url)
                 data = serwer.getthat(url)
-                if type(data)  != type(None):
+                if type(data) != type(None):
                     price = data[0]
                     area = data[1]
                     price_per_meter = data[2]
@@ -71,7 +81,7 @@ def get_data(miasto):
                     maxliczbapieter = data[9]
                     pietro = data[10]
                     parking = data[11]
-                    kuchnia = data [12]
+                    kuchnia = data[12]
                     wlasnosc = data[13]
                     stan = data[14]
                     material = data[15]
@@ -79,7 +89,8 @@ def get_data(miasto):
                     rynek = data[17]
                     opis = data[18]
                     fields = [price, area, price_per_meter, lat, lon, ident, typzabudowy, rokbudowy, liczbapokoi,
-                              maxliczbapieter, pietro, parking, kuchnia, wlasnosc, stan, material, okna, rynek, opis, url]
+                              maxliczbapieter, pietro, parking, kuchnia, wlasnosc, stan, material, okna, rynek, opis,
+                              url]
                     nowy_fields = []
                     for field in fields:
                         if field != opis:
@@ -114,3 +125,16 @@ def get_data(miasto):
                 print(e)
     conn.close()
 
+
+#get_data('warszawa', 'gratka')
+mysql_modifier.oferty_INITIATION('otodom', 'gratka')
+#mysql_modifier.oferty_MERGER('init', 'gratka')
+
+
+# TODO: Polaczyc dwie bazy danych (z naciskiem na   KOORDYNATY   i   CENE ZA METR   +   METRY)
+# TODO: Dodac opcje dodawania rekordow do bazy (KTORE SA SPRAWDZANE pod wzgledem powyzszego punktu)
+
+# TODO: ?? znalexc granice administracyjne lokalizacji za pomoca API Openmaps ??
+# TODO: Ogarnac koordynaty amenities z Openmaps i Geoportal
+# TODO: Znaleźć najblizsze amenities dla kazdego z rekordu (wystepowanie, nie cecha??) => Wykonac nowy db
+# TODO: Znaleźc sąsiadow lokalizacyjnych (po co??)
