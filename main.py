@@ -7,7 +7,7 @@ import mysql_modifier
 miasta = ['warszawa', 'krakow', 'lodz', 'wroclaw', 'poznan', 'gdansk', 'szczecin', 'bydgoszcz', 'lublin', 'bialystok']
 
 
-class Strona():
+class Strona:
     def __init__(self, serwis):
         self.serwis = serwis
 
@@ -62,7 +62,7 @@ def get_data(miasto, serwis):
     conn = db_connection.connect()
 
     for n, url in enumerate(urls):
-        if 70 < n < 90:  # and miasto == 'warszawa':
+        if n:
             try:
                 url = urls[n]
                 print(n)
@@ -127,12 +127,10 @@ def get_data(miasto, serwis):
 
 
 #get_data('warszawa', 'gratka')
-mysql_modifier.oferty_INITIATION('otodom', 'gratka')
-#mysql_modifier.oferty_MERGER('init', 'gratka')
+#mysql_modifier.oferty_INITIATION('otodom', 'gratka')
+#mysql_modifier.oferty_db_MERGER('merged', 'gratka', 'merged')
 
-
-# TODO: Polaczyc dwie bazy danych (z naciskiem na   KOORDYNATY   i   CENE ZA METR   +   METRY)
-# TODO: Dodac opcje dodawania rekordow do bazy (KTORE SA SPRAWDZANE pod wzgledem powyzszego punktu)
+help(mysql_modifier.oferty_db_MERGER)
 
 # TODO: ?? znalexc granice administracyjne lokalizacji za pomoca API Openmaps ??
 # TODO: Ogarnac koordynaty amenities z Openmaps i Geoportal

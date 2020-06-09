@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="edc9251b-a03a-493d-8db3-6662d61b7a60" name="Default Changelist" comment="RealITy">
+    <list default="true" id="edc9251b-a03a-493d-8db3-6662d61b7a60" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/mysql_modifier.py" beforeDir="false" afterPath="$PROJECT_DIR$/mysql_modifier.py" afterDir="false" />
@@ -28,7 +28,7 @@
   <component name="PropertiesComponent">
     <property name="TODO_SCOPE" value="All Places" />
     <property name="last_opened_file_path" value="D:/Git/bin/git.exe" />
-    <property name="settings.editor.selected.configurable" value="configurable.group.appearance" />
+    <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
   </component>
   <component name="RunDashboard">
     <option name="ruleStates">
@@ -144,7 +144,14 @@
       <option name="project" value="LOCAL" />
       <updated>1591536798509</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="RealITy 0.2020.02">
+      <created>1591648132371</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1591648132371</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -193,6 +200,8 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Get data and send to mysql localhost" />
     <MESSAGE value="RealITy" />
-    <option name="LAST_COMMIT_MESSAGE" value="RealITy" />
+    <MESSAGE value="RealITy 2" />
+    <MESSAGE value="RealITy 0.2020.02" />
+    <option name="LAST_COMMIT_MESSAGE" value="RealITy 0.2020.02" />
   </component>
 </project>
