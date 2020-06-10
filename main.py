@@ -1,53 +1,10 @@
 import csv
 import slownik
-from sqlalchemy import create_engine
-from sqlalchemy import Table, Column, Integer, Text, MetaData, Float
 import mysql_modifier
-
+import mysql_modifier
+from mysql_modifier import Strona
 miasta = ['warszawa', 'krakow', 'lodz', 'wroclaw', 'poznan', 'gdansk', 'szczecin', 'bydgoszcz', 'lublin', 'bialystok']
 
-
-class Strona:
-    def __init__(self, serwis):
-        self.serwis = serwis
-
-    def wybor(self):
-        if self.serwis == 'otodom':
-            import otodompy as serwer
-            return serwer
-        elif self.serwis == 'gratka':
-            import gratkapy as serwer
-            return serwer
-
-    def mysql_dbMaker(self):
-        db_connection = mysql_modifier.connect_to_MYSQL()
-        metadata = MetaData()
-        users = Table('oferty_{}'.format(self.serwis), metadata,
-                      Column('index', Integer, primary_key=True, autoincrement=True),
-                      Column('Price', Float),
-                      Column('Area', Float),
-                      Column('Price_per_metr', Float),
-                      Column('Latitude', Float),
-                      Column('Longitude', Float),
-                      Column('Ident', Text),
-                      Column('Typ_zabudowy', Text),
-                      Column('Rok_zabudowy', Text),
-                      Column('Liczba_pokoi', Text),
-                      Column('Max_liczba_pieter', Text),
-                      Column('Pietro', Text),
-                      Column('Parking', Text),
-                      Column('Kuchnia', Text),
-                      Column('Wlasnosc', Text),
-                      Column('Stan', Text),
-                      Column('Material', Text),
-                      Column('Okna', Text),
-                      Column('Rynek', Text),
-                      Column('Opis', Text),
-                      Column('Link', Text),
-                      Column('Miasto', Text),
-                      )
-        metadata.create_all(db_connection)
-        return users
 
 
 def get_data(miasto, serwis):
@@ -57,9 +14,8 @@ def get_data(miasto, serwis):
         urls.append(row[0])
 
     serwer = Strona(serwis).wybor()
-    db_connection = mysql_modifier.connect_to_MYSQL()
     users = Strona(serwis).mysql_dbMaker()
-    conn = db_connection.connect()
+    conn = mysql_modifier.connect_to_MYSQL()
 
     for n, url in enumerate(urls):
         if n:
@@ -128,9 +84,10 @@ def get_data(miasto, serwis):
 
 #get_data('warszawa', 'gratka')
 #mysql_modifier.oferty_INITIATION('otodom', 'gratka')
-#mysql_modifier.oferty_db_MERGER('merged', 'gratka', 'merged')
 
-help(mysql_modifier.oferty_db_MERGER)
+help(mysql_modifier.oferty_Merger)
+mysql_modifier.oferty_Merger('otodom', 'gratka', 'merged')
+
 
 # TODO: ?? znalexc granice administracyjne lokalizacji za pomoca API Openmaps ??
 # TODO: Ogarnac koordynaty amenities z Openmaps i Geoportal
