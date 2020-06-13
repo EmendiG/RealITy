@@ -2,12 +2,18 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="edc9251b-a03a-493d-8db3-6662d61b7a60" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/osmOverpassApi.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/chromedriver.exe" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mysql_modifier.py" beforeDir="false" afterPath="$PROJECT_DIR$/mysql_modifier.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/otodompy.py" beforeDir="false" afterPath="$PROJECT_DIR$/otodompy.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/districts/Białystok.html" beforeDir="false" afterPath="$PROJECT_DIR$/districts/Białystok.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/districts/Bydgoszcz.html" beforeDir="false" afterPath="$PROJECT_DIR$/districts/Bydgoszcz.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/districts/Gdańsk.html" beforeDir="false" afterPath="$PROJECT_DIR$/districts/Gdańsk.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/districts/Kraków.html" beforeDir="false" afterPath="$PROJECT_DIR$/districts/Kraków.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/districts/Lublin.html" beforeDir="false" afterPath="$PROJECT_DIR$/districts/Lublin.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/districts/Poznań.html" beforeDir="false" afterPath="$PROJECT_DIR$/districts/Poznań.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/districts/Szczecin.html" beforeDir="false" afterPath="$PROJECT_DIR$/districts/Szczecin.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/districts/Warszawa.html" beforeDir="false" afterPath="$PROJECT_DIR$/districts/Warszawa.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/districts/Wrocław.html" beforeDir="false" afterPath="$PROJECT_DIR$/districts/Wrocław.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/districts/Łódź.html" beforeDir="false" afterPath="$PROJECT_DIR$/districts/Łódź.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/osmOverpassApi.py" beforeDir="false" afterPath="$PROJECT_DIR$/osmOverpassApi.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
