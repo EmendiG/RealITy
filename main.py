@@ -1,11 +1,13 @@
 import csv
 import slownik
 import mysql_modifier
-import mysql_modifier
 from mysql_modifier import Strona
+from osmOverpassApi import District
+
 miasta = ['warszawa', 'krakow', 'lodz', 'wroclaw', 'poznan', 'gdansk', 'szczecin', 'bydgoszcz', 'lublin', 'bialystok']
 
-
+miastaDict = {'warszawa':'Warszawa', 'krakow':'Kraków', 'lodz':'Łódź', 'wroclaw':'Wrocław', 'poznan':'Poznań',
+              'gdansk':'Gdańsk', 'szczecin':'Szczecin', 'bydgoszcz':'Bydgoszcz', 'lublin':'Lublin', 'bialystok':'Białystok'}
 
 def get_data(miasto, serwis):
     urls_file = csv.reader(open("{0}/urls_{0}_{1}.csv".format(serwis, miasto), "r", encoding="utf-8"))
@@ -84,12 +86,13 @@ def get_data(miasto, serwis):
 
 #get_data('warszawa', 'gratka')
 #mysql_modifier.oferty_INITIATION('otodom', 'gratka')
+#help(mysql_modifier.oferty_Merger)
+#mysql_modifier.oferty_Merger('merged', 'gratka', 'merged')
 
-help(mysql_modifier.oferty_Merger)
-mysql_modifier.oferty_Merger('otodom', 'gratka', 'merged')
+for n, miasto in enumerate(miastaDict):
+    District(miastaDict[miasto]).mapDistrictPolygons()
 
 
-# TODO: ?? znalexc granice administracyjne lokalizacji za pomoca API Openmaps ??
 # TODO: Ogarnac koordynaty amenities z Openmaps i Geoportal
 # TODO: Znaleźć najblizsze amenities dla kazdego z rekordu (wystepowanie, nie cecha??) => Wykonac nowy db
 # TODO: Znaleźc sąsiadow lokalizacyjnych (po co??)

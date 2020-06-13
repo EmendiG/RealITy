@@ -22,7 +22,6 @@ class Strona:
             return serwer
 
     def mysql_dbMaker(self):
-        #db_connection = mysql_modifier.connect_to_MYSQL()
         conn = connect_to_MYSQL()
         metadata = MetaData()
         users = Table('oferty_{}'.format(self.serwis), metadata,
@@ -106,8 +105,20 @@ def oferty_Merger(bd_base:str, bd_comp:str, db_nowa:str):
             print(f'Wprowadzam dane do db {db_nowa} = {len(dobre)} nowych rekordow')
             df_comp = pd.read_sql('SELECT * FROM oferty_{} WHERE Miasto="'"{}"'"'.format(bd_comp, miasto), con=mydb).iloc[dobre]
             df_base = pd.read_sql('SELECT * FROM oferty_{}'.format(bd_base), con=mydb)
-            df_base_max = df_base.shape[0]
             df_comp_len = df_comp.shape[0]
+            cursor = mydb.cursor()
+            cursor.execute("USE realestate_zero")
+            cursor.execute("SHOW TABLES")
+            tables = cursor.fetchall()
+            tabela = [tab[0] for tab in tables]
+            if f'oferty_{db_nowa}' not in tabela:
+                df_base = df_base.reset_index(drop=True)  # .drop('level_0', axis=1)
+                Strona(db_nowa).mysql_dbMaker()
+                df_base.to_sql(f'oferty_{db_nowa}', if_exists='replace', con=conn)
+                df_base_max = df_base.shape[0]
+            else:
+                df_base = pd.read_sql('SELECT * FROM oferty_{}'.format(db_nowa), con=mydb)
+                df_base_max = df_base.shape[0]
             df_comp["index"] = range(df_base_max, df_base_max + df_comp_len)
             df_comp = df_comp.set_index("index")
             cursor = mydb.cursor()
@@ -119,6 +130,7 @@ def oferty_Merger(bd_base:str, bd_comp:str, db_nowa:str):
                 df_base = df_base.reset_index(drop=True)  # .drop('level_0', axis=1)
                 Strona(db_nowa).mysql_dbMaker()
                 df_base.to_sql(f'oferty_{db_nowa}', if_exists='replace', con=conn)
+
             df_comp.to_sql(f'oferty_{db_nowa}', con=conn, if_exists='append')
 
             mydb.reconnect()

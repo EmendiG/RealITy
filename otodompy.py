@@ -4,17 +4,12 @@ import time
 import csv
 import json
 import random
-from selenium import webdriver
-from selenium.webdriver.chrome.options import Options
 
 """
     Otodom
             """
 
 miasta = ['warszawa', 'krakow', 'lodz', 'wroclaw', 'poznan', 'gdansk', 'szczecin', 'bydgoszcz', 'lublin', 'bialystok']
-
-#'181.118.167.104:80'
-#'139.162.38.191:80'
 
 proxies = {
     'http': 'http://139.162.38.191:80',
@@ -80,9 +75,9 @@ def soupa(url):
     soup = BeautifulSoup(page.content, 'lxml')
     if type(soup.find("div", attrs={"class": "css-eij48e"})) == type(None):
         soup = 'niekonektet'
+        return soup
     else:
-        soup = soup
-    return soup
+        return soup
 
 
 def get_lon_lat(soup):
