@@ -21,7 +21,6 @@ class District:
     def getCoordinatesFromOSM_ways_districts(self, odpowiedz):
         # Get Coordinates from OSM == only WAYS !!
         matchingCounter = len(odpowiedz) - 1
-        global coords
         coords = []
         for nmb, geometry in enumerate(odpowiedz):
             if nmb == 0:
@@ -71,10 +70,10 @@ class District:
                         "geometry": {
                             "type": "Polygon",
                             "name": district,
-                            "coordinates": [[[d[n][0], d[n][1]] for n, d in enumerate(coordinates)]],
+                            "coordinates": [coordinates[n]],
                         },
                         "properties": {'name': district},
-                    } for district in districts]
+                    } for n, district in enumerate(districts)]
             }
             return geojson
 

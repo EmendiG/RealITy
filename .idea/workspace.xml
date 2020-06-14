@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="edc9251b-a03a-493d-8db3-6662d61b7a60" name="Default Changelist" comment="">
+    <list default="true" id="edc9251b-a03a-493d-8db3-6662d61b7a60" name="Default Changelist" comment="RealITy 0.2020.02.03 (added gpd.gdf)">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/districts/Warszawa.html" beforeDir="false" afterPath="$PROJECT_DIR$/districts/Warszawa.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/osmOverpassApi.py" beforeDir="false" afterPath="$PROJECT_DIR$/osmOverpassApi.py" afterDir="false" />
     </list>
@@ -112,8 +111,8 @@
       <method v="2" />
     </configuration>
     <list>
-      <item itemvalue="Python.otodompy" />
       <item itemvalue="Python.main" />
+      <item itemvalue="Python.otodompy" />
       <item itemvalue="Python.slownik" />
     </list>
   </component>
@@ -177,7 +176,14 @@
       <option name="project" value="LOCAL" />
       <updated>1592086920323</updated>
     </task>
-    <option name="localTasksCounter" value="8" />
+    <task id="LOCAL-00008" summary="RealITy 0.2020.02.03 (added gpd.gdf)">
+      <created>1592137477420</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1592137477420</updated>
+    </task>
+    <option name="localTasksCounter" value="9" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -231,7 +237,8 @@
     <MESSAGE value="RealITy 0.2020.02" />
     <MESSAGE value="RealITy 0.2020.02.01" />
     <MESSAGE value="RealITy 0.2020.02.03" />
-    <option name="LAST_COMMIT_MESSAGE" value="RealITy 0.2020.02.03" />
+    <MESSAGE value="RealITy 0.2020.02.03 (added gpd.gdf)" />
+    <option name="LAST_COMMIT_MESSAGE" value="RealITy 0.2020.02.03 (added gpd.gdf)" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
