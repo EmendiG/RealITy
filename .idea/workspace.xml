@@ -3,16 +3,8 @@
   <component name="ChangeListManager">
     <list default="true" id="edc9251b-a03a-493d-8db3-6662d61b7a60" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/districts/Białystok.html" beforeDir="false" afterPath="$PROJECT_DIR$/districts/Białystok.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/districts/Bydgoszcz.html" beforeDir="false" afterPath="$PROJECT_DIR$/districts/Bydgoszcz.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/districts/Gdańsk.html" beforeDir="false" afterPath="$PROJECT_DIR$/districts/Gdańsk.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/districts/Kraków.html" beforeDir="false" afterPath="$PROJECT_DIR$/districts/Kraków.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/districts/Lublin.html" beforeDir="false" afterPath="$PROJECT_DIR$/districts/Lublin.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/districts/Poznań.html" beforeDir="false" afterPath="$PROJECT_DIR$/districts/Poznań.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/districts/Szczecin.html" beforeDir="false" afterPath="$PROJECT_DIR$/districts/Szczecin.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/districts/Warszawa.html" beforeDir="false" afterPath="$PROJECT_DIR$/districts/Warszawa.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/districts/Wrocław.html" beforeDir="false" afterPath="$PROJECT_DIR$/districts/Wrocław.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/districts/Łódź.html" beforeDir="false" afterPath="$PROJECT_DIR$/districts/Łódź.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/osmOverpassApi.py" beforeDir="false" afterPath="$PROJECT_DIR$/osmOverpassApi.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -178,7 +170,14 @@
       <option name="project" value="LOCAL" />
       <updated>1592085022052</updated>
     </task>
-    <option name="localTasksCounter" value="7" />
+    <task id="LOCAL-00007" summary="RealITy 0.2020.02.03">
+      <created>1592086920323</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1592086920323</updated>
+    </task>
+    <option name="localTasksCounter" value="8" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -231,7 +230,8 @@
     <MESSAGE value="RealITy 2" />
     <MESSAGE value="RealITy 0.2020.02" />
     <MESSAGE value="RealITy 0.2020.02.01" />
-    <option name="LAST_COMMIT_MESSAGE" value="RealITy 0.2020.02.01" />
+    <MESSAGE value="RealITy 0.2020.02.03" />
+    <option name="LAST_COMMIT_MESSAGE" value="RealITy 0.2020.02.03" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

@@ -89,9 +89,10 @@ def get_data(miasto, serwis):
 #help(mysql_modifier.oferty_Merger)
 #mysql_modifier.oferty_Merger('merged', 'gratka', 'merged')
 
-for n, miasto in enumerate(miastaDict):
-    District(miastaDict[miasto]).mapDistrictPolygons()
+#for n, miasto in enumerate(miastaDict):
+#    District(miastaDict[miasto]).mapDistrictPolygons()
 
+District(miastaDict['wroclaw']).returnGeoDataFrame()
 
 # TODO: Ogarnac koordynaty amenities z Openmaps i Geoportal
 # TODO: Znaleźć najblizsze amenities dla kazdego z rekordu (wystepowanie, nie cecha??) => Wykonac nowy db

@@ -1,6 +1,7 @@
 import overpass
 import folium
 import numpy as np
+import geopandas as gpd
 from geojson import Point, Feature, FeatureCollection, Polygon, MultiPolygon, dump
 
 
@@ -16,9 +17,11 @@ class District:
         responseCity = api.get(QUERY, responseformat='json')
         return responseCity
 
-    # Get Coordinates from OSM == only WAYS !!
+
     def getCoordinatesFromOSM_ways_districts(self, odpowiedz):
+        # Get Coordinates from OSM == only WAYS !!
         matchingCounter = len(odpowiedz) - 1
+        global coords
         coords = []
         for nmb, geometry in enumerate(odpowiedz):
             if nmb == 0:
@@ -41,9 +44,49 @@ class District:
                         matchingCounter -= 1
         return coords
 
+    def returnGeoDataFrame(self):
+        responseCity = self.get_districts_osmApi()
+        dlugosc = len(list({dis['id']: dis for dis in responseCity['elements']}.values()))
 
-    # Get Polygons  = districts wihin a city (miasto) and draw it on a map
-    def mapDistrictsPolygons(self):
+        coordinates = []
+        districts = []
+        # append polygons and district names to proper lists
+        for dzielnice in range(0, dlugosc):
+            district = responseCity['elements'][dzielnice]['tags']['name']
+            odpowiedz = []
+            for num, ref in enumerate(responseCity['elements'][dzielnice]['members']):
+                if ref['role'] == 'outer' and ref['type'] == 'way':
+                    odpowiedz.append(ref)
+            coords = self.getCoordinatesFromOSM_ways_districts(odpowiedz)
+            coordinates.append(coords)
+            districts.append(district)
+
+        # make geojsons from lists of coordinates and names of districts, to be viable by the GeoPandas
+        def coordinates_toGeoJson(coordinates, districts):
+            geojson = {
+                "type": "FeatureCollection",
+                "features": [
+                    {
+                        "type": "Feature",
+                        "geometry": {
+                            "type": "Polygon",
+                            "name": district,
+                            "coordinates": [[[d[n][0], d[n][1]] for n, d in enumerate(coordinates)]],
+                        },
+                        "properties": {'name': district},
+                    } for district in districts]
+            }
+            return geojson
+
+        geojson = coordinates_toGeoJson(coordinates, districts)
+        gdf = gpd.GeoDataFrame.from_features(geojson)
+        return  gdf
+
+
+
+
+    def mapDistrictPolygons(self):
+        # Get Polygons  = districts wihin a city (miasto) and draw it on a map
         responseCity = self.get_districts_osmApi()
         dlugosc = len(list({dis['id']: dis for dis in responseCity['elements']}.values()))
 
@@ -85,31 +128,10 @@ class District:
                     }]
             }
             folium.GeoJson(geojson).add_to(map)
+
             #folium.FeatureGroup(name=district).add_to(map)
+
         folium.LayerControl().add_to(map)
         map.save(f"districts/{self.miasto}.html")
 
 
-
-
-
-
-        #multi1 = MultiPolygon(coords)
-        #poly1 = Polygon(multi1)
-        #multi2 = MultiPolygon(poly1)
-        #features.append(Feature(geometry=multi2))
-
-        #with open('test_cord.geojson', 'w', encoding='utf-8') as file:
-        #    feature_collection = FeatureCollection(features)
-        #    dump(feature_collection, file)
-
-        #coordynat = [coords[0][1], coords[0][0]]
-        #map = folium.Map(
-        #    location=coordynat,
-        #    zoom_start=10
-        #)
-
-        #folium.GeoJson('test_cord.geojson').add_to(map)
-        #folium.LayerControl().add_to(map)
-        #map.save(f"districts/{self.miasto}.html")
-        #return map
