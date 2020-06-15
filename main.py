@@ -1,7 +1,7 @@
 import csv
 import slownik
-import mysql_modifier
-from mysql_modifier import Strona
+import postgresql_modifier
+from postgresql_modifier import Strona
 from osmOverpassApi import District
 
 miasta = ['warszawa', 'krakow', 'lodz', 'wroclaw', 'poznan', 'gdansk', 'szczecin', 'bydgoszcz', 'lublin', 'bialystok']
@@ -16,11 +16,11 @@ def get_data(miasto, serwis):
         urls.append(row[0])
 
     serwer = Strona(serwis).wybor()
-    users = Strona(serwis).mysql_dbMaker()
-    conn = mysql_modifier.connect_to_MYSQL()
+    users = Strona(serwis).sqldbMaker()
+    conn = postgresql_modifier.connect_to_PostgreSQL()
 
     for n, url in enumerate(urls):
-        if n:
+        if n <30:
             try:
                 url = urls[n]
                 print(n)
@@ -84,15 +84,14 @@ def get_data(miasto, serwis):
     conn.close()
 
 
-#get_data('warszawa', 'gratka')
-#mysql_modifier.oferty_INITIATION('otodom', 'gratka')
-#help(mysql_modifier.oferty_Merger)
-#mysql_modifier.oferty_Merger('merged', 'gratka', 'merged')
+#get_data('warszawa', 'otodom')
+#help(postgresql_modifier.oferty_Merger)
+#postgresql_modifier.oferty_Merger('otodom', 'gratka', 'merged')
 #for n, miasto in enumerate(miastaDict):
 #    District(miastaDict[miasto]).mapDistrictPolygons()
 
-gdf = District(miastaDict['warszawa']).returnGeoDataFrame()
-print(gdf)
+#gdf = District(miastaDict['warszawa']).returnGeoDataFrame()
+#print(gdf)
 
 
 # TODO: Ogarnac koordynaty amenities z Openmaps i Geoportal

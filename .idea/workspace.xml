@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="edc9251b-a03a-493d-8db3-6662d61b7a60" name="Default Changelist" comment="RealITy 0.2020.02.03 (added gpd.gdf)">
+    <list default="true" id="edc9251b-a03a-493d-8db3-6662d61b7a60" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/osmOverpassApi.py" beforeDir="false" afterPath="$PROJECT_DIR$/osmOverpassApi.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mysql_modifier.py" beforeDir="false" afterPath="$PROJECT_DIR$/postgresql_modifier.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -111,8 +111,8 @@
       <method v="2" />
     </configuration>
     <list>
-      <item itemvalue="Python.main" />
       <item itemvalue="Python.otodompy" />
+      <item itemvalue="Python.main" />
       <item itemvalue="Python.slownik" />
     </list>
   </component>
@@ -183,7 +183,14 @@
       <option name="project" value="LOCAL" />
       <updated>1592137477420</updated>
     </task>
-    <option name="localTasksCounter" value="9" />
+    <task id="LOCAL-00009" summary="RealITy 0.2020.02.03 (added gpd.gdf)">
+      <created>1592159888151</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1592159888151</updated>
+    </task>
+    <option name="localTasksCounter" value="10" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -239,15 +246,5 @@
     <MESSAGE value="RealITy 0.2020.02.03" />
     <MESSAGE value="RealITy 0.2020.02.03 (added gpd.gdf)" />
     <option name="LAST_COMMIT_MESSAGE" value="RealITy 0.2020.02.03 (added gpd.gdf)" />
-  </component>
-  <component name="XDebuggerManager">
-    <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/mysql_modifier.py</url>
-          <option name="timeStamp" value="1" />
-        </line-breakpoint>
-      </breakpoints>
-    </breakpoint-manager>
   </component>
 </project>

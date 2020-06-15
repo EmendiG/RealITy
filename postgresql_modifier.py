@@ -1,7 +1,5 @@
-import mysql.connector
 import pandas as pd
-from sqlalchemy import create_engine
-from mysql.connector import (connection)
+import psycopg2
 from sqlalchemy import create_engine
 from sqlalchemy import Table, Column, Integer, Text, MetaData, Float
 import numpy as np
@@ -21,12 +19,12 @@ class Strona:
             import gratkapy as serwer
             return serwer
 
-    def mysql_dbMaker(self):
-        conn = connect_to_MYSQL()
+    def sqldbMaker(self):
+        conn = connect_to_PostgreSQL()
         metadata = MetaData()
         users = Table('oferty_{}'.format(self.serwis), metadata,
-                      Column('index', Integer, autoincrement=True),
-                      Column('Price', Integer),
+                      Column('index', Integer, autoincrement=True, primary_key=True),
+                      Column('Price', Float),
                       Column('Area', Float),
                       Column('Price_per_metr', Float),
                       Column('Latitude', Float),
@@ -52,9 +50,9 @@ class Strona:
         return users
 
 
-def connect_to_MYSQL():
-    db_connection_str = 'mysql+pymysql://{name}:{password}@{hostname}/{db_name}'.format(**db_dane)
-    db_connection = create_engine(db_connection_str).execution_options(autocommit=True)
+def connect_to_PostgreSQL():
+    db_connection_str = 'postgresql://{name}:{password}@{hostname}/{db_name}'.format(**db_dane)
+    db_connection = create_engine(db_connection_str)
     return db_connection.connect()
 
 def oferty_Merger(bd_base:str, bd_comp:str, db_nowa:str):
@@ -64,17 +62,23 @@ def oferty_Merger(bd_base:str, bd_comp:str, db_nowa:str):
     '''
     start = time.time()
 
-    mydb = connection.MySQLConnection(user=db_dane['name'], password=db_dane['password'], host=db_dane['hostname'],
-                                      database=db_dane['db_name'], auth_plugin='mysql_native_password')
+    #mydb = psycopg2.connect(user=db_dane['name'], password=db_dane['password'], host=db_dane['hostname'],
+    #                                  database=db_dane['db_name'])
 
-    conn = connect_to_MYSQL()
-    df_get = pd.read_sql('SELECT * FROM oferty_{}'.format(bd_comp), con=mydb)
+    con = psycopg2.connect(user=db_dane['name'], password=db_dane['password'], host=db_dane['hostname'],
+                           database=db_dane['db_name'])
+
+    #db_connection_str = 'postgresql://{name}:{password}@{hostname}/{db_name}'.format(**db_dane)
+    #mydb = create_engine(db_connection_str)
+
+    conn = connect_to_PostgreSQL()
+    df_get = pd.read_sql_query('SELECT * FROM oferty_{}'.format(bd_comp), con=conn)
     for miasto in df_get['Miasto'].unique().tolist():
         arr_comp = np.empty((0, 5), float)
         arr_base = np.empty((0, 5), float)
         if miasto:
-            df_base = pd.read_sql('SELECT * FROM oferty_{} WHERE Miasto="'"{}"'"'.format(bd_base, miasto), con=mydb)
-            df_comp = pd.read_sql('SELECT * FROM oferty_{} WHERE Miasto="'"{}"'"'.format(bd_comp, miasto), con=mydb)
+            df_base = pd.read_sql_query("""SELECT * FROM oferty_{} WHERE "Miasto"='{}'""".format(bd_base, miasto), con=conn)
+            df_comp = pd.read_sql_query("""SELECT * FROM oferty_{} WHERE "Miasto"='{}'""".format(bd_comp, miasto), con=conn)
 
             for index, row in df_comp.iterrows():
                 if int(index) % 1000 == 0:
@@ -103,43 +107,41 @@ def oferty_Merger(bd_base:str, bd_comp:str, db_nowa:str):
 
             dobre = [row[0] for row in arr_comp if row[0] not in wyniki]
             print(f'Wprowadzam dane do db {db_nowa} = {len(dobre)} nowych rekordow')
-            df_comp = pd.read_sql('SELECT * FROM oferty_{} WHERE Miasto="'"{}"'"'.format(bd_comp, miasto), con=mydb).iloc[dobre]
-            df_base = pd.read_sql('SELECT * FROM oferty_{}'.format(bd_base), con=mydb)
+            df_comp = pd.read_sql("""SELECT * FROM oferty_{} WHERE "Miasto"='{}'""".format(bd_comp, miasto), con=conn).iloc[dobre]
+            df_base = pd.read_sql("""SELECT * FROM oferty_{}""".format(bd_base), con=conn)
             df_comp_len = df_comp.shape[0]
-            cursor = mydb.cursor()
-            cursor.execute("USE realestate_zero")
-            cursor.execute("SHOW TABLES")
+
+            cursor = con.cursor()
+            cursor.execute("select relname from pg_class where relkind='r' and relname !~ '^(pg_|sql_)';")
             tables = cursor.fetchall()
             tabela = [tab[0] for tab in tables]
             if f'oferty_{db_nowa}' not in tabela:
-                df_base = df_base.reset_index(drop=True)  # .drop('level_0', axis=1)
-                Strona(db_nowa).mysql_dbMaker()
+                df_base = df_base.reset_index(drop=True)
+                Strona(db_nowa).sqldbMaker()
                 df_base.to_sql(f'oferty_{db_nowa}', if_exists='replace', con=conn)
                 df_base_max = df_base.shape[0]
             else:
-                df_base = pd.read_sql('SELECT * FROM oferty_{}'.format(db_nowa), con=mydb)
+                df_base = pd.read_sql('SELECT * FROM oferty_{}'.format(db_nowa), con=conn)
                 df_base_max = df_base.shape[0]
+
             df_comp["index"] = range(df_base_max, df_base_max + df_comp_len)
             df_comp = df_comp.set_index("index")
-            cursor = mydb.cursor()
-            cursor.execute("USE realestate_zero")
-            cursor.execute("SHOW TABLES")
+            #cursor = con.cursor()
+            cursor.execute("select relname from pg_class where relkind='r' and relname !~ '^(pg_|sql_)';")
             tables = cursor.fetchall()
             tabela = [tab[0] for tab in tables]
             if f'oferty_{db_nowa}' not in tabela:
                 df_base = df_base.reset_index(drop=True)  # .drop('level_0', axis=1)
-                Strona(db_nowa).mysql_dbMaker()
+                Strona(db_nowa).sqldbMaker()
                 df_base.to_sql(f'oferty_{db_nowa}', if_exists='replace', con=conn)
 
             df_comp.to_sql(f'oferty_{db_nowa}', con=conn, if_exists='append')
 
-            mydb.reconnect()
-            cursor = mydb.cursor()
-            cursor.execute("USE realestate_zero")
-            cursor.execute(f'DESCRIBE oferty_{db_nowa}')
-            columns = cursor.fetchall()
-            columna = [col[0] for col in columns]
-            if 'level_0' in columna:
+            #cursor = con.cursor()
+            cursor.execute(f"Select * FROM oferty_{db_nowa} LIMIT 0")
+            colnames = [desc[0] for desc in cursor.description]
+            if 'level_0' in colnames:
                 cursor.execute(f'ALTER TABLE oferty_{db_nowa} DROP COLUMN level_0')
+                con.commit()
     end = time.time()
     print(end - start)
