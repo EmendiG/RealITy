@@ -2,12 +2,15 @@ import csv
 import slownik
 import postgresql_modifier
 from postgresql_modifier import Strona
-from osmOverpassApi import District
+import postgresql_modifier
+from osmOverpassApi import District, Amenities
 
-miasta = ['warszawa', 'krakow', 'lodz', 'wroclaw', 'poznan', 'gdansk', 'szczecin', 'bydgoszcz', 'lublin', 'bialystok']
+miasta = ['warszawa', 'krakow', 'lodz', 'wroclaw', 'poznan', 'gdansk', 'szczecin', 'bydgoszcz', 'lublin','bialystok']
 
-miastaDict = {'warszawa':'Warszawa', 'krakow':'Kraków', 'lodz':'Łódź', 'wroclaw':'Wrocław', 'poznan':'Poznań',
-              'gdansk':'Gdańsk', 'szczecin':'Szczecin', 'bydgoszcz':'Bydgoszcz', 'lublin':'Lublin', 'bialystok':'Białystok'}
+miastaDict = {'warszawa': 'Warszawa', 'krakow': 'Kraków', 'lodz': 'Łódź', 'wroclaw': 'Wrocław', 'poznan': 'Poznań',
+              'gdansk': 'Gdańsk', 'szczecin': 'Szczecin', 'bydgoszcz': 'Bydgoszcz', 'lublin': 'Lublin',
+              'bialystok': 'Białystok'}
+
 
 def get_data(miasto, serwis):
     urls_file = csv.reader(open("{0}/urls_{0}_{1}.csv".format(serwis, miasto), "r", encoding="utf-8"))
@@ -20,7 +23,7 @@ def get_data(miasto, serwis):
     conn = postgresql_modifier.connect_to_PostgreSQL()
 
     for n, url in enumerate(urls):
-        if n <30:
+        if n < 30:
             try:
                 url = urls[n]
                 print(n)
@@ -84,16 +87,16 @@ def get_data(miasto, serwis):
     conn.close()
 
 
-#get_data('warszawa', 'otodom')
-#help(postgresql_modifier.oferty_Merger)
-#postgresql_modifier.oferty_Merger('otodom', 'gratka', 'merged')
-#for n, miasto in enumerate(miastaDict):
-#    District(miastaDict[miasto]).mapDistrictPolygons()
+# get_data('warszawa', 'otodom')
+# help(postgresql_modifier.oferty_Merger)
+# postgresql_modifier.oferty_Merger('otodom', 'gratka', 'merged')
 
-#gdf = District(miastaDict['warszawa']).returnGeoDataFrame()
-#print(gdf)
+# for n, miasto in enumerate(miastaDict):
+#    District(miastaDict[miasto]).osmApi_getDistricts_mapPolygons()
+# for miasto in miasta:
+#    postgresql_modifier.osmApi_getAmmenities_DataFrame_ToSQL(miasto)  # send data to sql server
 
 
-# TODO: Ogarnac koordynaty amenities z Openmaps i Geoportal
-# TODO: Znaleźć najblizsze amenities dla kazdego z rekordu (wystepowanie, nie cecha??) => Wykonac nowy db
-# TODO: Znaleźc sąsiadow lokalizacyjnych (po co??)
+
+# TODO: Znaleźć najblizsze amenities dla kazdego z rekordu (wystepowanie, nie cecha??) => Wykonac nowy db (relacyjny)
+# TODO: Znaleźc sąsiadow lokalizacyjnych (inne nieuchomosci, po co?? <- trzeba sprawdzic czy trzeba)

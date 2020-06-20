@@ -4,6 +4,7 @@ from sqlalchemy import create_engine
 from sqlalchemy import Table, Column, Integer, Text, MetaData, Float
 import numpy as np
 import time
+from osmOverpassApi import Amenities
 
 db_dane = {'name': 'RealITy', 'password': 'Reality1!', 'hostname': '127.0.0.1', 'db_name': 'realestate_zero'}
 
@@ -60,19 +61,14 @@ def oferty_Merger(bd_base:str, bd_comp:str, db_nowa:str):
        CHECK 2 DBs (bd_base + bd_comp) IF RECORDS DON'T OVERLAP THEN MERGE THEM INTO (db_nowa)
        IF (db_nowa) EXISTS THEN merging result of DBs (bd_base + bd_comp) IS APPENDED TO (db_nowa)
     '''
-    start = time.time()
 
-    #mydb = psycopg2.connect(user=db_dane['name'], password=db_dane['password'], host=db_dane['hostname'],
-    #                                  database=db_dane['db_name'])
+    start = time.time()
 
     con = psycopg2.connect(user=db_dane['name'], password=db_dane['password'], host=db_dane['hostname'],
                            database=db_dane['db_name'])
-
-    #db_connection_str = 'postgresql://{name}:{password}@{hostname}/{db_name}'.format(**db_dane)
-    #mydb = create_engine(db_connection_str)
-
     conn = connect_to_PostgreSQL()
     df_get = pd.read_sql_query('SELECT * FROM oferty_{}'.format(bd_comp), con=conn)
+
     for miasto in df_get['Miasto'].unique().tolist():
         arr_comp = np.empty((0, 5), float)
         arr_base = np.empty((0, 5), float)
@@ -112,7 +108,7 @@ def oferty_Merger(bd_base:str, bd_comp:str, db_nowa:str):
             df_comp_len = df_comp.shape[0]
 
             cursor = con.cursor()
-            cursor.execute("select relname from pg_class where relkind='r' and relname !~ '^(pg_|sql_)';")
+            cursor.execute("""select "relname" from "pg_class" where relkind='r' and "relname" !~ '^(pg_|sql_)';""")
             tables = cursor.fetchall()
             tabela = [tab[0] for tab in tables]
             if f'oferty_{db_nowa}' not in tabela:
@@ -126,8 +122,8 @@ def oferty_Merger(bd_base:str, bd_comp:str, db_nowa:str):
 
             df_comp["index"] = range(df_base_max, df_base_max + df_comp_len)
             df_comp = df_comp.set_index("index")
-            #cursor = con.cursor()
-            cursor.execute("select relname from pg_class where relkind='r' and relname !~ '^(pg_|sql_)';")
+
+            cursor.execute("""select "relname" from "pg_class" where relkind='r' and "relname" !~ '^(pg_|sql_)';""")
             tables = cursor.fetchall()
             tabela = [tab[0] for tab in tables]
             if f'oferty_{db_nowa}' not in tabela:
@@ -137,11 +133,23 @@ def oferty_Merger(bd_base:str, bd_comp:str, db_nowa:str):
 
             df_comp.to_sql(f'oferty_{db_nowa}', con=conn, if_exists='append')
 
-            #cursor = con.cursor()
-            cursor.execute(f"Select * FROM oferty_{db_nowa} LIMIT 0")
+            cursor.execute(f"""Select * FROM "oferty_{db_nowa}" LIMIT 0""")
             colnames = [desc[0] for desc in cursor.description]
             if 'level_0' in colnames:
-                cursor.execute(f'ALTER TABLE oferty_{db_nowa} DROP COLUMN level_0')
+                cursor.execute(f"""ALTER TABLE "oferty_{db_nowa}" DROP COLUMN level_0""")
                 con.commit()
     end = time.time()
     print(end - start)
+
+
+def osmApi_getAmmenities_DataFrame_ToSQL(miasto):
+    # Send DataFrame to PostgreSQL server
+    print(miasto)
+    amenities_df = Amenities(miasto).osmApi_getAmmenities_parseDataToDataFrame()
+    amenities_df.set_index('Ident', inplace=True) # Delete this funky 'index' column
+    conn = connect_to_PostgreSQL()
+    amenities_df.to_sql('Amenities', con=conn, if_exists='append')
+
+
+
+# TODO: Dodac funkcje zwracajaca liste 'ident' w roznych tabelach z postgresa i przezucic to do osmOverpassApi
