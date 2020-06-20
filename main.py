@@ -97,6 +97,5 @@ def get_data(miasto, serwis):
 #    postgresql_modifier.osmApi_getAmmenities_DataFrame_ToSQL(miasto)  # send data to sql server
 
 
-
 # TODO: Znaleźć najblizsze amenities dla kazdego z rekordu (wystepowanie, nie cecha??) => Wykonac nowy db (relacyjny)
 # TODO: Znaleźc sąsiadow lokalizacyjnych (inne nieuchomosci, po co?? <- trzeba sprawdzic czy trzeba)

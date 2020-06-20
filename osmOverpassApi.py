@@ -181,85 +181,52 @@ class Amenities:
             for CHOSEN in amenities_CHOSEN:
                 if amenity['tags']['amenity'] == CHOSEN and amenity['id'] not in amenities_df_IDENTS:
                     if 'name' in amenity['tags']:
-                        amenities_df = amenities_df.append(
-                            {'Ident': amenity['id'],
-                             'Amenity': CHOSEN,
-                             'Latitude': round(amenity['lat'], 5),
-                             'Longitude': round(amenity['lon'], 5),
-                             'Name': amenity['tags']['name'],
-                             'Miasto':self.miasto}, ignore_index=True)
+                        name = amenity['tags']['name']
                     elif 'name:en' in amenity['tags'] and 'name' not in amenity['tags']:
-                        amenities_df = amenities_df.append(
-                            {'Ident': amenity['id'],
-                             'Amenity': CHOSEN,
-                             'Latitude': round(amenity['lat'], 5),
-                             'Longitude': round(amenity['lon'], 5),
-                             'Name': amenity['tags']['name:en'],
-                             'Miasto':self.miasto}, ignore_index=True)
+                        name = amenity['tags']['name:en']
                     else:
-                        amenities_df = amenities_df.append(
-                            {'Ident': amenity['id'],
-                             'Amenity': CHOSEN,
-                             'Latitude': round(amenity['lat'], 5),
-                             'Longitude': round(amenity['lon'], 5),
-                             'Name': 'NaN',
-                             'Miasto':self.miasto}, ignore_index=True)
+                        name = 'NaN'
+                    amenities_df = amenities_df.append(
+                        {'Ident': amenity['id'],
+                         'Amenity': CHOSEN,
+                         'Latitude': round(amenity['lat'], 5),
+                         'Longitude': round(amenity['lon'], 5),
+                         'Name': name,
+                         'Miasto': self.miasto}, ignore_index=True)
 
             if amenity['tags']['amenity'] == amenities_CHOSEN_exception[0] and amenity['id'] not in amenities_df_IDENTS:
                 if 'vending' in amenity['tags']:
                     if 'parcel_pickup' in amenity['tags']['vending']:
                         try:
-                            amenities_df = amenities_df.append(
-                                {'Ident': amenity['id'],
-                                 'Amenity': amenities_CHOSEN_exception[0],
-                                 'Latitude': round(amenity['lat'], 5),
-                                 'Longitude': round(amenity['lon'], 5),
-                                 'Name': amenity['tags']['operator'] ,
-                                 'Miasto':self.miasto}, ignore_index=True)
+                            name = amenity['tags']['operator']
                         except:
                             try:
-                                amenities_df = amenities_df.append(
-                                    {'Ident': amenity['id'],
-                                     'Amenity': amenities_CHOSEN_exception[0],
-                                     'Latitude': round(amenity['lat'], 5),
-                                     'Longitude': round(amenity['lon'], 5),
-                                     'Name': amenity['tags']['name'],
-                                     'Miasto':self.miasto}, ignore_index=True)
+                                name = amenity['tags']['name']
                             except:
-                                amenities_df = amenities_df.append(
-                                    {'Ident': amenity['id'],
-                                     'Amenity': amenities_CHOSEN_exception[0],
-                                     'Latitude': round(amenity['lat'], 5),
-                                     'Longitude': round(amenity['lon'], 5),
-                                     'Name': 'NaN',
-                                     'Miasto':self.miasto},
-                                    ignore_index=True)
+                                name = 'NaN'
+                        amenities_df = amenities_df.append(
+                            {'Ident': amenity['id'],
+                             'Amenity': amenities_CHOSEN_exception[0],
+                             'Latitude': round(amenity['lat'], 5),
+                             'Longitude': round(amenity['lon'], 5),
+                             'Name': name,
+                             'Miasto':self.miasto},
+                             ignore_index=True)
             elif amenity['tags']['amenity'] == amenities_CHOSEN_exception[1] and amenity['id'] not in amenities_df_IDENTS:
                 try:
-                    amenities_df = amenities_df.append(
-                        {'Ident': amenity['id'],
-                         'Amenity': amenities_CHOSEN_exception[1],
-                         'Latitude': round(amenity['lat'], 5),
-                         'Longitude': round(amenity['lon'], 5),
-                         'Name': amenity['tags']['operator'],
-                         'Miasto':self.miasto}, ignore_index=True)
+                    name = amenity['tags']['operator']
                 except:
                     try:
-                        amenities_df = amenities_df.append(
-                            {'Ident': amenity['id'],
-                             'Amenity': amenities_CHOSEN_exception[1],
-                             'Latitude': round(amenity['lat'], 5),
-                             'Longitude': round(amenity['lon'], 5),
-                             'Name': amenity['tags']['name'],
-                             'Miasto':self.miasto}, ignore_index=True)
+                        name = amenity['tags']['name']
                     except:
-                        amenities_df = amenities_df.append(
-                            {'Ident': amenity['id'],
-                             'Amenity': amenities_CHOSEN_exception[1],
-                             'Latitude': round(amenity['lat'], 5),
-                             'Longitude': round(amenity['lon'], 5),
-                             'Name': 'NaN',
-                             'Miasto':self.miasto}, ignore_index=True)
+                        name = 'NaN'
+                amenities_df = amenities_df.append(
+                    {'Ident': amenity['id'],
+                     'Amenity': amenities_CHOSEN_exception[1],
+                     'Latitude': round(amenity['lat'], 5),
+                     'Longitude': round(amenity['lon'], 5),
+                     'Name': name,
+                     'Miasto':self.miasto}, ignore_index=True)
         return amenities_df
 
 
