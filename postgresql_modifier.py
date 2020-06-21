@@ -4,7 +4,7 @@ from sqlalchemy import create_engine
 from sqlalchemy import Table, Column, Integer, Text, MetaData, Float
 import numpy as np
 import time
-from osmOverpassApi import Amenities
+import osmOverpassApi
 
 db_dane = {'name': 'RealITy', 'password': 'Reality1!', 'hostname': '127.0.0.1', 'db_name': 'realestate_zero'}
 
@@ -21,7 +21,7 @@ class Strona:
             return serwer
 
     def sqldbMaker(self):
-        conn = connect_to_PostgreSQL()
+        conn = PostgreSQL_connectSQLalchemy()
         metadata = MetaData()
         users = Table('oferty_{}'.format(self.serwis), metadata,
                       Column('index', Integer, autoincrement=True, primary_key=True),
@@ -51,10 +51,15 @@ class Strona:
         return users
 
 
-def connect_to_PostgreSQL():
+def PostgreSQL_connectSQLalchemy():
     db_connection_str = 'postgresql://{name}:{password}@{hostname}/{db_name}'.format(**db_dane)
     db_connection = create_engine(db_connection_str)
     return db_connection.connect()
+
+def PostgreSQL_connectPsycopg2():
+    con = psycopg2.connect(user=db_dane['name'], password=db_dane['password'], host=db_dane['hostname'],
+                           database=db_dane['db_name'])
+    return con
 
 def oferty_Merger(bd_base:str, bd_comp:str, db_nowa:str):
     '''
@@ -63,10 +68,8 @@ def oferty_Merger(bd_base:str, bd_comp:str, db_nowa:str):
     '''
 
     start = time.time()
-
-    con = psycopg2.connect(user=db_dane['name'], password=db_dane['password'], host=db_dane['hostname'],
-                           database=db_dane['db_name'])
-    conn = connect_to_PostgreSQL()
+    con = PostgreSQL_connectPsycopg2()
+    conn = PostgreSQL_connectSQLalchemy()
     df_get = pd.read_sql_query('SELECT * FROM oferty_{}'.format(bd_comp), con=conn)
 
     for miasto in df_get['Miasto'].unique().tolist():
@@ -142,14 +145,41 @@ def oferty_Merger(bd_base:str, bd_comp:str, db_nowa:str):
     print(end - start)
 
 
-def osmApi_getAmmenities_DataFrame_ToSQL(miasto):
-    # Send DataFrame to PostgreSQL server
+def osmApi_DataFrame_ToSQL(miasto, feature):
+    """
+    Send DataFrame to PostgreSQL server
+
+    :param miasto: str
+    :param feature: str
+            Optional str:
+                - Amenities
+                - Tourism
+                - Leisure
+    :return: -> send DataFrame to SQL server
+    """
+    global feature_df
     print(miasto)
-    amenities_df = Amenities(miasto).osmApi_getAmmenities_parseDataToDataFrame()
-    amenities_df.set_index('Ident', inplace=True) # Delete this funky 'index' column
-    conn = connect_to_PostgreSQL()
-    amenities_df.to_sql('Amenities', con=conn, if_exists='append')
+    if feature == 'Amenities':
+        feature_df = osmOverpassApi.MapFeatures(miasto, feature).osmApi_getAmenities_parseDataToDataFrame()
+    elif feature == 'Tourism':
+        feature_df = osmOverpassApi.MapFeatures(miasto, feature).osmApi_getFeature_parseDataToDataFrame()
+    elif feature == 'Leisure':
+        feature_df = osmOverpassApi.MapFeatures(miasto, feature).osmApi_getFeature_parseDataToDataFrame()
+    feature_df.set_index('Ident', inplace=True) # Delete this funky 'index' column
+    conn = PostgreSQL_connectSQLalchemy()
+    feature_df.to_sql(f'{feature}', con=conn, if_exists='append')
 
-
+def osmApi_DataFrame_FromSQL(feature):
+    conn = PostgreSQL_connectSQLalchemy()
+    con = PostgreSQL_connectPsycopg2()
+    cursor = con.cursor()
+    cursor.execute("""select "relname" from "pg_class" where relkind='r' and "relname" !~ '^(pg_|sql_)';""")
+    tables = cursor.fetchall()
+    tabela = [tab[0] for tab in tables]
+    if f'{feature}' in tabela:
+        df_base = pd.read_sql(f"""SELECT "Ident" FROM "{feature}" """, con=conn)
+        return df_base['Ident'].values.tolist()
+    else:
+        return []
 
 # TODO: Dodac funkcje zwracajaca liste 'ident' w roznych tabelach z postgresa i przezucic to do osmOverpassApi

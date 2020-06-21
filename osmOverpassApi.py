@@ -5,9 +5,12 @@ import geopandas as gpd
 import pandas as pd
 import os
 from geojson import Point, Feature, FeatureCollection, Polygon, MultiPolygon, dump
+import postgresql_modifier
 
-miastaDict = {'warszawa':'Warszawa', 'krakow':'Kraków', 'lodz':'Łódź', 'wroclaw':'Wrocław', 'poznan':'Poznań',
-              'gdansk':'Gdańsk', 'szczecin':'Szczecin', 'bydgoszcz':'Bydgoszcz', 'lublin':'Lublin', 'bialystok':'Białystok'}
+miastaDict = {'warszawa': 'Warszawa', 'krakow': 'Kraków', 'lodz': 'Łódź', 'wroclaw': 'Wrocław', 'poznan': 'Poznań',
+              'gdansk': 'Gdańsk', 'szczecin': 'Szczecin', 'bydgoszcz': 'Bydgoszcz', 'lublin': 'Lublin',
+              'bialystok': 'Białystok'}
+
 
 class District:
     def __init__(self, miasto):
@@ -22,8 +25,7 @@ class District:
         responseCity = api.get(QUERY, responseformat='json')
         return responseCity
 
-
-    def osmApi_getDistricts_getCoordinatesOfWays(self, odpowiedz):
+    def osmApi_getDistricts_returnGeoDataFrame_getCoordinatesOfWays(self, odpowiedz):
         # Get Coordinates from OSM == only WAYS !!
         matchingCounter = len(odpowiedz) - 1
         coords = []
@@ -60,7 +62,7 @@ class District:
             for num, ref in enumerate(self.responseCity['elements'][dzielnice]['members']):
                 if ref['role'] == 'outer' and ref['type'] == 'way':
                     odpowiedz.append(ref)
-            coords = self.osmApi_getDistricts_getCoordinatesOfWays(odpowiedz)
+            coords = self.osmApi_getDistricts_returnGeoDataFrame_getCoordinatesOfWays(odpowiedz)
             coordinates.append(coords)
             districts.append(district)
 
@@ -83,8 +85,7 @@ class District:
 
         geojson = coordinates_toGeoJson(coordinates, districts)
         gdf = gpd.GeoDataFrame.from_features(geojson)
-        return  gdf
-
+        return gdf
 
     def osmApi_getDistricts_mapPolygons(self):
         # Get Polygons  = districts wihin a city (miasto) and draw it on a map
@@ -111,7 +112,7 @@ class District:
             for num, ref in enumerate(self.responseCity['elements'][dzielnice]['members']):
                 if ref['role'] == 'outer' and ref['type'] == 'way':
                     odpowiedz.append(ref)
-            coords = self.osmApi_getDistricts_getCoordinatesOfWays(odpowiedz)
+            coords = self.osmApi_getDistricts_returnGeoDataFrame_getCoordinatesOfWays(odpowiedz)
 
             district = self.responseCity['elements'][dzielnice]['tags']['name']
             geojson = {
@@ -129,7 +130,7 @@ class District:
             }
             folium.GeoJson(geojson).add_to(map)
 
-            #folium.FeatureGroup(name=district).add_to(map)
+            # folium.FeatureGroup(name=district).add_to(map)
 
         folium.LayerControl().add_to(map)
 
@@ -140,12 +141,11 @@ class District:
         map.save(f"districts/{self.miasto}.html")
 
 
-class Amenities:
-    def __init__(self, miasto):
+class MapFeatures:
+    def __init__(self, miasto, feature):
         self.miastoDict = miastaDict[miasto]
         self.miasto = miasto
-        self.amenitiesInCity = self.osmApi_getAmmenities()
-        self.tourismInCity = self.osmApi_getTourism()       # to chyba nie tu?
+        self.feature = feature
 
     def osmApi_getAmmenities(self):
         api = overpass.API(timeout=60)
@@ -161,23 +161,38 @@ class Amenities:
         out geom;"""
         return api.get(QUERY, responseformat='json')
 
-    def osmApi_getAmmenities_parseDataToDataFrame(self):
+    def osmApi_getLeisureNodes(self):
+        try:
+            api = overpass.API(timeout=60)
+            QUERY = f"""area[name="{self.miastoDict}"][type="boundary"]->.city; 
+            node(area.city)["leisure"];
+            out geom;"""
+            return api.get(QUERY, responseformat='json')
+        except overpass.errors.MultipleRequestsError:
+            api = overpass.API(timeout=60, url='//overpass.openstreetmap.fr/api/')
+            QUERY = f"""area[name="{self.miastoDict}"][type="boundary"]->.city; 
+                        node(area.city)["leisure"];
+                        out geom;"""
+            return api.get(QUERY, responseformat='json')
 
-        amenities_df = pd.DataFrame(columns = ['Ident', 'Amenity', 'Longitude', 'Latitude', 'Name', 'Miasto'])
+
+    def osmApi_getAmenities_parseDataToDataFrame(self):
+
+        amenities_df = pd.DataFrame(columns=['Ident', 'Amenity', 'Longitude', 'Latitude', 'Name', 'Miasto'])
         # Chosen types of amenities by importance
         amenities_CHOSEN = ['bar', 'pub', 'restaurant', 'fast_food', 'cafe', 'nightclub', 'pharmacy', 'hospital',
-                            'doctors','dentist', 'clinic', 'bank', 'bicycle_rental', 'post_office', 'kindergarten',
+                            'doctors', 'dentist', 'clinic', 'bank', 'bicycle_rental', 'post_office', 'kindergarten',
                             'school', 'library', 'university', 'college', 'theatre', 'arts_centre', 'cinema', 'police']
 
         # Two types of amenities has special json properties
         amenities_CHOSEN_exception = ['vending_machine', 'atm']
         # Check if amenities don't overwrite itself with SQL server data
-        amenities_df_IDENTS = [ident for ident in amenities_df['Ident']] # TODO: Add sql import
-        amenities_NUMBER = len(self.amenitiesInCity['elements'])
+        amenities_df_IDENTS = postgresql_modifier.osmApi_DataFrame_FromSQL(self.feature)
+        amenities_NUMBER = len(self.osmApi_getAmmenities()['elements'])
 
-        for n, amenity in enumerate(self.amenitiesInCity['elements']):
-            if n%1000 == 0:
-                print("%.0f" % round(n/amenities_NUMBER*100, 0), '%')
+        for n, amenity in enumerate(self.osmApi_getAmmenities()['elements']):
+            if n % 1000 == 0:
+                print("%.0f" % round(n / amenities_NUMBER * 100, 0), '%')
             for CHOSEN in amenities_CHOSEN:
                 if amenity['tags']['amenity'] == CHOSEN and amenity['id'] not in amenities_df_IDENTS:
                     if 'name' in amenity['tags']:
@@ -186,6 +201,7 @@ class Amenities:
                         name = amenity['tags']['name:en']
                     else:
                         name = 'NaN'
+                    amenities_df_IDENTS.append(amenity['id'])
                     amenities_df = amenities_df.append(
                         {'Ident': amenity['id'],
                          'Amenity': CHOSEN,
@@ -204,15 +220,17 @@ class Amenities:
                                 name = amenity['tags']['name']
                             except:
                                 name = 'NaN'
+                        amenities_df_IDENTS.append(amenity['id'])
                         amenities_df = amenities_df.append(
                             {'Ident': amenity['id'],
                              'Amenity': amenities_CHOSEN_exception[0],
                              'Latitude': round(amenity['lat'], 5),
                              'Longitude': round(amenity['lon'], 5),
                              'Name': name,
-                             'Miasto':self.miasto},
-                             ignore_index=True)
-            elif amenity['tags']['amenity'] == amenities_CHOSEN_exception[1] and amenity['id'] not in amenities_df_IDENTS:
+                             'Miasto': self.miasto},
+                            ignore_index=True)
+            elif amenity['tags']['amenity'] == amenities_CHOSEN_exception[1] and amenity[
+                'id'] not in amenities_df_IDENTS:
                 try:
                     name = amenity['tags']['operator']
                 except:
@@ -220,14 +238,53 @@ class Amenities:
                         name = amenity['tags']['name']
                     except:
                         name = 'NaN'
+                amenities_df_IDENTS.append(amenity['id'])
                 amenities_df = amenities_df.append(
                     {'Ident': amenity['id'],
                      'Amenity': amenities_CHOSEN_exception[1],
                      'Latitude': round(amenity['lat'], 5),
                      'Longitude': round(amenity['lon'], 5),
                      'Name': name,
-                     'Miasto':self.miasto}, ignore_index=True)
+                     'Miasto': self.miasto}, ignore_index=True)
         return amenities_df
 
+    def osmApi_getFeature_parseDataToDataFrame(self):
+        # Function dedicated to features other than Amenities such as Tourism or Leisure (IMPORTANT = ONLY NODES)
+        feature_df = pd.DataFrame(columns=['Ident', self.feature, 'Longitude', 'Latitude', 'Name', 'Miasto'])
+        # Chosen types of amenities by importance
+        global feature__CHOSEN, osmApi_features, feature_NUMBER
+
+        if self.feature == 'Tourism':
+            feature__CHOSEN = ['attraction', 'hotel', 'viewpoint', 'museum', 'artwork']
+            feature_NUMBER = len(self.osmApi_getTourism()['elements'])
+            osmApi_features = self.osmApi_getTourism()['elements']
+        elif self.feature == 'Leisure':
+            feature__CHOSEN = ['playground', 'sports_centre', 'fitness_centre']
+            feature_NUMBER = len(self.osmApi_getLeisureNodes()['elements'])
+            osmApi_features = self.osmApi_getLeisureNodes()['elements']
+
+        # Check if amenities don't overwrite itself with SQL server data
+        feature_df_IDENTS = postgresql_modifier.osmApi_DataFrame_FromSQL(self.feature)
+
+        for n, featur in enumerate(osmApi_features):
+            if n % 100 == 0:
+                print("%.0f" % round(n / feature_NUMBER * 100, 0), '%')
+            for CHOSEN in feature__CHOSEN:
+                if featur['tags'][f'{self.feature}'.lower()] == CHOSEN and featur['id'] not in feature_df_IDENTS:
+                    if 'name' in featur['tags']:
+                        name = featur['tags']['name']
+                    elif 'name:en' in featur['tags'] and 'name' not in featur['tags']:
+                        name = featur['tags']['name:en']
+                    else:
+                        name = 'NaN'
+                    feature_df_IDENTS.append(featur['id'])
+                    feature_df = feature_df.append(
+                        {'Ident': featur['id'],
+                         f'{self.feature}': CHOSEN,
+                         'Latitude': round(featur['lat'], 5),
+                         'Longitude': round(featur['lon'], 5),
+                         'Name': name,
+                         'Miasto': self.miasto}, ignore_index=True)
+        return feature_df
 
 # TODO: Ogarnac koordynaty amenities z Openmaps i Geoportal

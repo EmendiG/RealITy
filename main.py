@@ -1,11 +1,9 @@
 import csv
 import slownik
 import postgresql_modifier
-from postgresql_modifier import Strona
-import postgresql_modifier
-from osmOverpassApi import District, Amenities
+import osmOverpassApi
 
-miasta = ['warszawa', 'krakow', 'lodz', 'wroclaw', 'poznan', 'gdansk', 'szczecin', 'bydgoszcz', 'lublin','bialystok']
+miasta = ['warszawa', 'krakow', 'lodz', 'wroclaw', 'poznan', 'gdansk', 'szczecin', 'bydgoszcz', 'lublin','bialystok'] #
 
 miastaDict = {'warszawa': 'Warszawa', 'krakow': 'Kraków', 'lodz': 'Łódź', 'wroclaw': 'Wrocław', 'poznan': 'Poznań',
               'gdansk': 'Gdańsk', 'szczecin': 'Szczecin', 'bydgoszcz': 'Bydgoszcz', 'lublin': 'Lublin',
@@ -18,9 +16,9 @@ def get_data(miasto, serwis):
     for row in urls_file:
         urls.append(row[0])
 
-    serwer = Strona(serwis).wybor()
-    users = Strona(serwis).sqldbMaker()
-    conn = postgresql_modifier.connect_to_PostgreSQL()
+    serwer = postgresql_modifier.Strona(serwis).wybor()
+    users = postgresql_modifier.Strona(serwis).sqldbMaker()
+    conn = postgresql_modifier.PostgreSQL_connectSQLalchemy()
 
     for n, url in enumerate(urls):
         if n < 30:
@@ -87,6 +85,7 @@ def get_data(miasto, serwis):
     conn.close()
 
 
+
 # get_data('warszawa', 'otodom')
 # help(postgresql_modifier.oferty_Merger)
 # postgresql_modifier.oferty_Merger('otodom', 'gratka', 'merged')
@@ -94,8 +93,9 @@ def get_data(miasto, serwis):
 # for n, miasto in enumerate(miastaDict):
 #    District(miastaDict[miasto]).osmApi_getDistricts_mapPolygons()
 # for miasto in miasta:
-#    postgresql_modifier.osmApi_getAmmenities_DataFrame_ToSQL(miasto)  # send data to sql server
+#    postgresql_modifier.osmApi_DataFrame_ToSQL(miasto, 'Leisure')
 
+#postgresql_modifier.osmApi_DataFrame_ToSQL('warszawa', 'Tourism')
 
 # TODO: Znaleźć najblizsze amenities dla kazdego z rekordu (wystepowanie, nie cecha??) => Wykonac nowy db (relacyjny)
 # TODO: Znaleźc sąsiadow lokalizacyjnych (inne nieuchomosci, po co?? <- trzeba sprawdzic czy trzeba)
