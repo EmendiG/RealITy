@@ -4,7 +4,7 @@ from sqlalchemy import create_engine
 from sqlalchemy import Table, Column, Integer, Text, MetaData, Float
 import numpy as np
 import time
-import osmOverpassApi
+import OpenStreetMapOverpass
 
 db_dane = {'name': 'RealITy', 'password': 'Reality1!', 'hostname': '127.0.0.1', 'db_name': 'realestate_zero'}
 
@@ -145,31 +145,41 @@ def oferty_Merger(bd_base:str, bd_comp:str, db_nowa:str):
     print(end - start)
 
 
-def osmApi_DataFrame_ToSQL(miasto, feature):
+def osmApi_DataFrame_ToSQL(miasto:str, feature:str, type:str):
     """
     Send DataFrame to PostgreSQL server
 
     :param miasto: str
     :param feature: str
-            Optional str:
-                - Amenities
+            Mandatory str:
+                - Amenity
                 - Tourism
                 - Leisure
+    :param type: str
+            Mandatory str:
+                - Node
+                - Way
+                - Rel
+
     :return: -> send DataFrame to SQL server
     """
     global feature_df
     print(miasto)
-    if feature == 'Amenities':
-        feature_df = osmOverpassApi.MapFeatures(miasto, feature).osmApi_getAmenities_parseDataToDataFrame()
-    elif feature == 'Tourism':
-        feature_df = osmOverpassApi.MapFeatures(miasto, feature).osmApi_getFeature_parseDataToDataFrame()
-    elif feature == 'Leisure':
-        feature_df = osmOverpassApi.MapFeatures(miasto, feature).osmApi_getFeature_parseDataToDataFrame()
+    if feature == 'Amenities' and type == 'Node':
+        feature_df = OpenStreetMapOverpass.MapFeatures(miasto, feature, type).osmApi_getAmenities_parseToDataFrame_nodes()
+    elif feature == 'Tourism' and type == 'Node':
+        feature_df = OpenStreetMapOverpass.MapFeatures(miasto, feature, type).osmApi_getFeature_parseToDataFrame_nodes()
+    elif feature == 'Leisure' and type == 'Node':
+        feature_df = OpenStreetMapOverpass.MapFeatures(miasto, feature, type).osmApi_getFeature_parseToDataFrame_nodes()
+    elif feature == 'Leisure' and type == 'Way':
+        feature_df = OpenStreetMapOverpass.MapFeatures(miasto, feature, type).osmApi_getFeature_parseToDataFrame_ways()
+
     feature_df.set_index('Ident', inplace=True) # Delete this funky 'index' column
     conn = PostgreSQL_connectSQLalchemy()
-    feature_df.to_sql(f'{feature}', con=conn, if_exists='append')
+    feature_df.to_sql(f'{feature}_{type}', con=conn, if_exists='append')
 
-def osmApi_DataFrame_FromSQL(feature):
+
+def osmApi_DataFrame_FromSQL(feature, type):
     conn = PostgreSQL_connectSQLalchemy()
     con = PostgreSQL_connectPsycopg2()
     cursor = con.cursor()
@@ -177,7 +187,7 @@ def osmApi_DataFrame_FromSQL(feature):
     tables = cursor.fetchall()
     tabela = [tab[0] for tab in tables]
     if f'{feature}' in tabela:
-        df_base = pd.read_sql(f"""SELECT "Ident" FROM "{feature}" """, con=conn)
+        df_base = pd.read_sql(f"""SELECT "Ident" FROM "{feature}_{type}" """, con=conn)
         return df_base['Ident'].values.tolist()
     else:
         return []

@@ -1,13 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="edc9251b-a03a-493d-8db3-6662d61b7a60" name="Default Changelist" comment="RealITy 0.2020.02.04 (added Amenities Database from OpenStreetMap API)">
-      <change beforePath="$PROJECT_DIR$/.idea/analityka.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/analityka.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+    <list default="true" id="edc9251b-a03a-493d-8db3-6662d61b7a60" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/osmOverpassApi.py" beforeDir="false" afterPath="$PROJECT_DIR$/osmOverpassApi.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/postgresql_modifier.py" beforeDir="false" afterPath="$PROJECT_DIR$/postgresql_modifier.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/osmOverpassApi.py" beforeDir="false" afterPath="$PROJECT_DIR$/OpenStreetMapOverpass.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/postgresql_modifier.py" beforeDir="false" afterPath="$PROJECT_DIR$/PostgreSQLModifier.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -35,7 +33,7 @@
   <component name="PropertiesComponent">
     <property name="TODO_SCOPE" value="All Places" />
     <property name="last_opened_file_path" value="D:/Git/bin/git.exe" />
-    <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
+    <property name="settings.editor.selected.configurable" value="reference.settingsdialog.IDE.editor.colors" />
   </component>
   <component name="RunDashboard">
     <option name="ruleStates">
@@ -221,7 +219,14 @@
       <option name="project" value="LOCAL" />
       <updated>1592691411691</updated>
     </task>
-    <option name="localTasksCounter" value="14" />
+    <task id="LOCAL-00014" summary="RealITy 0.2020.02.04 (added Amenities, Tourism and Leisure data from OpenStreetMap API)">
+      <created>1592753481059</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1592753481059</updated>
+    </task>
+    <option name="localTasksCounter" value="15" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -278,6 +283,7 @@
     <MESSAGE value="RealITy 0.2020.02.03 (added gpd.gdf)" />
     <MESSAGE value="RealITy 0.2020.02.03 (changed mysql to postgresql, cuz of geometry(Polygons))" />
     <MESSAGE value="RealITy 0.2020.02.04 (added Amenities Database from OpenStreetMap API)" />
-    <option name="LAST_COMMIT_MESSAGE" value="RealITy 0.2020.02.04 (added Amenities Database from OpenStreetMap API)" />
+    <MESSAGE value="RealITy 0.2020.02.04 (added Amenities, Tourism and Leisure data from OpenStreetMap API)" />
+    <option name="LAST_COMMIT_MESSAGE" value="RealITy 0.2020.02.04 (added Amenities, Tourism and Leisure data from OpenStreetMap API)" />
   </component>
 </project>

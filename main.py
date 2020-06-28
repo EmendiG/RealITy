@@ -1,9 +1,9 @@
 import csv
 import slownik
-import postgresql_modifier
-import osmOverpassApi
+import PostgreSQLModifier
+import OpenStreetMapOverpass
 
-miasta = ['warszawa', 'krakow', 'lodz', 'wroclaw', 'poznan', 'gdansk', 'szczecin', 'bydgoszcz', 'lublin','bialystok'] #
+miasta = [ 'warszawa', 'krakow', 'lodz', 'wroclaw', 'poznan', 'gdansk', 'szczecin', 'bydgoszcz', 'lublin','bialystok'] #
 
 miastaDict = {'warszawa': 'Warszawa', 'krakow': 'Kraków', 'lodz': 'Łódź', 'wroclaw': 'Wrocław', 'poznan': 'Poznań',
               'gdansk': 'Gdańsk', 'szczecin': 'Szczecin', 'bydgoszcz': 'Bydgoszcz', 'lublin': 'Lublin',
@@ -16,9 +16,9 @@ def get_data(miasto, serwis):
     for row in urls_file:
         urls.append(row[0])
 
-    serwer = postgresql_modifier.Strona(serwis).wybor()
-    users = postgresql_modifier.Strona(serwis).sqldbMaker()
-    conn = postgresql_modifier.PostgreSQL_connectSQLalchemy()
+    serwer = PostgreSQLModifier.Strona(serwis).wybor()
+    users = PostgreSQLModifier.Strona(serwis).sqldbMaker()
+    conn = PostgreSQLModifier.PostgreSQL_connectSQLalchemy()
 
     for n, url in enumerate(urls):
         if n < 30:
@@ -95,7 +95,9 @@ def get_data(miasto, serwis):
 # for miasto in miasta:
 #    postgresql_modifier.osmApi_DataFrame_ToSQL(miasto, 'Leisure')
 
-#postgresql_modifier.osmApi_DataFrame_ToSQL('warszawa', 'Tourism')
+# PostgreSQLModifier.osmApi_DataFrame_ToSQL(miasto, 'Leisure', 'Way')
+
+print(OpenStreetMapOverpass.MapFeatures('warszawa', 'Leisure', 'Rel').osmApi_getFeature_parseToDataFrame_rels())
 
 # TODO: Znaleźć najblizsze amenities dla kazdego z rekordu (wystepowanie, nie cecha??) => Wykonac nowy db (relacyjny)
 # TODO: Znaleźc sąsiadow lokalizacyjnych (inne nieuchomosci, po co?? <- trzeba sprawdzic czy trzeba)
