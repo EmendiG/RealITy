@@ -5,6 +5,7 @@ import geopandas as gpd
 import pandas as pd
 import os
 import PostgreSQLModifier
+from shapely.geometry import Polygon, MultiPolygon
 
 miastaDict = {'warszawa': 'Warszawa', 'krakow': 'Kraków', 'lodz': 'Łódź', 'wroclaw': 'Wrocław', 'poznan': 'Poznań',
               'gdansk': 'Gdańsk', 'szczecin': 'Szczecin', 'bydgoszcz': 'Bydgoszcz', 'lublin': 'Lublin',
@@ -141,7 +142,7 @@ class District:
 
 
 class MapFeatures:
-    def __init__(self, miasto, feature, type):
+    def __init__(self, miasto, feature, type, autoselection):
         self.miastoDict = miastaDict[miasto]
         self.miasto = miasto
         self.feature = feature
@@ -149,6 +150,7 @@ class MapFeatures:
         self.typeLower = type.lower()
         self.featureLower = feature.lower()
         self.getFeature = self.osmApi_getFeature()
+        self.autoselection = autoselection
 
     def osmApi_getFeature(self):
         try:
@@ -178,21 +180,19 @@ class MapFeatures:
     def osmApi_getAmenities_parseToDataFrame_nodes(self):
 
         amenities_df = pd.DataFrame(columns=['Ident', 'Amenity', 'Longitude', 'Latitude', 'Name', 'Miasto'])
-
-        print(self.osmApi_getFeature_showFeatures())
-        amenities__INPUT = input('Enter a list of features separated by space (type 0 for default list) = ')
-        if amenities__INPUT == '0':
+        if self.autoselection == True:
             if self.feature == 'Amenity':
-                # Chosen types of amenities by importance
                 amenities_CHOSEN = ['bar', 'pub', 'restaurant', 'fast_food', 'cafe', 'nightclub', 'pharmacy',
                                     'hospital', 'doctors', 'dentist', 'clinic', 'bank', 'bicycle_rental', 'post_office',
                                     'kindergarten', 'school', 'library', 'university', 'college', 'theatre',
                                     'arts_centre', 'cinema', 'police']
+                # Two types of amenities has special json properties
+                amenities_CHOSEN_exception = ['vending_machine', 'atm']
         else:
+            print(self.osmApi_getFeature_showFeatures())
+            amenities__INPUT = input('Enter a list of features separated by space = ')
             amenities_CHOSEN = amenities__INPUT.split()
 
-        # Two types of amenities has special json properties
-        amenities_CHOSEN_exception = ['vending_machine', 'atm']
         # Check if amenities don't overwrite itself with SQL server data
         amenities_df_IDENTS = PostgreSQLModifier.osmApi_DataFrame_FromSQL(self.feature, self.type)
         amenities_NUMBER = len(self.getFeature['elements'])
@@ -260,14 +260,14 @@ class MapFeatures:
         feature_df = pd.DataFrame(columns=['Ident', self.feature, 'Longitude', 'Latitude', 'Name', 'Miasto'])
         # Chosen types of amenities by importance
 
-        print(self.osmApi_getFeature_showFeatures())
-        feature__INPUT = input('Enter a list of features separated by space (type 0 for default list) = ')
-        if feature__INPUT == '0':
+        if self.autoselection == True:
             if self.feature == 'Tourism':
                 feature__CHOSEN = ['attraction', 'hotel', 'viewpoint', 'museum', 'artwork']
             elif self.feature == 'Leisure':
                 feature__CHOSEN = ['playground', 'sports_centre', 'fitness_centre']
         else:
+            print(self.osmApi_getFeature_showFeatures())
+            feature__INPUT = input('Enter a list of features separated by space = ')
             feature__CHOSEN = feature__INPUT.split()
 
 
@@ -301,14 +301,13 @@ class MapFeatures:
         # Function dedicated to features other than Amenities such as Tourism or Leisure (IMPORTANT = ONLY NODES)
         feature_df = pd.DataFrame(columns=['Ident', self.feature, 'Longitude', 'Latitude', 'Name', 'Miasto'])
 
-        print(self.osmApi_getFeature_showFeatures())
-        feature__INPUT = input('Enter a list of features separated by space (type 0 for default list) = ')
-        if feature__INPUT == '0':
+        if self.autoselection == True:
             if self.feature == 'Leisure':
                 feature__CHOSEN = ['playground']
         else:
+            print(self.osmApi_getFeature_showFeatures())
+            feature__INPUT = input('Enter a list of features separated by space = ')
             feature__CHOSEN = feature__INPUT.split()
-
 
         feature_NUMBER = len(self.getFeature['elements'])
         # Check if amenities don't overwrite itself with SQL server data
@@ -336,94 +335,46 @@ class MapFeatures:
                          'Miasto': self.miasto}, ignore_index=True)  # first lat/lon value is enough, those are small objects
         return feature_df
 
-
     def osmApi_getFeature_parseToDataFrame_rels(self):
-        feature_df = pd.DataFrame(columns=['Ident', self.feature, 'Geometry', 'Name', 'Miasto'])
 
-        print(self.osmApi_getFeature_showFeatures())
-        feature__INPUT = input('Enter a list of features separated by space (type 0 for default list) = ')
-        if feature__INPUT == '0':
+        if self.autoselection == True:
             if self.feature == 'Leisure':
                 feature__CHOSEN = ['park', 'nature_reserve']
         else:
+            print(self.osmApi_getFeature_showFeatures())
+            feature__INPUT = input('Enter a list of features separated by space = ')
             feature__CHOSEN = feature__INPUT.split()
         #feature_df_IDENTS = PostgreSQLModifier.osmApi_DataFrame_FromSQL(self.feature, self.type)
+        feature_df_IDENTS = []
 
-
-        dlugosc = len(list({dis['id']: dis for dis in self.getFeature['elements']}.values()))
-        coordinates = []
-        districts = []
-        coords = []
-        # append polygons and district names to proper lists
-        for dzielnice in range(0, dlugosc):
-            odpowiedz = []
+        arr_base = np.empty((0, 5), float)
+        for feature in self.getFeature['elements']:
             for CHOSEN in feature__CHOSEN:
-                for num, ref in enumerate(self.getFeature['elements'][dzielnice]['members']):
-                    if self.getFeature['elements'][dzielnice]['tags'][f'{self.featureLower}'] == CHOSEN:
-                        if self.getFeature['elements'][dzielnice]['tags']['type'] == 'boundary' and ref['role'] == 'outer':
-                            print(self.getFeature['elements'][dzielnice]['tags']['type'])
-                            odpowiedz.append(ref)
-                            if 'name' in self.getFeature['elements'][dzielnice]['tags']:
-                                district = self.getFeature['elements'][dzielnice]['tags']['name']
-                        elif self.getFeature['elements'][dzielnice]['tags']['type'] == 'multipolygon':
-                            print(self.getFeature['elements'][dzielnice]['tags']['type'])
-                            if 'name' in self.getFeature['elements'][dzielnice]['tags']:
-                                district = self.getFeature['elements'][dzielnice]['tags']['name']
-                                coords += [(elem['lat'], elem['lon']) for elem in ref['geometry']]
+                if feature['tags']['leisure'] == CHOSEN and feature['id'] not in feature_df_IDENTS:
+                    for member in feature['members']:
+                        koords = []
+                        if member['role'] == 'outer' and feature['tags'][
+                            'type'] == 'multipolygon' and 'geometry' in member:
+                            if len(member['geometry']) > 3:
+                                if 'name' in feature['tags']:
+                                    name = feature['tags']['name']
+                                else:
+                                    name = 'NaN'
+                                koords += [(elem['lon'], elem['lat']) for elem in member['geometry']]
+                                arr_base = np.concatenate(
+                                    (arr_base, [[feature['id'], CHOSEN, MultiPolygon([Polygon(koords)]), name, self.miasto]]),
+                                    axis=0)
 
-
-            coords = self.osmApi_getFeature_parseToDataFrame_rels_getCoordinatesOfWays(odpowiedz)
-            coordinates.append(coords)
-            districts.append(district)
-
-        # make geojsons from lists of coordinates and names of districts, to be viable by the GeoPandas
-        def coordinates_toGeoJson(coordinates, districts):
-            geojson = {
-                "type": "FeatureCollection",
-                "features": [
-                    {
-                        "type": "Feature",
-                        "geometry": {
-                            "type": "Polygon",
-                            "name": district,
-                            "coordinates": [coordinates[n]],
-                        },
-                        "properties": {'name': district},
-                    } for n, district in enumerate(districts)]
-            }
-            return geojson
-
-        geojson = coordinates_toGeoJson(coordinates, districts)
-        gdf = gpd.GeoDataFrame.from_features(geojson)
-        return gdf
-
-
-    def osmApi_getFeature_parseToDataFrame_rels_getCoordinatesOfWays(self, odpowiedz):
-        # Get Coordinates from OSM == only WAYS !!
-        matchingCounter = len(odpowiedz) - 2
-        coords = []
-        for nmb, geometry in enumerate(odpowiedz):
-            if nmb == 0:
-                coords += [(float(geom['lon']), float(geom['lat'])) for geom in geometry['geometry']]
-
-        while matchingCounter > 0:
-            for nmb, geometry in enumerate(odpowiedz):
-                if nmb > 0:
-                    koordynat_0 = coords[-1][0]
-                    koordynat_1 = coords[-1][1]
-                    # check if last coordinates in osm.way are similar to first coordinates in next osm.way
-                    if koordynat_0 == odpowiedz[nmb]['geometry'][0]['lon'] and koordynat_1 == \
-                            odpowiedz[nmb]['geometry'][0]['lat']:
-                        coords += [(float(geom['lon']), float(geom['lat'])) for geom in geometry['geometry']]
-                        matchingCounter -= 1
-                    # check reverse osm.way if first condition is not true
-                    elif koordynat_0 == odpowiedz[nmb]['geometry'][len(odpowiedz[nmb]['geometry']) - 1][
-                        'lon'] and koordynat_1 == \
-                            odpowiedz[nmb]['geometry'][len(odpowiedz[nmb]['geometry']) - 1]['lat']:
-                        coords += [(float(geom['lon']), float(geom['lat'])) for geom in geometry['geometry'][::-1]]
-                        matchingCounter -= 1
-
-        return coords
+        arr_final = np.array(['Ident', 'Leisure', 'Geometry', 'Name', 'Miasto'])
+        for n, identyfikator in enumerate(arr_base):
+            if n < len(arr_base) - 1:
+                if arr_base[n][0] == arr_base[n + 1][0]:
+                    arr_base[n + 1][2] = arr_base[n][2].union(arr_base[n + 1][2])
+                else:
+                    arr_final = np.vstack((arr_final, arr_base[n]))
+            else:
+                arr_final = np.vstack((arr_final, arr_base[n]))
+        return pd.DataFrame(data=arr_final[1:, 0:],  columns=arr_final[0,0:])
 
 
 

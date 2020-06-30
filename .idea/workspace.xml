@@ -3,9 +3,9 @@
   <component name="ChangeListManager">
     <list default="true" id="edc9251b-a03a-493d-8db3-6662d61b7a60" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/OpenStreetMapOverpass.py" beforeDir="false" afterPath="$PROJECT_DIR$/OpenStreetMapOverpass.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PostgreSQLModifier.py" beforeDir="false" afterPath="$PROJECT_DIR$/PostgreSQLModifier.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/osmOverpassApi.py" beforeDir="false" afterPath="$PROJECT_DIR$/OpenStreetMapOverpass.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/postgresql_modifier.py" beforeDir="false" afterPath="$PROJECT_DIR$/PostgreSQLModifier.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -226,7 +226,14 @@
       <option name="project" value="LOCAL" />
       <updated>1592753481059</updated>
     </task>
-    <option name="localTasksCounter" value="15" />
+    <task id="LOCAL-00015" summary="RealITy 0.2020.02.05">
+      <created>1593371706490</created>
+      <option name="number" value="00015" />
+      <option name="presentableId" value="LOCAL-00015" />
+      <option name="project" value="LOCAL" />
+      <updated>1593371706491</updated>
+    </task>
+    <option name="localTasksCounter" value="16" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -284,6 +291,7 @@
     <MESSAGE value="RealITy 0.2020.02.03 (changed mysql to postgresql, cuz of geometry(Polygons))" />
     <MESSAGE value="RealITy 0.2020.02.04 (added Amenities Database from OpenStreetMap API)" />
     <MESSAGE value="RealITy 0.2020.02.04 (added Amenities, Tourism and Leisure data from OpenStreetMap API)" />
-    <option name="LAST_COMMIT_MESSAGE" value="RealITy 0.2020.02.04 (added Amenities, Tourism and Leisure data from OpenStreetMap API)" />
+    <MESSAGE value="RealITy 0.2020.02.05" />
+    <option name="LAST_COMMIT_MESSAGE" value="RealITy 0.2020.02.05" />
   </component>
 </project>

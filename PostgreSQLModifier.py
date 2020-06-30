@@ -145,7 +145,7 @@ def oferty_Merger(bd_base:str, bd_comp:str, db_nowa:str):
     print(end - start)
 
 
-def osmApi_DataFrame_ToSQL(miasto:str, feature:str, type:str):
+def osmApi_DataFrame_ToSQL(miasto:str, feature:str, type:str, autoselection:bool=True):
     """
     Send DataFrame to PostgreSQL server
 
@@ -166,13 +166,15 @@ def osmApi_DataFrame_ToSQL(miasto:str, feature:str, type:str):
     global feature_df
     print(miasto)
     if feature == 'Amenities' and type == 'Node':
-        feature_df = OpenStreetMapOverpass.MapFeatures(miasto, feature, type).osmApi_getAmenities_parseToDataFrame_nodes()
+        feature_df = OpenStreetMapOverpass.MapFeatures(miasto, feature, type, autoselection).osmApi_getAmenities_parseToDataFrame_nodes()
     elif feature == 'Tourism' and type == 'Node':
-        feature_df = OpenStreetMapOverpass.MapFeatures(miasto, feature, type).osmApi_getFeature_parseToDataFrame_nodes()
+        feature_df = OpenStreetMapOverpass.MapFeatures(miasto, feature, type, autoselection).osmApi_getFeature_parseToDataFrame_nodes()
     elif feature == 'Leisure' and type == 'Node':
-        feature_df = OpenStreetMapOverpass.MapFeatures(miasto, feature, type).osmApi_getFeature_parseToDataFrame_nodes()
+        feature_df = OpenStreetMapOverpass.MapFeatures(miasto, feature, type, autoselection).osmApi_getFeature_parseToDataFrame_nodes()
     elif feature == 'Leisure' and type == 'Way':
-        feature_df = OpenStreetMapOverpass.MapFeatures(miasto, feature, type).osmApi_getFeature_parseToDataFrame_ways()
+        feature_df = OpenStreetMapOverpass.MapFeatures(miasto, feature, type, autoselection).osmApi_getFeature_parseToDataFrame_ways()
+    elif feature == 'Leisure' and type == 'Rel':
+        feature_df = OpenStreetMapOverpass.MapFeatures(miasto, feature, type, autoselection).osmApi_getFeature_parseToDataFrame_rels()
 
     feature_df.set_index('Ident', inplace=True) # Delete this funky 'index' column
     conn = PostgreSQL_connectSQLalchemy()

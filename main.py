@@ -97,7 +97,9 @@ def get_data(miasto, serwis):
 
 # PostgreSQLModifier.osmApi_DataFrame_ToSQL(miasto, 'Leisure', 'Way')
 
-print(OpenStreetMapOverpass.MapFeatures('warszawa', 'Leisure', 'Rel').osmApi_getFeature_parseToDataFrame_rels())
+#print(OpenStreetMapOverpass.MapFeatures('warszawa', 'Leisure', 'Rel').osmApi_getFeature_parseToDataFrame_rels())
+
+PostgreSQLModifier.osmApi_DataFrame_ToSQL('warszawa', 'Leisure', 'Rel')
 
 # TODO: Znaleźć najblizsze amenities dla kazdego z rekordu (wystepowanie, nie cecha??) => Wykonac nowy db (relacyjny)
 # TODO: Znaleźc sąsiadow lokalizacyjnych (inne nieuchomosci, po co?? <- trzeba sprawdzic czy trzeba)
