@@ -374,7 +374,8 @@ class MapFeatures:
                     arr_final = np.vstack((arr_final, arr_base[n]))
             else:
                 arr_final = np.vstack((arr_final, arr_base[n]))
-        return pd.DataFrame(data=arr_final[1:, 0:],  columns=arr_final[0,0:])
+        feature_df = pd.DataFrame(data=arr_final[1:, 0:],  columns=arr_final[0,0:])
+        return gpd.GeoDataFrame(feature_df, crs="EPSG:4326", geometry='Geometry')
 
 
 

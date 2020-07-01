@@ -6,6 +6,12 @@ import numpy as np
 import time
 import OpenStreetMapOverpass
 
+import geopandas as gpd
+
+from geoalchemy2 import Geometry, WKTElement
+
+import geopandas_postgis
+
 db_dane = {'name': 'RealITy', 'password': 'Reality1!', 'hostname': '127.0.0.1', 'db_name': 'realestate_zero'}
 
 class Strona:
@@ -165,6 +171,8 @@ def osmApi_DataFrame_ToSQL(miasto:str, feature:str, type:str, autoselection:bool
     """
     global feature_df
     print(miasto)
+
+    conn = PostgreSQL_connectSQLalchemy()
     if feature == 'Amenities' and type == 'Node':
         feature_df = OpenStreetMapOverpass.MapFeatures(miasto, feature, type, autoselection).osmApi_getAmenities_parseToDataFrame_nodes()
     elif feature == 'Tourism' and type == 'Node':
@@ -173,12 +181,23 @@ def osmApi_DataFrame_ToSQL(miasto:str, feature:str, type:str, autoselection:bool
         feature_df = OpenStreetMapOverpass.MapFeatures(miasto, feature, type, autoselection).osmApi_getFeature_parseToDataFrame_nodes()
     elif feature == 'Leisure' and type == 'Way':
         feature_df = OpenStreetMapOverpass.MapFeatures(miasto, feature, type, autoselection).osmApi_getFeature_parseToDataFrame_ways()
-    elif feature == 'Leisure' and type == 'Rel':
+
+
+    if feature == 'Leisure' and type == 'Rel':
         feature_df = OpenStreetMapOverpass.MapFeatures(miasto, feature, type, autoselection).osmApi_getFeature_parseToDataFrame_rels()
+        feature_df.set_index('Ident', inplace=True)  # Delete this funky 'index' column
+        feature_df.postgis.to_postgis(table_name=f'{feature}_{type}', con=conn, if_exists='append', index=False,
+                                      geometry='Geometry')
+
 
     feature_df.set_index('Ident', inplace=True) # Delete this funky 'index' column
-    conn = PostgreSQL_connectSQLalchemy()
     feature_df.to_sql(f'{feature}_{type}', con=conn, if_exists='append')
+
+    # TODO: Wyjebać te if pify
+
+
+
+
 
 
 def osmApi_DataFrame_FromSQL(feature, type):
