@@ -173,8 +173,7 @@ class MapFeatures:
                 featureDict[element['tags'][self.featureLower]] = 1
             elif element['tags'][self.featureLower] in featureDict.keys():
                 featureDict[element['tags'][self.featureLower]] += 1
-        sortedfeatureDict = {k: v for k, v in sorted(featureDict.items(), key=lambda item: item[1], reverse=True)}
-        return sortedfeatureDict
+        return {k: v for k, v in sorted(featureDict.items(), key=lambda item: item[1], reverse=True)}
 
 
     def osmApi_getAmenities_parseToDataFrame_nodes(self):
@@ -258,7 +257,6 @@ class MapFeatures:
     def osmApi_getFeature_parseToDataFrame_nodes(self):
         # Function dedicated to features other than Amenities such as Tourism or Leisure (IMPORTANT = ONLY NODES)
         feature_df = pd.DataFrame(columns=['Ident', self.feature, 'Longitude', 'Latitude', 'Name', 'Miasto'])
-        # Chosen types of amenities by importance
 
         if self.autoselection == True:
             if self.feature == 'Tourism':
@@ -279,25 +277,65 @@ class MapFeatures:
             if n % 100 == 0:
                 print("%.0f" % round(n / feature_NUMBER * 100, 0), '%')
             # noinspection PyUnboundLocalVariable
-            for CHOSEN in feature__CHOSEN:
-                if featur['tags'][f'{self.featureLower}'] == CHOSEN and featur['id'] not in feature_df_IDENTS:
-                    if 'name' in featur['tags']:
-                        name = featur['tags']['name']
-                    elif 'name:en' in featur['tags'] and 'name' not in featur['tags']:
-                        name = featur['tags']['name:en']
-                    else:
-                        name = 'NaN'
-                    feature_df_IDENTS.append(featur['id'])
-                    feature_df = feature_df.append(
-                        {'Ident': featur['id'],
-                         f'{self.feature}': CHOSEN,
-                         'Latitude': round(featur['lat'], 5),
-                         'Longitude': round(featur['lon'], 5),
-                         'Name': name,
-                         'Miasto': self.miasto}, ignore_index=True)
+            if featur['tags'][f'{self.featureLower}'] in feature__CHOSEN and featur['id'] not in feature_df_IDENTS:
+                if 'name' in featur['tags']:
+                    name = featur['tags']['name']
+                elif 'name:en' in featur['tags'] and 'name' not in featur['tags']:
+                    name = featur['tags']['name:en']
+                else:
+                    name = 'NaN'
+                feature_df_IDENTS.append(featur['id'])
+                feature_df = feature_df.append(
+                    {'Ident': featur['id'],
+                     f'{self.feature}': featur['tags'][f'{self.featureLower}'],
+                     'Latitude': round(featur['lat'], 5),
+                     'Longitude': round(featur['lon'], 5),
+                     'Name': name,
+                     'Miasto': self.miasto}, ignore_index=True)
         return feature_df
 
     def osmApi_getFeature_parseToDataFrame_ways(self):
+        # Function dedicated to features such as Leisure (ONLY WAYS)
+        feature_df = gpd.GeoDataFrame(columns=['Ident', self.feature, 'Geometry', 'Name', 'Miasto'],
+                                      crs="EPSG:4326",
+                                      geometry='Geometry')
+
+        if self.autoselection == True:
+            if self.feature == 'Tourism':
+                feature__CHOSEN = []
+            elif self.feature == 'Leisure':
+                feature__CHOSEN = ['park']
+        else:
+            print(self.osmApi_getFeature_showFeatures())
+            feature__INPUT = input('Enter a list of features separated by space = ')
+            feature__CHOSEN = feature__INPUT.split()
+
+        feature_NUMBER = len(self.getFeature['elements'])
+        # Check if amenities don't overwrite itself with SQL server data
+        feature_df_IDENTS = PostgreSQLModifier.osmApi_DataFrame_FromSQL(self.feature, self.type)
+
+        for n, featur in enumerate(self.getFeature['elements']):
+            if n % 100 == 0:
+                print("%.0f" % round(n / feature_NUMBER * 100, 0), '%')
+            # noinspection PyUnboundLocalVariable
+            coords = []
+            if featur['tags'][f'{self.featureLower}'] in feature__CHOSEN and 'geometry' in featur:
+                coords += [(elem['lon'], elem['lat']) for elem in featur['geometry']]
+                if 'name' in featur['tags']:
+                    name = featur['tags']['name']
+                elif 'name:en' in featur['tags'] and 'name' not in featur['tags']:
+                    name = featur['tags']['name:en']
+                else:
+                    name = 'NaN'
+                feature_df = feature_df.append(
+                                {'Ident': featur['id'],
+                                 'Leisure': featur['tags'][f'{self.featureLower}'],
+                                 'Geometry': Polygon(coords),
+                                 'Name': name,
+                                 'Miasto': self.miasto}, ignore_index=True)
+        return feature_df
+
+    def osmApi_getFeature_parseToDataFrame_nodeOfway(self):
         # Function dedicated to features other than Amenities such as Tourism or Leisure (IMPORTANT = ONLY NODES)
         feature_df = pd.DataFrame(columns=['Ident', self.feature, 'Longitude', 'Latitude', 'Name', 'Miasto'])
 
@@ -361,9 +399,10 @@ class MapFeatures:
                                 else:
                                     name = 'NaN'
                                 koords += [(elem['lon'], elem['lat']) for elem in member['geometry']]
-                                arr_base = np.concatenate(
-                                    (arr_base, [[feature['id'], CHOSEN, MultiPolygon([Polygon(koords)]), name, self.miasto]]),
-                                    axis=0)
+                                if Polygon(koords).is_valid:
+                                    arr_base = np.concatenate(
+                                        (arr_base, [[feature['id'], CHOSEN, MultiPolygon([Polygon(koords)]), name, self.miasto]]),
+                                        axis=0)
 
         arr_final = np.array(['Ident', 'Leisure', 'Geometry', 'Name', 'Miasto'])
         for n, identyfikator in enumerate(arr_base):

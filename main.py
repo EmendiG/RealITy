@@ -3,7 +3,7 @@ import slownik
 import PostgreSQLModifier
 import OpenStreetMapOverpass
 
-miasta = [ 'warszawa', 'krakow', 'lodz', 'wroclaw', 'poznan', 'gdansk', 'szczecin', 'bydgoszcz', 'lublin','bialystok'] #
+miasta = ['warszawa', 'krakow', 'lodz',  'wroclaw', 'poznan', 'gdansk', 'szczecin', 'bydgoszcz', 'lublin','bialystok'] #
 
 miastaDict = {'warszawa': 'Warszawa', 'krakow': 'Kraków', 'lodz': 'Łódź', 'wroclaw': 'Wrocław', 'poznan': 'Poznań',
               'gdansk': 'Gdańsk', 'szczecin': 'Szczecin', 'bydgoszcz': 'Bydgoszcz', 'lublin': 'Lublin',
@@ -99,7 +99,10 @@ def get_data(miasto, serwis):
 
 #print(OpenStreetMapOverpass.MapFeatures('warszawa', 'Leisure', 'Rel').osmApi_getFeature_parseToDataFrame_rels())
 
-PostgreSQLModifier.osmApi_DataFrame_ToSQL('warszawa', 'Leisure', 'Rel')
+for miasto in miasta:
+    PostgreSQLModifier.osmApi_DataFrame_ToSQL(miasto, 'Leisure', 'Rel')
+
+#PostgreSQLModifier.osmApi_DataFrame_ToSQL('lodz', 'Leisure', 'Rel')
 
 # TODO: Znaleźć najblizsze amenities dla kazdego z rekordu (wystepowanie, nie cecha??) => Wykonac nowy db (relacyjny)
 # TODO: Znaleźc sąsiadow lokalizacyjnych (inne nieuchomosci, po co?? <- trzeba sprawdzic czy trzeba)
