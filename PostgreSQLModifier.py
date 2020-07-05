@@ -12,6 +12,7 @@ import geopandas_postgis
 
 db_dane = {'name': 'RealITy', 'password': 'Reality1!', 'hostname': '127.0.0.1', 'db_name': 'realestate_zero'}
 
+
 class Strona:
     def __init__(self, serwis):
         self.serwis = serwis
@@ -60,12 +61,14 @@ def PostgreSQL_connectSQLalchemy():
     db_connection = create_engine(db_connection_str)
     return db_connection.connect()
 
+
 def PostgreSQL_connectPsycopg2():
     con = psycopg2.connect(user=db_dane['name'], password=db_dane['password'], host=db_dane['hostname'],
                            database=db_dane['db_name'])
     return con
 
-def oferty_Merger(bd_base:str, bd_comp:str, db_nowa:str):
+
+def oferty_Merger(bd_base: str, bd_comp: str, db_nowa: str):
     '''
        CHECK 2 DBs (bd_base + bd_comp) IF RECORDS DON'T OVERLAP THEN MERGE THEM INTO (db_nowa)
        IF (db_nowa) EXISTS THEN merging result of DBs (bd_base + bd_comp) IS APPENDED TO (db_nowa)
@@ -80,8 +83,10 @@ def oferty_Merger(bd_base:str, bd_comp:str, db_nowa:str):
         arr_comp = np.empty((0, 5), float)
         arr_base = np.empty((0, 5), float)
         if miasto:
-            df_base = pd.read_sql_query("""SELECT * FROM oferty_{} WHERE "Miasto"='{}'""".format(bd_base, miasto), con=conn)
-            df_comp = pd.read_sql_query("""SELECT * FROM oferty_{} WHERE "Miasto"='{}'""".format(bd_comp, miasto), con=conn)
+            df_base = pd.read_sql_query("""SELECT * FROM oferty_{} WHERE "Miasto"='{}'""".format(bd_base, miasto),
+                                        con=conn)
+            df_comp = pd.read_sql_query("""SELECT * FROM oferty_{} WHERE "Miasto"='{}'""".format(bd_comp, miasto),
+                                        con=conn)
 
             for index, row in df_comp.iterrows():
                 if int(index) % 1000 == 0:
@@ -110,7 +115,8 @@ def oferty_Merger(bd_base:str, bd_comp:str, db_nowa:str):
 
             dobre = [row[0] for row in arr_comp if row[0] not in wyniki]
             print(f'Wprowadzam dane do db {db_nowa} = {len(dobre)} nowych rekordow')
-            df_comp = pd.read_sql("""SELECT * FROM oferty_{} WHERE "Miasto"='{}'""".format(bd_comp, miasto), con=conn).iloc[dobre]
+            df_comp = \
+            pd.read_sql("""SELECT * FROM oferty_{} WHERE "Miasto"='{}'""".format(bd_comp, miasto), con=conn).iloc[dobre]
             df_base = pd.read_sql("""SELECT * FROM oferty_{}""".format(bd_base), con=conn)
             df_comp_len = df_comp.shape[0]
 
@@ -149,22 +155,29 @@ def oferty_Merger(bd_base:str, bd_comp:str, db_nowa:str):
     print(end - start)
 
 
-def osmApi_DataFrame_ToSQL(miasto:str, feature:str, type:str, autoselection:bool=True):
+def osmApi_DataFrame_ToSQL(miasto: str, feature: str, type: str, autoselection: bool = True, onepoint: bool = False):
     """
     Send DataFrame to PostgreSQL server
 
     :param miasto: str
     :param feature: str
             Mandatory str:
-                - Amenity
-                - Tourism
-                - Leisure
+                - Amenity           (N)
+                - Tourism           (N)
+                - Leisure           (N, W, R, W-onepoint)
+                - Shop              (W)
+                - Public_transport  (W-onepoint)
     :param type: str
             Mandatory str:
-                - Node
-                - Way
-                - Rel
-                - NodeOfWay
+                - Node          (N)
+                - Way           (W)
+                - Rel           (R)
+    :param autoselection: bool
+            True    -   get features that are prepared
+            False   -   get features that you wish
+    :param onepoint: bool
+            True    -   (works only with ways) get only one point of all ways (lon, lat)
+            False   -   get all points of ways (geom: Polygon)
 
     :return: -> send DataFrame to SQL server
     """
@@ -172,33 +185,39 @@ def osmApi_DataFrame_ToSQL(miasto:str, feature:str, type:str, autoselection:bool
     print(miasto)
     conn = PostgreSQL_connectSQLalchemy()
 
+    if feature == 'Amenities' and type == 'Node' and onepoint == False:
+        feature_df = OpenStreetMapOverpass.MapFeatures(miasto, feature, type, autoselection
+                                                       ).osmApi_getAmenities_parseToDataFrame_nodes()
+    elif feature == 'Tourism' and type == 'Node' and onepoint == False:
+        feature_df = OpenStreetMapOverpass.MapFeatures(miasto, feature, type, autoselection
+                                                       ).osmApi_getFeature_parseToDataFrame_nodes()
+    elif feature == 'Leisure' and type == 'Node' and onepoint == False:
+        feature_df = OpenStreetMapOverpass.MapFeatures(miasto, feature, type, autoselection
+                                                       ).osmApi_getFeature_parseToDataFrame_nodes()
+    elif feature == 'Leisure' and type == 'Way' and onepoint == True:
+        feature_df = OpenStreetMapOverpass.MapFeatures(miasto, feature, type, autoselection
+                                                       ).osmApi_getFeature_parseToDataFrame_nodeOfway()
+    elif feature == 'Leisure' and type == 'Rel' and onepoint == False:
+        feature_df = OpenStreetMapOverpass.MapFeatures(miasto, feature, type, autoselection
+                                                       ).osmApi_getFeature_parseToDataFrame_rels()
+    elif feature == 'Leisure' and type == 'Way' and onepoint == False:
+        feature_df = OpenStreetMapOverpass.MapFeatures(miasto, feature, type, autoselection
+                                                       ).osmApi_getFeature_parseToDataFrame_ways()
+    elif feature == 'Shop' and type == 'Way' and onepoint == True:
+        feature_df = OpenStreetMapOverpass.MapFeatures(miasto, feature, type, autoselection
+                                                       ).osmApi_getFeature_parseToDataFrame_nodeOfway()
+    elif feature == 'Public_transport' and type == 'Node' and onepoint == False:
+        feature_df = OpenStreetMapOverpass.MapFeatures(miasto, feature, type, autoselection
+                                                       ).osmApi_getFeature_parseToDataFrame_nodes()
 
-    if feature == 'Amenities' and type == 'Node':
-        feature_df = OpenStreetMapOverpass.MapFeatures(miasto, feature, type, autoselection).osmApi_getAmenities_parseToDataFrame_nodes()
-    elif feature == 'Tourism' and type == 'Node':
-        feature_df = OpenStreetMapOverpass.MapFeatures(miasto, feature, type, autoselection).osmApi_getFeature_parseToDataFrame_nodes()
-    elif feature == 'Leisure' and type == 'Node':
-        feature_df = OpenStreetMapOverpass.MapFeatures(miasto, feature, type, autoselection).osmApi_getFeature_parseToDataFrame_nodes()
-    elif feature == 'Leisure' and type == 'NodeOfWay':
-        feature_df = OpenStreetMapOverpass.MapFeatures(miasto, feature, type, autoselection).osmApi_getFeature_parseToDataFrame_nodeOfway()
-    elif feature == 'Leisure' and type == 'Rel':
-        feature_df = OpenStreetMapOverpass.MapFeatures(miasto, feature, type, autoselection).osmApi_getFeature_parseToDataFrame_rels()
-    elif feature == 'Leisure' and type =='Way':
-        feature_df = OpenStreetMapOverpass.MapFeatures(miasto, feature, type, autoselection).osmApi_getFeature_parseToDataFrame_ways()
-
-    if 'Geometry' in feature_df:                        # isinstance doesn't work cuz gdf==df
-        feature_df.set_index('Ident', inplace=True)     # Delete this funky 'index' column
+    if 'Geometry' in feature_df:  # isinstance doesn't work cuz gdf==df
+        feature_df.set_index('Ident', inplace=True)  # Delete this funky 'index' column
         feature_df.postgis.to_postgis(table_name=f'{feature}_{type}', con=conn, if_exists='append', geometry='Geometry')
     else:
-        feature_df.set_index('Ident', inplace=True)     # Delete this funky 'index' column
+        feature_df.set_index('Ident', inplace=True)  # Delete this funky 'index' column
         feature_df.to_sql(f'{feature}_{type}', con=conn, if_exists='append')
 
-
-    # TODO: Wyjebać te if pify
-
-
-
-
+    # TODO: Wyjebać te if pify (wszystko kurwa na zszywkach sie trzyma - REFACTOR CODE !!)
 
 
 def osmApi_DataFrame_FromSQL(feature, type):

@@ -263,6 +263,13 @@ class MapFeatures:
                 feature__CHOSEN = ['attraction', 'hotel', 'viewpoint', 'museum', 'artwork']
             elif self.feature == 'Leisure':
                 feature__CHOSEN = ['playground', 'sports_centre', 'fitness_centre']
+            elif self.feature == 'Shop':
+                feature__CHOSEN = ['alcohol', 'bakery', 'beverages', 'butcher', 'coffee', 'confectionery', 'convenience',
+                                  'deli', 'greengrocer', 'ice_cream', 'pastry', 'seafood', 'department_store', 'kiosk',
+                                  'supermarket', 'beauty', 'hairdresser', 'florist', 'art', 'chemist', 'jewelry', 'wine']
+            elif self.feature == 'Public_transport':
+                feature__CHOSEN = ['stop_position']
+                transport_CHOSEN = ['bus', 'train', 'subway', 'tram']
         else:
             print(self.osmApi_getFeature_showFeatures())
             feature__INPUT = input('Enter a list of features separated by space = ')
@@ -284,6 +291,10 @@ class MapFeatures:
                     name = featur['tags']['name:en']
                 else:
                     name = 'NaN'
+                if self.feature == 'Public_transport':
+                    for featureKey, featurValue in featur['tags'].items():
+                        if 'yes' == featurValue and featureKey in transport_CHOSEN:
+                            featur['tags'][f'{self.featureLower}'] = featureKey
                 feature_df_IDENTS.append(featur['id'])
                 feature_df = feature_df.append(
                     {'Ident': featur['id'],
@@ -301,9 +312,7 @@ class MapFeatures:
                                       geometry='Geometry')
 
         if self.autoselection == True:
-            if self.feature == 'Tourism':
-                feature__CHOSEN = []
-            elif self.feature == 'Leisure':
+            if self.feature == 'Leisure':
                 feature__CHOSEN = ['park']
         else:
             print(self.osmApi_getFeature_showFeatures())
@@ -329,7 +338,7 @@ class MapFeatures:
                     name = 'NaN'
                 feature_df = feature_df.append(
                                 {'Ident': featur['id'],
-                                 'Leisure': featur['tags'][f'{self.featureLower}'],
+                                 f'{self.feature}': featur['tags'][f'{self.featureLower}'],
                                  'Geometry': Polygon(coords),
                                  'Name': name,
                                  'Miasto': self.miasto}, ignore_index=True)
@@ -342,6 +351,8 @@ class MapFeatures:
         if self.autoselection == True:
             if self.feature == 'Leisure':
                 feature__CHOSEN = ['playground']
+            elif self.feature == 'Shop':
+                feature__CHOSEN = ['mall', 'supermarket', 'convenience', 'florist', 'kiosk', 'greengrocer']
         else:
             print(self.osmApi_getFeature_showFeatures())
             feature__INPUT = input('Enter a list of features separated by space = ')
@@ -355,22 +366,21 @@ class MapFeatures:
             if n % 100 == 0:
                 print("%.0f" % round(n / feature_NUMBER * 100, 0), '%')
             # noinspection PyUnboundLocalVariable
-            for CHOSEN in feature__CHOSEN:
-                if featur['tags'][f'{self.featureLower}'] == CHOSEN and featur['id'] not in feature_df_IDENTS:
-                    if 'name' in featur['tags']:
-                        name = featur['tags']['name']
-                    elif 'name:en' in featur['tags'] and 'name' not in featur['tags']:
-                        name = featur['tags']['name:en']
-                    else:
-                        name = 'NaN'
-                    feature_df_IDENTS.append(featur['id'])
-                    feature_df = feature_df.append(
-                        {'Ident': featur['id'],
-                         f'{self.feature}': CHOSEN,
-                         'Latitude': round(featur['geometry'][0]['lat'], 5),
-                         'Longitude': round(featur['geometry'][0]['lon'], 5),
-                         'Name': name,
-                         'Miasto': self.miasto}, ignore_index=True)  # first lat/lon value is enough, those are small objects
+            if featur['tags'][f'{self.featureLower}'] in feature__CHOSEN and featur['id'] not in feature_df_IDENTS:
+                if 'name' in featur['tags']:
+                    name = featur['tags']['name']
+                elif 'name:en' in featur['tags'] and 'name' not in featur['tags']:
+                    name = featur['tags']['name:en']
+                else:
+                    name = 'NaN'
+                feature_df_IDENTS.append(featur['id'])
+                feature_df = feature_df.append(
+                    {'Ident': featur['id'],
+                     f'{self.feature}': featur['tags'][f'{self.featureLower}'],
+                     'Latitude': round(featur['geometry'][0]['lat'], 5),
+                     'Longitude': round(featur['geometry'][0]['lon'], 5),
+                     'Name': name,
+                     'Miasto': self.miasto}, ignore_index=True)  # first lat/lon value is enough, those are small objects
         return feature_df
 
     def osmApi_getFeature_parseToDataFrame_rels(self):
@@ -378,6 +388,7 @@ class MapFeatures:
         if self.autoselection == True:
             if self.feature == 'Leisure':
                 feature__CHOSEN = ['park', 'nature_reserve']
+
         else:
             print(self.osmApi_getFeature_showFeatures())
             feature__INPUT = input('Enter a list of features separated by space = ')
@@ -387,22 +398,21 @@ class MapFeatures:
 
         arr_base = np.empty((0, 5), float)
         for feature in self.getFeature['elements']:
-            for CHOSEN in feature__CHOSEN:
-                if feature['tags']['leisure'] == CHOSEN and feature['id'] not in feature_df_IDENTS:
-                    for member in feature['members']:
-                        koords = []
-                        if member['role'] == 'outer' and feature['tags'][
-                            'type'] == 'multipolygon' and 'geometry' in member:
-                            if len(member['geometry']) > 3:
-                                if 'name' in feature['tags']:
-                                    name = feature['tags']['name']
-                                else:
-                                    name = 'NaN'
-                                koords += [(elem['lon'], elem['lat']) for elem in member['geometry']]
-                                if Polygon(koords).is_valid:
-                                    arr_base = np.concatenate(
-                                        (arr_base, [[feature['id'], CHOSEN, MultiPolygon([Polygon(koords)]), name, self.miasto]]),
-                                        axis=0)
+            if feature['tags']['leisure'] in feature__CHOSEN and feature['id'] not in feature_df_IDENTS:
+                for member in feature['members']:
+                    koords = []
+                    if member['role'] == 'outer' and feature['tags'][
+                        'type'] == 'multipolygon' and 'geometry' in member:
+                        if len(member['geometry']) > 3:
+                            if 'name' in feature['tags']:
+                                name = feature['tags']['name']
+                            else:
+                                name = 'NaN'
+                            koords += [(elem['lon'], elem['lat']) for elem in member['geometry']]
+                            if Polygon(koords).is_valid:
+                                arr_base = np.concatenate(
+                                    (arr_base, [[feature['id'], feature['tags']['leisure'] , MultiPolygon([Polygon(koords)]), name, self.miasto]]),
+                                    axis=0)
 
         arr_final = np.array(['Ident', 'Leisure', 'Geometry', 'Name', 'Miasto'])
         for n, identyfikator in enumerate(arr_base):
@@ -416,6 +426,9 @@ class MapFeatures:
         feature_df = pd.DataFrame(data=arr_final[1:, 0:],  columns=arr_final[0,0:])
         return gpd.GeoDataFrame(feature_df, crs="EPSG:4326", geometry='Geometry')
 
+# TODO: Shop // node, way
+# node = ['alcohol', 'bakery', 'beverages', 'butcher', 'coffee', 'confectionery', 'convenience', 'deli',
+# 'greengrocer', 'ice_cream', 'pastry', 'seafood', 'department_store', 'kiosk', 'supermarket',
+# 'beauty', 'hairdresser', 'florist', 'art', 'chemist', 'jewelry', 'wine']
 
-
-# TODO: Ogarnac koordynaty amenities z Openmaps i Geoportal
+# way = ['mall', 'supermarket', 'convenience', 'florist', 'kiosk', 'greengrocer'] - chyba tylko 1 node (central)
