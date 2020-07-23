@@ -155,7 +155,7 @@ def oferty_Merger(bd_base: str, bd_comp: str, db_nowa: str):
     print(end - start)
 
 
-def osmApi_DataFrame_ToSQL(miasto: str, feature: str, type: str, autoselection: bool = True, onepoint: bool = False):
+def osmApi_DataFrame_ToSQL(miasto: str, feature: str, type: str, autoselection: bool = True):
     """
     Send DataFrame to PostgreSQL server
 
@@ -164,18 +164,19 @@ def osmApi_DataFrame_ToSQL(miasto: str, feature: str, type: str, autoselection: 
             Mandatory str:
                 - Amenity           (N)
                 - Tourism           (N)
-                - Leisure           (N, W, R, W-onepoint)
-                - Shop              (W)
-                - Public_transport  (W-onepoint)
+                - Leisure           (N, W, R, NoW)
+                - Shop              (N, NoW)
+                - Public_transport  (N)
     :param type: str
             Mandatory str:
                 - Node          (N)
                 - Way           (W)
                 - Rel           (R)
+                - NodeOfWay     (NoW)
     :param autoselection: bool
             True    -   get features that are prepared
             False   -   get features that you wish
-    :param onepoint: bool
+    :param onepoint: bool , onepoint: bool = False
             True    -   (works only with ways) get only one point of all ways (lon, lat)
             False   -   get all points of ways (geom: Polygon)
 
@@ -185,28 +186,31 @@ def osmApi_DataFrame_ToSQL(miasto: str, feature: str, type: str, autoselection: 
     print(miasto)
     conn = PostgreSQL_connectSQLalchemy()
 
-    if feature == 'Amenities' and type == 'Node' and onepoint == False:
+    if feature == 'Amenity' and type == 'Node':
         feature_df = OpenStreetMapOverpass.MapFeatures(miasto, feature, type, autoselection
                                                        ).osmApi_getAmenities_parseToDataFrame_nodes()
-    elif feature == 'Tourism' and type == 'Node' and onepoint == False:
+    elif feature == 'Tourism' and type == 'Node':
         feature_df = OpenStreetMapOverpass.MapFeatures(miasto, feature, type, autoselection
                                                        ).osmApi_getFeature_parseToDataFrame_nodes()
-    elif feature == 'Leisure' and type == 'Node' and onepoint == False:
+    elif feature == 'Leisure' and type == 'Node':
         feature_df = OpenStreetMapOverpass.MapFeatures(miasto, feature, type, autoselection
                                                        ).osmApi_getFeature_parseToDataFrame_nodes()
-    elif feature == 'Leisure' and type == 'Way' and onepoint == True:
+    elif feature == 'Leisure' and type == 'NodeOfWay':
         feature_df = OpenStreetMapOverpass.MapFeatures(miasto, feature, type, autoselection
                                                        ).osmApi_getFeature_parseToDataFrame_nodeOfway()
-    elif feature == 'Leisure' and type == 'Rel' and onepoint == False:
+    elif feature == 'Leisure' and type == 'Rel':
         feature_df = OpenStreetMapOverpass.MapFeatures(miasto, feature, type, autoselection
                                                        ).osmApi_getFeature_parseToDataFrame_rels()
-    elif feature == 'Leisure' and type == 'Way' and onepoint == False:
+    elif feature == 'Leisure' and type == 'Way':
         feature_df = OpenStreetMapOverpass.MapFeatures(miasto, feature, type, autoselection
                                                        ).osmApi_getFeature_parseToDataFrame_ways()
-    elif feature == 'Shop' and type == 'Way' and onepoint == True:
+    elif feature == 'Shop' and type == 'Node':
+        feature_df = OpenStreetMapOverpass.MapFeatures(miasto, feature, type, autoselection
+                                                       ).osmApi_getFeature_parseToDataFrame_nodes()
+    elif feature == 'Shop' and type == 'NodeOfWay':
         feature_df = OpenStreetMapOverpass.MapFeatures(miasto, feature, type, autoselection
                                                        ).osmApi_getFeature_parseToDataFrame_nodeOfway()
-    elif feature == 'Public_transport' and type == 'Node' and onepoint == False:
+    elif feature == 'Public_transport' and type == 'Node':
         feature_df = OpenStreetMapOverpass.MapFeatures(miasto, feature, type, autoselection
                                                        ).osmApi_getFeature_parseToDataFrame_nodes()
 
@@ -227,10 +231,10 @@ def osmApi_DataFrame_FromSQL(feature, type):
     cursor.execute("""select "relname" from "pg_class" where relkind='r' and "relname" !~ '^(pg_|sql_)';""")
     tables = cursor.fetchall()
     tabela = [tab[0] for tab in tables]
-    if f'{feature}' in tabela:
-        df_base = pd.read_sql(f"""SELECT "Ident" FROM "{feature}_{type}" """, con=conn)
-        return df_base['Ident'].values.tolist()
+    if f'{feature}_{type}' in tabela:
+        df_base = pd.read_sql(f"""SELECT "Ident" FROM "{feature}_{type}" """, con=conn)['Ident'].values.tolist()
     else:
-        return []
+        df_base = []
+    return df_base
 
-# TODO: Dodac funkcje zwracajaca liste 'ident' w roznych tabelach z postgresa i przezucic to do osmOverpassApi
+

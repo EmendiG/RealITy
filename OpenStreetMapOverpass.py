@@ -153,16 +153,20 @@ class MapFeatures:
         self.autoselection = autoselection
 
     def osmApi_getFeature(self):
+        if self.type == 'NodeOfWay':
+            typename = 'way'
+        else:
+            typename = self.typeLower
         try:
             api = overpass.API(timeout=60)
             QUERY = f"""area[name="{self.miastoDict}"][type="boundary"]->.city; 
-            {self.typeLower}(area.city)["{self.featureLower}"];
+            {typename}(area.city)["{self.featureLower}"];
             out geom;"""
             return api.get(QUERY, responseformat='json')
         except overpass.errors.MultipleRequestsError:
             api = overpass.API(timeout=60, url='//overpass.openstreetmap.fr/api/')
             QUERY = f"""area[name="{self.miastoDict}"][type="boundary"]->.city; 
-                        {self.typeLower}(area.city)["{self.featureLower}"];
+                        {typename}(area.city)["{self.featureLower}"];
                         out geom;"""
             return api.get(QUERY, responseformat='json')
 
@@ -328,7 +332,7 @@ class MapFeatures:
                 print("%.0f" % round(n / feature_NUMBER * 100, 0), '%')
             # noinspection PyUnboundLocalVariable
             coords = []
-            if featur['tags'][f'{self.featureLower}'] in feature__CHOSEN and 'geometry' in featur:
+            if featur['tags'][f'{self.featureLower}'] in feature__CHOSEN and 'geometry' in featur and featur['id'] not in feature_df_IDENTS:
                 coords += [(elem['lon'], elem['lat']) for elem in featur['geometry']]
                 if 'name' in featur['tags']:
                     name = featur['tags']['name']
@@ -388,16 +392,17 @@ class MapFeatures:
         if self.autoselection == True:
             if self.feature == 'Leisure':
                 feature__CHOSEN = ['park', 'nature_reserve']
-
         else:
             print(self.osmApi_getFeature_showFeatures())
             feature__INPUT = input('Enter a list of features separated by space = ')
             feature__CHOSEN = feature__INPUT.split()
-        #feature_df_IDENTS = PostgreSQLModifier.osmApi_DataFrame_FromSQL(self.feature, self.type)
-        feature_df_IDENTS = []
+        feature_df_IDENTS = PostgreSQLModifier.osmApi_DataFrame_FromSQL(self.feature, self.type)
+        feature_NUMBER = len(self.getFeature['elements'])
 
         arr_base = np.empty((0, 5), float)
-        for feature in self.getFeature['elements']:
+        for n, feature in enumerate(self.getFeature['elements']):
+            if n % 100 == 0:
+                print("%.0f" % round(n / feature_NUMBER * 100, 0), '%')
             if feature['tags']['leisure'] in feature__CHOSEN and feature['id'] not in feature_df_IDENTS:
                 for member in feature['members']:
                     koords = []
@@ -426,9 +431,3 @@ class MapFeatures:
         feature_df = pd.DataFrame(data=arr_final[1:, 0:],  columns=arr_final[0,0:])
         return gpd.GeoDataFrame(feature_df, crs="EPSG:4326", geometry='Geometry')
 
-# TODO: Shop // node, way
-# node = ['alcohol', 'bakery', 'beverages', 'butcher', 'coffee', 'confectionery', 'convenience', 'deli',
-# 'greengrocer', 'ice_cream', 'pastry', 'seafood', 'department_store', 'kiosk', 'supermarket',
-# 'beauty', 'hairdresser', 'florist', 'art', 'chemist', 'jewelry', 'wine']
-
-# way = ['mall', 'supermarket', 'convenience', 'florist', 'kiosk', 'greengrocer'] - chyba tylko 1 node (central)
