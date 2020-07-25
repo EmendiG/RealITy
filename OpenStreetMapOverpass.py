@@ -6,11 +6,12 @@ import pandas as pd
 import os
 import PostgreSQLModifier
 from shapely.geometry import Polygon, MultiPolygon
+import datetime
 
 miastaDict = {'warszawa': 'Warszawa', 'krakow': 'Kraków', 'lodz': 'Łódź', 'wroclaw': 'Wrocław', 'poznan': 'Poznań',
               'gdansk': 'Gdańsk', 'szczecin': 'Szczecin', 'bydgoszcz': 'Bydgoszcz', 'lublin': 'Lublin',
               'bialystok': 'Białystok'}
-
+now = datetime.datetime.now()
 
 class District:
     def __init__(self, miasto):
@@ -182,7 +183,7 @@ class MapFeatures:
 
     def osmApi_getAmenities_parseToDataFrame_nodes(self):
 
-        amenities_df = pd.DataFrame(columns=['Ident', 'Amenity', 'Longitude', 'Latitude', 'Name', 'Miasto'])
+        amenities_df = pd.DataFrame(columns=['Ident', 'Amenity', 'Longitude', 'Latitude', 'Name', 'Miasto', 'ExtractionTime'])
         if self.autoselection == True:
             if self.feature == 'Amenity':
                 amenities_CHOSEN = ['bar', 'pub', 'restaurant', 'fast_food', 'cafe', 'nightclub', 'pharmacy',
@@ -213,12 +214,14 @@ class MapFeatures:
                         name = 'NaN'
                     amenities_df_IDENTS.append(amenity['id'])
                     amenities_df = amenities_df.append(
-                        {'Ident': amenity['id'],
-                         'Amenity': CHOSEN,
-                         'Latitude': round(amenity['lat'], 5),
-                         'Longitude': round(amenity['lon'], 5),
-                         'Name': name,
-                         'Miasto': self.miasto}, ignore_index=True)
+                                    {'Ident': amenity['id'],
+                                     'Amenity': CHOSEN,
+                                     'Latitude': round(amenity['lat'], 5),
+                                     'Longitude': round(amenity['lon'], 5),
+                                     'Name': name,
+                                     'Miasto': self.miasto,
+                                     'ExtractionTime': f"{now.year}.{now.month}"},
+                                    ignore_index=True)
 
             if amenity['tags']['amenity'] == amenities_CHOSEN_exception[0] and amenity['id'] not in amenities_df_IDENTS:
                 if 'vending' in amenity['tags']:
@@ -232,13 +235,14 @@ class MapFeatures:
                                 name = 'NaN'
                         amenities_df_IDENTS.append(amenity['id'])
                         amenities_df = amenities_df.append(
-                            {'Ident': amenity['id'],
-                             'Amenity': amenities_CHOSEN_exception[0],
-                             'Latitude': round(amenity['lat'], 5),
-                             'Longitude': round(amenity['lon'], 5),
-                             'Name': name,
-                             'Miasto': self.miasto},
-                            ignore_index=True)
+                                        {'Ident': amenity['id'],
+                                         'Amenity': amenities_CHOSEN_exception[0],
+                                         'Latitude': round(amenity['lat'], 5),
+                                         'Longitude': round(amenity['lon'], 5),
+                                         'Name': name,
+                                         'Miasto': self.miasto,
+                                         'ExtractionTime': f"{now.year}.{now.month}"},
+                                        ignore_index=True)
             elif amenity['tags']['amenity'] == amenities_CHOSEN_exception[1] and amenity[
                 'id'] not in amenities_df_IDENTS:
                 try:
@@ -250,17 +254,19 @@ class MapFeatures:
                         name = 'NaN'
                 amenities_df_IDENTS.append(amenity['id'])
                 amenities_df = amenities_df.append(
-                    {'Ident': amenity['id'],
-                     'Amenity': amenities_CHOSEN_exception[1],
-                     'Latitude': round(amenity['lat'], 5),
-                     'Longitude': round(amenity['lon'], 5),
-                     'Name': name,
-                     'Miasto': self.miasto}, ignore_index=True)
+                                {'Ident': amenity['id'],
+                                 'Amenity': amenities_CHOSEN_exception[1],
+                                 'Latitude': round(amenity['lat'], 5),
+                                 'Longitude': round(amenity['lon'], 5),
+                                 'Name': name,
+                                 'Miasto': self.miasto,
+                                 'ExtractionTime': f"{now.year}.{now.month}"},
+                                ignore_index=True)
         return amenities_df
 
     def osmApi_getFeature_parseToDataFrame_nodes(self):
         # Function dedicated to features other than Amenities such as Tourism or Leisure (IMPORTANT = ONLY NODES)
-        feature_df = pd.DataFrame(columns=['Ident', self.feature, 'Longitude', 'Latitude', 'Name', 'Miasto'])
+        feature_df = pd.DataFrame(columns=['Ident', self.feature, 'Longitude', 'Latitude', 'Name', 'Miasto', 'ExtractionTime'])
 
         if self.autoselection == True:
             if self.feature == 'Tourism':
@@ -301,21 +307,23 @@ class MapFeatures:
                             featur['tags'][f'{self.featureLower}'] = featureKey
                 feature_df_IDENTS.append(featur['id'])
                 feature_df = feature_df.append(
-                    {'Ident': featur['id'],
-                     f'{self.feature}': featur['tags'][f'{self.featureLower}'],
-                     'Latitude': round(featur['lat'], 5),
-                     'Longitude': round(featur['lon'], 5),
-                     'Name': name,
-                     'Miasto': self.miasto}, ignore_index=True)
+                                {'Ident': featur['id'],
+                                 f'{self.feature}': featur['tags'][f'{self.featureLower}'],
+                                 'Latitude': round(featur['lat'], 5),
+                                 'Longitude': round(featur['lon'], 5),
+                                 'Name': name,
+                                 'Miasto': self.miasto,
+                                 'ExtractionTime': f"{now.year}.{now.month}"},
+                                ignore_index=True)
         return feature_df
 
     def osmApi_getFeature_parseToDataFrame_ways(self):
         # Function dedicated to features such as Leisure (ONLY WAYS)
-        feature_df = gpd.GeoDataFrame(columns=['Ident', self.feature, 'Geometry', 'Name', 'Miasto'],
+        feature_df = gpd.GeoDataFrame(columns=['Ident', self.feature, 'Geometry', 'Name', 'Miasto', 'ExtractionTime'],
                                       crs="EPSG:4326",
                                       geometry='Geometry')
 
-        if self.autoselection == True:
+        if self.autoselection is True:
             if self.feature == 'Leisure':
                 feature__CHOSEN = ['park']
         else:
@@ -345,12 +353,14 @@ class MapFeatures:
                                  f'{self.feature}': featur['tags'][f'{self.featureLower}'],
                                  'Geometry': Polygon(coords),
                                  'Name': name,
-                                 'Miasto': self.miasto}, ignore_index=True)
+                                 'Miasto': self.miasto,
+                                 'ExtractionTime': f"{now.year}.{now.month}"},
+                                ignore_index=True)
         return feature_df
 
     def osmApi_getFeature_parseToDataFrame_nodeOfway(self):
         # Function dedicated to features other than Amenities such as Tourism or Leisure (IMPORTANT = ONLY NODES)
-        feature_df = pd.DataFrame(columns=['Ident', self.feature, 'Longitude', 'Latitude', 'Name', 'Miasto'])
+        feature_df = pd.DataFrame(columns=['Ident', self.feature, 'Longitude', 'Latitude', 'Name', 'Miasto', 'ExtractionTime'])
 
         if self.autoselection == True:
             if self.feature == 'Leisure':
@@ -379,12 +389,14 @@ class MapFeatures:
                     name = 'NaN'
                 feature_df_IDENTS.append(featur['id'])
                 feature_df = feature_df.append(
-                    {'Ident': featur['id'],
-                     f'{self.feature}': featur['tags'][f'{self.featureLower}'],
-                     'Latitude': round(featur['geometry'][0]['lat'], 5),
-                     'Longitude': round(featur['geometry'][0]['lon'], 5),
-                     'Name': name,
-                     'Miasto': self.miasto}, ignore_index=True)  # first lat/lon value is enough, those are small objects
+                                {'Ident': featur['id'],
+                                 f'{self.feature}': featur['tags'][f'{self.featureLower}'],
+                                 'Latitude': round(featur['geometry'][0]['lat'], 5),
+                                 'Longitude': round(featur['geometry'][0]['lon'], 5),
+                                 'Name': name,
+                                 'Miasto': self.miasto,
+                                 'ExtractionTime': f"{now.year}.{now.month}"},
+                                ignore_index=True)  # first lat/lon value is enough, those are small objects
         return feature_df
 
     def osmApi_getFeature_parseToDataFrame_rels(self):
@@ -419,7 +431,7 @@ class MapFeatures:
                                     (arr_base, [[feature['id'], feature['tags']['leisure'] , MultiPolygon([Polygon(koords)]), name, self.miasto]]),
                                     axis=0)
 
-        arr_final = np.array(['Ident', 'Leisure', 'Geometry', 'Name', 'Miasto'])
+        arr_final = np.array(['Ident', 'Leisure', 'Geometry', 'Name', 'Miasto', 'ExtractionTime'])
         for n, identyfikator in enumerate(arr_base):
             if n < len(arr_base) - 1:
                 if arr_base[n][0] == arr_base[n + 1][0]:

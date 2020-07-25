@@ -5,6 +5,7 @@
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/OpenStreetMapOverpass.py" beforeDir="false" afterPath="$PROJECT_DIR$/OpenStreetMapOverpass.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/PostgreSQLModifier.py" beforeDir="false" afterPath="$PROJECT_DIR$/PostgreSQLModifier.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/gratkapy.py" beforeDir="false" afterPath="$PROJECT_DIR$/gratkapy.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -32,8 +33,8 @@
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="PropertiesComponent">
     <property name="TODO_SCOPE" value="All Places" />
-    <property name="last_opened_file_path" value="D:/Git/bin/git.exe" />
-    <property name="settings.editor.selected.configurable" value="reference.settingsdialog.IDE.editor.colors" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/tests.py" />
+    <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
   </component>
   <component name="RunDashboard">
     <option name="ruleStates">
@@ -47,7 +48,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Python.main">
+  <component name="RunManager" selected="Python.tests">
     <configuration name="main" type="PythonConfigurationType" factoryName="Python" nameIsGenerated="true">
       <module name="analityka" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -90,19 +91,19 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
-    <configuration name="slownik" type="PythonConfigurationType" factoryName="Python" nameIsGenerated="true">
+    <configuration name="tests" type="PythonConfigurationType" factoryName="Python" nameIsGenerated="true">
       <module name="analityka" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
       <envs>
         <env name="PYTHONUNBUFFERED" value="1" />
       </envs>
-      <option name="SDK_HOME" value="F:\OneDrive - Politechnika Warszawska\PyCharmProjects\analityka\venv\Scripts\python.exe" />
+      <option name="SDK_HOME" value="D:\Anaconda\python.exe" />
       <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
       <option name="IS_MODULE_SDK" value="false" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/slownik.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/tests.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -114,7 +115,7 @@
     <list>
       <item itemvalue="Python.otodompy" />
       <item itemvalue="Python.main" />
-      <item itemvalue="Python.slownik" />
+      <item itemvalue="Python.tests" />
     </list>
   </component>
   <component name="SvnConfiguration">
@@ -261,7 +262,14 @@
       <option name="project" value="LOCAL" />
       <updated>1593974503913</updated>
     </task>
-    <option name="localTasksCounter" value="20" />
+    <task id="LOCAL-00020" summary="RealITy 0.2020.02.07.1 (needs some functions merging and refactoring)">
+      <created>1595525250935</created>
+      <option name="number" value="00020" />
+      <option name="presentableId" value="LOCAL-00020" />
+      <option name="project" value="LOCAL" />
+      <updated>1595525250935</updated>
+    </task>
+    <option name="localTasksCounter" value="21" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">

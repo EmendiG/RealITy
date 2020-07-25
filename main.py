@@ -2,6 +2,7 @@ import csv
 import slownik
 import PostgreSQLModifier
 import OpenStreetMapOverpass
+import datetime
 
 miasta = ['warszawa', 'krakow', 'lodz',  'wroclaw', 'poznan', 'gdansk', 'szczecin', 'bydgoszcz', 'lublin','bialystok'] #
 
@@ -9,6 +10,7 @@ miastaDict = {'warszawa': 'Warszawa', 'krakow': 'Kraków', 'lodz': 'Łódź', 'w
               'gdansk': 'Gdańsk', 'szczecin': 'Szczecin', 'bydgoszcz': 'Bydgoszcz', 'lublin': 'Lublin',
               'bialystok': 'Białystok'}
 
+now = datetime.datetime.now()
 
 def get_data(miasto, serwis):
     urls_file = csv.reader(open("{0}/urls_{0}_{1}.csv".format(serwis, miasto), "r", encoding="utf-8"))
@@ -78,7 +80,8 @@ def get_data(miasto, serwis):
                                  Rynek=nowy_fields[17],
                                  Opis=str(data[18]),
                                  Link=url,
-                                 Miasto=miasto
+                                 Miasto=miasto,
+                                 ExtractionTime = f"{now.year}.{now.month}"
                                  )
             except Exception as e:
                 print(e)

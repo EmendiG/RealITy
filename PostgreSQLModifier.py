@@ -1,14 +1,11 @@
 import pandas as pd
-import geopandas as gpd
-
 import psycopg2
 from sqlalchemy import create_engine
 from sqlalchemy import Table, Column, Integer, Text, MetaData, Float
 import numpy as np
 import time
 import OpenStreetMapOverpass
-# from geoalchemy2 import Geometry, WKTElement
-import geopandas_postgis
+
 
 db_dane = {'name': 'RealITy', 'password': 'Reality1!', 'hostname': '127.0.0.1', 'db_name': 'realestate_zero'}
 
@@ -51,6 +48,7 @@ class Strona:
                       Column('Opis', Text),
                       Column('Link', Text),
                       Column('Miasto', Text),
+                      Column('ExtractionTime', Text),
                       )
         metadata.create_all(conn)
         return users
@@ -67,6 +65,12 @@ def PostgreSQL_connectPsycopg2():
                            database=db_dane['db_name'])
     return con
 
+
+def PosgreSQL_gettables():
+    cursor = PostgreSQL_connectPsycopg2().cursor()
+    cursor.execute("""select "relname" from "pg_class" where relkind='r' and "relname" !~ '^(pg_|sql_)';""")
+    tables = cursor.fetchall()
+    return [tab[0] for tab in tables]
 
 def oferty_Merger(bd_base: str, bd_comp: str, db_nowa: str):
     '''
@@ -120,10 +124,7 @@ def oferty_Merger(bd_base: str, bd_comp: str, db_nowa: str):
             df_base = pd.read_sql("""SELECT * FROM oferty_{}""".format(bd_base), con=conn)
             df_comp_len = df_comp.shape[0]
 
-            cursor = con.cursor()
-            cursor.execute("""select "relname" from "pg_class" where relkind='r' and "relname" !~ '^(pg_|sql_)';""")
-            tables = cursor.fetchall()
-            tabela = [tab[0] for tab in tables]
+            tabela = PosgreSQL_gettables()
             if f'oferty_{db_nowa}' not in tabela:
                 df_base = df_base.reset_index(drop=True)
                 Strona(db_nowa).sqldbMaker()
@@ -136,9 +137,8 @@ def oferty_Merger(bd_base: str, bd_comp: str, db_nowa: str):
             df_comp["index"] = range(df_base_max, df_base_max + df_comp_len)
             df_comp = df_comp.set_index("index")
 
-            cursor.execute("""select "relname" from "pg_class" where relkind='r' and "relname" !~ '^(pg_|sql_)';""")
-            tables = cursor.fetchall()
-            tabela = [tab[0] for tab in tables]
+
+            tabela = PosgreSQL_gettables()
             if f'oferty_{db_nowa}' not in tabela:
                 df_base = df_base.reset_index(drop=True)  # .drop('level_0', axis=1)
                 Strona(db_nowa).sqldbMaker()
@@ -146,6 +146,7 @@ def oferty_Merger(bd_base: str, bd_comp: str, db_nowa: str):
 
             df_comp.to_sql(f'oferty_{db_nowa}', con=conn, if_exists='append')
 
+            cursor = PostgreSQL_connectPsycopg2().cursor()
             cursor.execute(f"""Select * FROM "oferty_{db_nowa}" LIMIT 0""")
             colnames = [desc[0] for desc in cursor.description]
             if 'level_0' in colnames:
@@ -226,11 +227,7 @@ def osmApi_DataFrame_ToSQL(miasto: str, feature: str, type: str, autoselection: 
 
 def osmApi_DataFrame_FromSQL(feature, type):
     conn = PostgreSQL_connectSQLalchemy()
-    con = PostgreSQL_connectPsycopg2()
-    cursor = con.cursor()
-    cursor.execute("""select "relname" from "pg_class" where relkind='r' and "relname" !~ '^(pg_|sql_)';""")
-    tables = cursor.fetchall()
-    tabela = [tab[0] for tab in tables]
+    tabela = PosgreSQL_gettables()
     if f'{feature}_{type}' in tabela:
         df_base = pd.read_sql(f"""SELECT "Ident" FROM "{feature}_{type}" """, con=conn)['Ident'].values.tolist()
     else:
