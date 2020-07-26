@@ -72,10 +72,16 @@ def PosgreSQL_gettables():
     tables = cursor.fetchall()
     return [tab[0] for tab in tables]
 
+def PosgreSQL_columns(tablename):
+    cursor = PostgreSQL_connectPsycopg2().cursor()
+    cursor.execute(f"""Select * FROM "{tablename}" LIMIT 0""")
+    colnames = [desc[0] for desc in cursor.description]
+    return colnames
+
 def oferty_Merger(bd_base: str, bd_comp: str, db_nowa: str):
     '''
        CHECK 2 DBs (bd_base + bd_comp) IF RECORDS DON'T OVERLAP THEN MERGE THEM INTO (db_nowa)
-       IF (db_nowa) EXISTS THEN merging result of DBs (bd_base + bd_comp) IS APPENDED TO (db_nowa)
+       IF (db_nowa) EXISTS THEN merging result of DBs (db_base + db_comp + db_nowa) IS APPENDED TO (db_nowa)
     '''
 
     start = time.time()

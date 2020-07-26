@@ -13,7 +13,8 @@ miastaDict = {'warszawa': 'Warszawa', 'krakow': 'Kraków', 'lodz': 'Łódź', 'w
 now = datetime.datetime.now()
 
 def get_data(miasto, serwis):
-    urls_file = csv.reader(open("{0}/urls_{0}_{1}.csv".format(serwis, miasto), "r", encoding="utf-8"))
+    """Serwis = otodom / gratka"""
+    urls_file = csv.reader(open(f"{serwis}/urls_{serwis}_{miasto}.csv", "r", encoding="utf-8"))
     urls = []
     for row in urls_file:
         urls.append(row[0])
