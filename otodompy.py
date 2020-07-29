@@ -158,7 +158,7 @@ def get_liczbapokoi(li):
         for typ in li:
             if 'Liczba pokoi: ' in typ:
                 liczbapokoi = typ.strong.text
-        return liczbapokoi
+        return re.sub("[^0-9]", "", liczbapokoi)
     except:
         return ('NaN')
 

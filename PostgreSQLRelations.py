@@ -149,7 +149,7 @@ def PostgreSQL_getfeatures_multprocess_checking(arr_Shop_Node_miasto, arr_Shop_N
                 print(f'Process {num_of_process} is {round((n - start) / approximation * 100)} % done')
             for node in arr_Shop_Node_miasto:
                 if relation[1] == node[0]:
-                    temp_dict[relation[0]].append(node[0])
+                    temp_dict[relation[0]].append(node[1])
     return temp_dict
 
 
@@ -180,9 +180,10 @@ def PostgreSQL_getfeatures_multprocess(miasto:str, tabletolookin:str, df_oferty_
 
     keys = list(temp_dict.keys())
     values = list(temp_dict.values())
-    for index, row in df_oferty_miasto.iterrows():
+    for indeks, row in df_oferty_miasto.iterrows():
         if row['Ident'] in temp_dict.keys():
-            df_oferty_merged[tabletolookin].iloc[index] = values[keys.index(row['Ident'])]
+            df_oferty_merged[tabletolookin].iloc[indeks] = values[keys.index(row['Ident'])]
+            # df_oferty_merged.loc.__setitem__((indeks, tabletolookin), values[keys.index(row['Ident'])])
     return df_oferty_merged
 
 def PostgreSQL_getfeatures(tabletolookin:str, tablecompared:str="oferty_merged"):
@@ -213,7 +214,5 @@ if __name__ == '__main__':
 
     all_tables = PostgreSQLModifier.PosgreSQL_gettables()
     for table in all_tables:
-        if '_Node' in table and '_Node_' not in table and 'relation' not in table or'_Rel' in table and '_Rel_' not in table or '_Way' in table and '_Way_' not in table:
+        if '_Node' in table  and '_Node_' not in table and 'relation' not in table or'_Rel' in table and '_Rel_' not in table or '_Way' in table and '_Way_' not in table:
             PostgreSQL_getfeatures(table)
-
-    print()

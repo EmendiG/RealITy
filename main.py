@@ -94,8 +94,9 @@ def get_data(miasto, serwis):
 # help(postgresql_modifier.oferty_Merger)
 # postgresql_modifier.oferty_Merger('otodom', 'gratka', 'merged')
 
-# for n, miasto in enumerate(miastaDict):
-#    District(miastaDict[miasto]).osmApi_getDistricts_mapPolygons()
+# for miasto in miasta:
+#    OpenStreetMapOverpass.District(miasto).osmApi_getDistricts_returnGeoDataFrame_toGeoJSON()
+
 # for miasto in miasta:
 #    postgresql_modifier.osmApi_DataFrame_ToSQL(miasto, 'Leisure')
 
@@ -103,8 +104,8 @@ def get_data(miasto, serwis):
 
 #print(OpenStreetMapOverpass.MapFeatures('warszawa', 'Leisure', 'Rel').osmApi_getFeature_parseToDataFrame_rels())
 
-for miasto in miasta:
-    PostgreSQLModifier.osmApi_DataFrame_ToSQL(miasto, 'Public_transport', 'Node')
+# for miasto in miasta:
+#    PostgreSQLModifier.osmApi_DataFrame_ToSQL(miasto, 'Public_transport', 'Node')
 
 # PostgreSQLModifier.osmApi_DataFrame_ToSQL('warszawa', 'Tourism', 'Node', onepoint=False)
 

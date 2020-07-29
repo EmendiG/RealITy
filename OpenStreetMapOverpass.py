@@ -7,6 +7,7 @@ import os
 import PostgreSQLModifier
 from shapely.geometry import Polygon, MultiPolygon
 import datetime
+import slownik
 
 miastaDict = {'warszawa': 'Warszawa', 'krakow': 'Kraków', 'lodz': 'Łódź', 'wroclaw': 'Wrocław', 'poznan': 'Poznań',
               'gdansk': 'Gdańsk', 'szczecin': 'Szczecin', 'bydgoszcz': 'Bydgoszcz', 'lublin': 'Lublin',
@@ -16,11 +17,12 @@ now = datetime.datetime.now()
 class District:
     def __init__(self, miasto):
         self.miasto = miasto
+        self.miastoDict = miastaDict[miasto]
         self.responseCity = self.osmApi_getDistricts()
 
     def osmApi_getDistricts(self):
         api = overpass.API(timeout=60)
-        QUERY = f"""area[name="{self.miasto}"][type="boundary"]->.city; 
+        QUERY = f"""area[name="{self.miastoDict}"][type="boundary"]->.city; 
         rel(area.city)[admin_level=9];
         out geom;"""
         responseCity = api.get(QUERY, responseformat='json')
@@ -65,7 +67,7 @@ class District:
                     odpowiedz.append(ref)
             coords = self.osmApi_getDistricts_returnGeoDataFrame_getCoordinatesOfWays(odpowiedz)
             coordinates.append(coords)
-            districts.append(district)
+            districts.append(slownik.Slownik().kodowanie(district))
 
         # make geojsons from lists of coordinates and names of districts, to be viable by the GeoPandas
         def coordinates_toGeoJson(coordinates, districts):
@@ -87,6 +89,10 @@ class District:
         geojson = coordinates_toGeoJson(coordinates, districts)
         gdf = gpd.GeoDataFrame.from_features(geojson)
         return gdf
+
+    def osmApi_getDistricts_returnGeoDataFrame_toGeoJSON(self):
+        gdf = self.osmApi_getDistricts_returnGeoDataFrame()
+        gdf.to_file(f'districts/{self.miasto}.json', driver='GeoJSON')
 
     def osmApi_getDistricts_mapPolygons(self):
         # Get Polygons  = districts wihin a city (miasto) and draw it on a map
