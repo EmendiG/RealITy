@@ -98,7 +98,8 @@ def get_data(miasto, serwis):
 #    OpenStreetMapOverpass.District(miasto).osmApi_getDistricts_returnGeoDataFrame_toGeoJSON()
 
 # for miasto in miasta:
-#    postgresql_modifier.osmApi_DataFrame_ToSQL(miasto, 'Leisure')
+#    PostgreSQLModifier.PosgreSQL_oferty_Merger_assignDistricts(miasto)
+#    PostgreSQLModifier.osmApi_DataFrame_ToSQL(miasto, 'Leisure')
 
 # PostgreSQLModifier.osmApi_DataFrame_ToSQL(miasto, 'Leisure', 'Way')
 

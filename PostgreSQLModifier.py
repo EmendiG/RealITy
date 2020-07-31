@@ -1,4 +1,5 @@
 import pandas as pd
+import geopandas as gpd
 import psycopg2
 from sqlalchemy import create_engine
 from sqlalchemy import Table, Column, Integer, Text, MetaData, Float
@@ -158,8 +159,27 @@ def oferty_Merger(bd_base: str, bd_comp: str, db_nowa: str):
             if 'level_0' in colnames:
                 cursor.execute(f"""ALTER TABLE "oferty_{db_nowa}" DROP COLUMN level_0""")
                 con.commit()
-    end = time.time()
-    print(end - start)
+    print(time.time() - start)
+
+def PosgreSQL_oferty_Merger_assignDistricts(miasto, db_nowa:str="oferty_merged"):
+    # Adjust existing table that contains offers and assign proper district name according to geographical coordinates
+    city_districts = gpd.read_file(f'districts/{miasto}.json')
+
+    conn = PostgreSQL_connectSQLalchemy()
+    df_oferty_merged = pd.read_sql(f'{db_nowa}', con=conn)
+    gdf_oferty_merged = gpd.GeoDataFrame(df_oferty_merged, geometry=gpd.points_from_xy(df_oferty_merged.Longitude,
+                                                                                       df_oferty_merged.Latitude))
+    gdf_oferty_miasto = gdf_oferty_merged.loc[gdf_oferty_merged['Miasto'] == miasto]
+
+    howmany = round(len(gdf_oferty_miasto) / 10)
+    print(miasto)
+    for n, oferta in enumerate(gdf_oferty_miasto.iterrows()):
+        if n % (howmany) == 0:
+            print(n / howmany * 10, '%')
+        for dzielnica in city_districts.iterrows():
+            if dzielnica[1]['geometry'].contains(oferta[1]['geometry']):
+                df_oferty_merged.loc[oferta[0], 'Dzielnica'] = dzielnica[1]['name']
+    df_oferty_merged.drop('geometry', axis=1).to_sql(f'{db_nowa}', if_exists='replace', con=conn, index=False)
 
 
 def osmApi_DataFrame_ToSQL(miasto: str, feature: str, type: str, autoselection: bool = True):

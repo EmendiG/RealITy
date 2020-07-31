@@ -161,7 +161,7 @@ def get_liczbapokoi(span):
         for n, typ in enumerate(span):
             if 'Liczba pokoi' in typ:
                 liczbapokoi = span[n].findNext('b').contents[0]
-        return liczbapokoi
+        return re.sub("[^0-9]", "", liczbapokoi)
     except:
         return('NaN')
 

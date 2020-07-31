@@ -3,10 +3,9 @@
   <component name="ChangeListManager">
     <list default="true" id="edc9251b-a03a-493d-8db3-6662d61b7a60" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/OpenStreetMapOverpass.py" beforeDir="false" afterPath="$PROJECT_DIR$/OpenStreetMapOverpass.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PostgreSQLRelations.py" beforeDir="false" afterPath="$PROJECT_DIR$/PostgreSQLRelations.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PostgreSQLModifier.py" beforeDir="false" afterPath="$PROJECT_DIR$/PostgreSQLModifier.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/gratkapy.py" beforeDir="false" afterPath="$PROJECT_DIR$/gratkapy.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/otodompy.py" beforeDir="false" afterPath="$PROJECT_DIR$/otodompy.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -290,7 +289,14 @@
       <option name="project" value="LOCAL" />
       <updated>1595790822709</updated>
     </task>
-    <option name="localTasksCounter" value="24" />
+    <task id="LOCAL-00024" summary="RealITy 0.2020.02.08.03">
+      <created>1596051845351</created>
+      <option name="number" value="00024" />
+      <option name="presentableId" value="LOCAL-00024" />
+      <option name="project" value="LOCAL" />
+      <updated>1596051845352</updated>
+    </task>
+    <option name="localTasksCounter" value="25" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -356,6 +362,7 @@
     <MESSAGE value="RealITy 0.2020.02.08 (added relations checking between oferty table and Way table )" />
     <MESSAGE value="RealITy 0.2020.02.08.01 (added relations checking between oferty table and Way/Rel table )" />
     <MESSAGE value="RealITy 0.2020.02.08.02 (additional db_tables' relations added (oferty/features) )" />
-    <option name="LAST_COMMIT_MESSAGE" value="RealITy 0.2020.02.08.02 (additional db_tables' relations added (oferty/features) )" />
+    <MESSAGE value="RealITy 0.2020.02.08.03" />
+    <option name="LAST_COMMIT_MESSAGE" value="RealITy 0.2020.02.08.03" />
   </component>
 </project>
