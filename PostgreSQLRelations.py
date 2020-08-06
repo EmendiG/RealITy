@@ -194,7 +194,7 @@ def PostgreSQL_getfeatures(tabletolookin:str, tablecompared:str="oferty_merged")
 
     if f'{tablecompared}_features' in all_tables:
         df_oferty_merged = pd.read_sql(sql=f'{tablecompared}_features', con=conn)
-        columnsnames = PostgreSQLModifier.PosgreSQL_columns(f'{tablecompared}_features')
+        columnsnames = PostgreSQLModifier.PosgreSQL_getcolumns(f'{tablecompared}_features')
         if tabletolookin not in columnsnames:
             df_oferty_merged[tabletolookin] = ''
     else:

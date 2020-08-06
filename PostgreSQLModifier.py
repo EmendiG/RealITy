@@ -73,7 +73,7 @@ def PosgreSQL_gettables():
     tables = cursor.fetchall()
     return [tab[0] for tab in tables]
 
-def PosgreSQL_columns(tablename):
+def PosgreSQL_getcolumns(tablename):
     cursor = PostgreSQL_connectPsycopg2().cursor()
     cursor.execute(f"""Select * FROM "{tablename}" LIMIT 0""")
     colnames = [desc[0] for desc in cursor.description]
