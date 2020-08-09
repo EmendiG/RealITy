@@ -1,11 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="edc9251b-a03a-493d-8db3-6662d61b7a60" name="Default Changelist" comment="RealITy 0.2020.02.08.04 (added offers district recognition based on coordinates)">
-      <change afterPath="$PROJECT_DIR$/RealityLearning.py" afterDir="false" />
+    <list default="true" id="edc9251b-a03a-493d-8db3-6662d61b7a60" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/morizonpy.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PostgreSQLModifier.py" beforeDir="false" afterPath="$PROJECT_DIR$/PostgreSQLModifier.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PostgreSQLRelations.py" beforeDir="false" afterPath="$PROJECT_DIR$/PostgreSQLRelations.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/RealityLearning.py" beforeDir="false" afterPath="$PROJECT_DIR$/RealityLearning.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -33,7 +32,7 @@
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="PropertiesComponent">
     <property name="TODO_SCOPE" value="All Places" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/tests.py" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/morizonpy.py" />
     <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
   </component>
   <component name="RunDashboard">
@@ -48,7 +47,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Python.main">
+  <component name="RunManager" selected="Python.morizonpy">
     <configuration name="PostgreSQLRelations" type="PythonConfigurationType" factoryName="Python" nameIsGenerated="true">
       <module name="analityka" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -91,7 +90,7 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
-    <configuration name="otodompy" type="PythonConfigurationType" factoryName="Python" nameIsGenerated="true">
+    <configuration name="morizonpy" type="PythonConfigurationType" factoryName="Python" nameIsGenerated="true">
       <module name="analityka" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -103,7 +102,7 @@
       <option name="IS_MODULE_SDK" value="false" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/otodompy.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/morizonpy.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -113,7 +112,7 @@
       <method v="2" />
     </configuration>
     <list>
-      <item itemvalue="Python.otodompy" />
+      <item itemvalue="Python.morizonpy" />
       <item itemvalue="Python.main" />
       <item itemvalue="Python.PostgreSQLRelations" />
     </list>
@@ -304,7 +303,14 @@
       <option name="project" value="LOCAL" />
       <updated>1596199889279</updated>
     </task>
-    <option name="localTasksCounter" value="26" />
+    <task id="LOCAL-00026" summary="RealITy 0.2020.03 (added Machine Learning algorithms to process gathered and predict &quot;Price per square meter&quot; value)">
+      <created>1596748106822</created>
+      <option name="number" value="00026" />
+      <option name="presentableId" value="LOCAL-00026" />
+      <option name="project" value="LOCAL" />
+      <updated>1596748106822</updated>
+    </task>
+    <option name="localTasksCounter" value="27" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -372,6 +378,7 @@
     <MESSAGE value="RealITy 0.2020.02.08.02 (additional db_tables' relations added (oferty/features) )" />
     <MESSAGE value="RealITy 0.2020.02.08.03" />
     <MESSAGE value="RealITy 0.2020.02.08.04 (added offers district recognition based on coordinates)" />
-    <option name="LAST_COMMIT_MESSAGE" value="RealITy 0.2020.02.08.04 (added offers district recognition based on coordinates)" />
+    <MESSAGE value="RealITy 0.2020.03 (added Machine Learning algorithms to process gathered and predict &quot;Price per square meter&quot; value)" />
+    <option name="LAST_COMMIT_MESSAGE" value="RealITy 0.2020.03 (added Machine Learning algorithms to process gathered and predict &quot;Price per square meter&quot; value)" />
   </component>
 </project>

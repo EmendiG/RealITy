@@ -4,6 +4,7 @@ import PostgreSQLModifier
 import re
 import gzip
 import sys
+from time import time
 from sklearn.ensemble import GradientBoostingRegressor
 from sklearn.svm import SVR
 from sklearn.base import BaseEstimator, TransformerMixin
@@ -14,7 +15,6 @@ from sklearn.linear_model import LinearRegression
 from sklearn.model_selection import train_test_split
 from sklearn.model_selection import cross_val_score
 from sklearn.model_selection import GridSearchCV
-from time import time
 from sklearn.preprocessing import StandardScaler, Normalizer, RobustScaler
 from sklearn.compose import TransformedTargetRegressor
 from sklearn.pipeline import FeatureUnion

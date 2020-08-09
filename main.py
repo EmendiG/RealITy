@@ -98,7 +98,7 @@ def get_data(miasto, serwis):
 # for miasto in miasta:
 #    OpenStreetMapOverpass.District(miasto).osmApi_getDistricts_returnGeoDataFrame_toGeoJSON()
 
-RealityLearning.MachineLearningRealEstatePrices('warszawa').MLREP_getDataFrame_adjustments()
+# RealityLearning.MachineLearningRealEstatePrices('warszawa').MLREP_getDataFrame_adjustments()
 
 # for miasto in miasta:
 #    PostgreSQLModifier.PosgreSQL_oferty_Merger_assignDistricts(miasto, 'oferty_merged_features_featuresN')
