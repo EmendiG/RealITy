@@ -20,9 +20,10 @@ def soupa(url):
 
 def get_lon_lat(soup):
     parses = soup.find_all("div", attrs={"class": "mz-card__item"})[1].find_all('div', attrs={'class': 'GoogleMap'})
-    long = parses[0].get('data-lng')
-    lati = parses[0].get('data-lat')
-    return long, lati
+    if parses:
+        long = parses[0].get('data-lng')
+        lati = parses[0].get('data-lat')
+        return long, lati
 
 
 def get_price(soup):
@@ -51,17 +52,60 @@ def get_price_per_metr(soup):
     price_per_metr = float(parses)
     return price_per_metr
 
-def get_rynek(soup):
+def get_rynek(table):
     try:
-        parses = soup.find_all('section', attrs={'class': 'params clearfix'})
-        for tr in parses[0].table.find_all('tr'):
+        for tr in table.table.find_all('tr'):
             if 'Rynek: ' in str(tr.th):
-                return str(tr.td.text.strip())
+                return str(tr.td.text).strip()
     except:
         return('NaN')
 
+def get_typzabudowy(table):
+    try:
+        table_2 = table.find_all('table')[1]
+        for tr in table_2.find_all('tr'):
+            if 'Typ budynku: ' in str(tr.th):
+                return str(tr.td.text).strip().lower()
+    except:
+        return('NaN')
+
+def get_rokbudowy(table):
+    try:
+        table_2 = table.find_all('table')[1]
+        for tr in table_2.find_all('tr'):
+            if 'Rok budowy: ' in str(tr.th):
+                return str(tr.td.text).strip()
+    except:
+        return('NaN')
+
+def get_liczbapokoi(soup):
+    try:
+        roomnumber = soup.find('li', attrs={'class': 'paramIconNumberOfRooms'})
+        return  roomnumber.em.get_text()
+    except:
+        return('NaN')
+
+def get_pietro(table):
+    try:
+        for tr in table.table.find_all('tr'):
+            if 'Piętro: ' in str(tr.th):
+                pietro = str(tr.td.text).strip()
+                if '/' in pietro:
+                    return pietro.split('/')[0].strip()
+                else:
+                    return pietro
+    except:
+        return('NaN')
+
+def get_parking(table):
+    # try:
+    for h3 in table.find_all('h3'):
+        if 'Udogodnienia' in h3.text:
+           if h3.findNext('p').text
+    # except:
+    #     return ('NaN')
+
 def wyprintuj_mnie( ident, price, area, price_per_meter, price_per_metr, lengthehe, lat, lon, url):
-    #print("Ulica: ", ulica.rjust(lengthehe - 8))
     print("ID: ", str(ident).rjust(lengthehe - 5))
     print("Price: ", str(price).rjust(lengthehe - 8))
     print("Area: ", str(area).rjust(lengthehe - 7))
@@ -73,22 +117,32 @@ def wyprintuj_mnie( ident, price, area, price_per_meter, price_per_metr, lengthe
 
 def getthat(url):
     soup = soupa(url)
-    lon = get_lon_lat(soup)[0]
-    lat = get_lon_lat(soup)[1]
-    price = get_price(soup)
-    area = get_area(soup)
-    ident = get_id(soup)
-    price_per_meter = round(price / area, 0)
-    price_per_metr = get_price_per_metr(soup)
-    url = url
-    lengthehe = len(url)
-    print(get_rynek(soup))
-    # wyprintuj_mnie( ident, price, area, price_per_meter, price_per_metr, lengthehe, lat, lon, url)
-    return price, area, price_per_metr, price_per_meter, lat, lon, ident, url
+    table = soup.find('section', attrs={'class': 'params clearfix'})
+    if type(get_lon_lat(soup)) is not type(None):
+        lon = get_lon_lat(soup)[0]
+        lat = get_lon_lat(soup)[1]
+        price = get_price(soup)
+        area = get_area(soup)
+        ident = get_id(soup)
+        price_per_meter = round(price / area, 0)
+        price_per_metr = get_price_per_metr(soup)
+        url = url
+        lengthehe = len(url)
+        print(get_parking(table))
+        # wyprintuj_mnie( ident, price, area, price_per_meter, price_per_metr, lengthehe, lat, lon, url)
+        return price, area, price_per_metr, price_per_meter, lat, lon, ident, url
+    else:
+        pass
 
 url1 = 'https://www.morizon.pl/oferta/sprzedaz-mieszkanie-warszawa-ursus-tomcia-palucha-47m2-mzn2036649127'
 url2 = 'https://www.morizon.pl/oferta/sprzedaz-mieszkanie-warszawa-mokotow-ludwiga-van-beethovena-45m2-mzn2036387936'
 url3 = 'https://www.morizon.pl/oferta/sprzedaz-mieszkanie-warszawa-wilanow-292m2-mzn2034562958'
 url4 = 'https://www.morizon.pl/oferta/sprzedaz-mieszkanie-warszawa-mokotow-157m2-mzn2035978428'
 
-getthat(url1)
+url5 = 'https://www.morizon.pl/oferta/sprzedaz-mieszkanie-warszawa-ursus-tomcia-palucha-47m2-mzn2036649127'
+
+url6 = 'https://www.morizon.pl/oferta/sprzedaz-mieszkanie-warszawa-ursus-50m2-mzn2036708810'
+
+
+getthat(url6)
+#getthat(url3)

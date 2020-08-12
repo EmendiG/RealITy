@@ -247,20 +247,20 @@ def get_okna(li):
 
 def get_opis(zoup):
     """To co JavaScriptowe"""
-    """try:
-        chromeOptions = Options()
-        chromeOptions.add_argument('-headless')
-        #chromeOptions.add_argument('--ignore-certificate-errors')
-        chromeOptions.add_argument('--incognito')
-        browser = webdriver.Chrome(executable_path=r"F:\OneDrive - Politechnika Warszawska\PyCharmProjects\analityka\chromedriver.exe", options= chromeOptions)
-        browser.get(url)
-        element = browser.find_element_by_xpath('/html/body/div/article/div[3]/div[1]/section[2]/div[2]/a')
-        browser.execute_script("arguments[0].click();", element)
-        opis = browser.find_element_by_xpath('/html/body/div/article/div[3]/div[1]/section[2]/div[1]').text
-        return opis
-    except:
-        opis = soup.find('div', attrs={'class':"css-1bi3ib9"}).text
-        return opis"""
+    # try:
+    #     chromeOptions = Options()
+    #     chromeOptions.add_argument('-headless')
+    #     #chromeOptions.add_argument('--ignore-certificate-errors')
+    #     chromeOptions.add_argument('--incognito')
+    #     browser = webdriver.Chrome(executable_path=r"F:\OneDrive - Politechnika Warszawska\PyCharmProjects\analityka\chromedriver.exe", options= chromeOptions)
+    #     browser.get(url)
+    #     element = browser.find_element_by_xpath('/html/body/div/article/div[3]/div[1]/section[2]/div[2]/a')
+    #     browser.execute_script("arguments[0].click();", element)
+    #     opis = browser.find_element_by_xpath('/html/body/div/article/div[3]/div[1]/section[2]/div[1]').text
+    #     return opis
+    # except:
+    #     opis = soup.find('div', attrs={'class':"css-1bi3ib9"}).text
+    #     return opis
     opis = zoup.find('section', attrs={'class': "section-description"}).text
     return opis
 

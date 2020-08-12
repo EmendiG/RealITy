@@ -2,10 +2,10 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="edc9251b-a03a-493d-8db3-6662d61b7a60" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/morizonpy.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/RealityLearning.py" beforeDir="false" afterPath="$PROJECT_DIR$/RealityLearning.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/morizonpy.py" beforeDir="false" afterPath="$PROJECT_DIR$/morizonpy.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/otodompy.py" beforeDir="false" afterPath="$PROJECT_DIR$/otodompy.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -32,8 +32,8 @@
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="PropertiesComponent">
     <property name="TODO_SCOPE" value="All Places" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/morizonpy.py" />
-    <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/DjangoWeb.py" />
+    <property name="settings.editor.selected.configurable" value="copyright.profiles" />
   </component>
   <component name="RunDashboard">
     <option name="ruleStates">
@@ -47,8 +47,8 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Python.morizonpy">
-    <configuration name="PostgreSQLRelations" type="PythonConfigurationType" factoryName="Python" nameIsGenerated="true">
+  <component name="RunManager" selected="Python.DjangoWeb">
+    <configuration name="DjangoWeb" type="PythonConfigurationType" factoryName="Python" nameIsGenerated="true">
       <module name="analityka" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -60,7 +60,7 @@
       <option name="IS_MODULE_SDK" value="false" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="SCRIPT_NAME" value="F:\OneDrive - Politechnika Warszawska\PyCharmProjects\analityka\PostgreSQLRelations.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/DjangoWeb.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -114,7 +114,7 @@
     <list>
       <item itemvalue="Python.morizonpy" />
       <item itemvalue="Python.main" />
-      <item itemvalue="Python.PostgreSQLRelations" />
+      <item itemvalue="Python.DjangoWeb" />
     </list>
   </component>
   <component name="SvnConfiguration">
@@ -310,7 +310,14 @@
       <option name="project" value="LOCAL" />
       <updated>1596748106822</updated>
     </task>
-    <option name="localTasksCounter" value="27" />
+    <task id="LOCAL-00027" summary="RealITy 0.2020.03.01 (added Machine Learning algorithms to process gathered data and predict &quot;Price per square meter&quot; value)">
+      <created>1597006776891</created>
+      <option name="number" value="00027" />
+      <option name="presentableId" value="LOCAL-00027" />
+      <option name="project" value="LOCAL" />
+      <updated>1597006776891</updated>
+    </task>
+    <option name="localTasksCounter" value="28" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -379,6 +386,7 @@
     <MESSAGE value="RealITy 0.2020.02.08.03" />
     <MESSAGE value="RealITy 0.2020.02.08.04 (added offers district recognition based on coordinates)" />
     <MESSAGE value="RealITy 0.2020.03 (added Machine Learning algorithms to process gathered and predict &quot;Price per square meter&quot; value)" />
-    <option name="LAST_COMMIT_MESSAGE" value="RealITy 0.2020.03 (added Machine Learning algorithms to process gathered and predict &quot;Price per square meter&quot; value)" />
+    <MESSAGE value="RealITy 0.2020.03.01 (added Machine Learning algorithms to process gathered data and predict &quot;Price per square meter&quot; value)" />
+    <option name="LAST_COMMIT_MESSAGE" value="RealITy 0.2020.03.01 (added Machine Learning algorithms to process gathered data and predict &quot;Price per square meter&quot; value)" />
   </component>
 </project>
