@@ -1,11 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="edc9251b-a03a-493d-8db3-6662d61b7a60" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/RealityWeb/RealityWeb/settings.py" beforeDir="false" afterPath="$PROJECT_DIR$/RealityWeb/RealityWeb/settings.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/RealityWeb/RealityWeb/wsgi.py" beforeDir="false" afterPath="$PROJECT_DIR$/RealityWeb/RealityWeb/wsgi.py" afterDir="false" />
-    </list>
+    <list default="true" id="edc9251b-a03a-493d-8db3-6662d61b7a60" name="Default Changelist" comment="" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -330,7 +326,14 @@
       <option name="project" value="LOCAL" />
       <updated>1597226783427</updated>
     </task>
-    <option name="localTasksCounter" value="30" />
+    <task id="LOCAL-00030" summary="RealITy 0.2020.03.02 (added Django framework + Apache webserver)">
+      <created>1597349568371</created>
+      <option name="number" value="00030" />
+      <option name="presentableId" value="LOCAL-00030" />
+      <option name="project" value="LOCAL" />
+      <updated>1597349568371</updated>
+    </task>
+    <option name="localTasksCounter" value="31" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -401,6 +404,7 @@
     <MESSAGE value="RealITy 0.2020.03 (added Machine Learning algorithms to process gathered and predict &quot;Price per square meter&quot; value)" />
     <MESSAGE value="RealITy 0.2020.03.01 (added Machine Learning algorithms to process gathered data and predict &quot;Price per square meter&quot; value)" />
     <MESSAGE value="RealITy 0.2020.03.02 (added Django framework)" />
-    <option name="LAST_COMMIT_MESSAGE" value="RealITy 0.2020.03.02 (added Django framework)" />
+    <MESSAGE value="RealITy 0.2020.03.02 (added Django framework + Apache webserver)" />
+    <option name="LAST_COMMIT_MESSAGE" value="RealITy 0.2020.03.02 (added Django framework + Apache webserver)" />
   </component>
 </project>
