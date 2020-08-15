@@ -101,7 +101,9 @@ def get_parking(table):
     # try:
     for h3 in table.find_all('h3'):
         if 'Udogodnienia' in h3.text:
-           if h3.findNext('p').text
+            print(h3.findNext('p').text)
+            if re.findall('garaż', h3.findNext('p').text):
+                return 'garaz'
     # except:
     #     return ('NaN')
 

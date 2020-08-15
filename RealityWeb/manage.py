@@ -6,7 +6,9 @@ import sys
 
 def main():
     """Run administrative tasks."""
-    os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'RealityWeb.settings')
+    root_path = os.path.abspath(os.path.split(__file__)[0])
+    sys.path.append(root_path)
+    os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'RealityDjango.settings')
     try:
         from django.core.management import execute_from_command_line
     except ImportError as exc:

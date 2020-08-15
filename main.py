@@ -5,6 +5,7 @@ import OpenStreetMapOverpass
 import datetime
 import RealityLearning
 
+
 miasta = ['warszawa', 'krakow', 'lodz',  'wroclaw', 'poznan', 'gdansk', 'szczecin', 'bydgoszcz', 'lublin','bialystok'] #
 
 miastaDict = {'warszawa': 'Warszawa', 'krakow': 'Kraków', 'lodz': 'Łódź', 'wroclaw': 'Wrocław', 'poznan': 'Poznań',
@@ -88,7 +89,6 @@ def get_data(miasto, serwis):
             except Exception as e:
                 print(e)
     conn.close()
-
 
 
 # get_data('warszawa', 'otodom')

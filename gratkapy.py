@@ -1,12 +1,9 @@
 from bs4 import BeautifulSoup
 import requests
 import json
-from selenium import webdriver
-from selenium.webdriver.chrome.options import Options
 import csv
 import re
-import pandas as pd
-import unicodedata
+
 
 """
     Gratka
