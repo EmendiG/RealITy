@@ -1,0 +1,17 @@
+{% extends "home/base.html" %}
+{% block content %}
+    <h1>RealITyWeb StartPage</h1>
+    <p> choose wisely </p>
+    {% for nieruchomosc in nieruchomosci %}
+         <article class="media content-section">
+             <div class="media-body">
+                 <div class="article-metadata">
+                     <a class="mr-2" href="#">{{ nieruchomosc.miasto }}</a>
+                     <small class="text-muted">{{ nieruchomosc.content }}</small>
+                 </div>
+                     <p class="article-content">{{ nieruchomosc.longitude }}</p>
+                     <p class="article-content">{{ nieruchomosc.latitude }}</p>
+             </div>
+         </article>
+    {% endfor %}
+{% endblock content %}
