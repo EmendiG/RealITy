@@ -12,6 +12,7 @@
 
     <link rel="stylesheet" type="text/css" href="{% static 'home/main.css' %}">
     <link rel="shortcut icon" href="{% static 'images/favicon.png' %}" >
+
     <title>{{ title }}</title>
   </head>
 <body>
@@ -24,6 +25,7 @@
           </button>
           <div class="collapse navbar-collapse" id="navbarToggle">
             <div class="navbar-nav mr-auto">
+              <a class="nav-item nav-link" href="{% url 'index-map' %}">Map</a>
               <a class="nav-item nav-link" href="{% url 'index-about' %}">About</a>
             </div>
             <!-- Navbar Right Side -->
@@ -35,6 +37,7 @@
         </div>
       </nav>
     </header>
+
     <main role="main" class="container">
       <div class="row">
         <div class="col-md-8">

@@ -1,5 +1,6 @@
 from django.db import models
 from django.db import transaction
+from django import forms
 
 # Create your models here.
 class Post(models.Model):
@@ -14,7 +15,11 @@ class Post(models.Model):
     def save(self, *args, **kwargs):
         with transaction.atomic():
             super().save(*args, **kwargs)
-            # for python < 3.0 super(pick, self).save(*args, **kwargs)
             self.ident = self.id
             super().save(*args, **kwargs)
-            # for python < 3.0 super(pick, self).save(*args, **kwargs)
+
+class GetPriceModel(models.Model):
+    lat = models.DecimalField( max_digits=7, decimal_places=4, null=True, blank=True )
+    lon = models.DecimalField( max_digits=7, decimal_places=4, null=True, blank=True  )
+    category = models.CharField(max_length=20, choices=[('domek', 'domek'), ('mieszkanie', 'mieszkanie')])
+    subject = models.CharField(max_length=120)

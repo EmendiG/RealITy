@@ -2,14 +2,20 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="edc9251b-a03a-493d-8db3-6662d61b7a60" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/RealityWeb/RealityWeb/templates/home/about.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/RealityWeb/RealityWeb/templates/home/base.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/RealityWeb/RealityWeb/templates/home/index.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/RealityWeb/RealityWeb/forms.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/RealityWeb/RealityWeb/templates/miasta/map.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/RealityWeb/RealityDjango/settings.py" beforeDir="false" afterPath="$PROJECT_DIR$/RealityWeb/RealityDjango/settings.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/RealityWeb/RealityDjango/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/RealityWeb/RealityDjango/urls.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/RealityWeb/RealityWeb/admin.py" beforeDir="false" afterPath="$PROJECT_DIR$/RealityWeb/RealityWeb/admin.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/RealityWeb/RealityWeb/migrations/0001_initial.py" beforeDir="false" afterPath="$PROJECT_DIR$/RealityWeb/RealityWeb/migrations/0001_initial.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/RealityWeb/RealityWeb/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/RealityWeb/RealityWeb/models.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/RealityWeb/RealityWeb/templates/home/base.html" beforeDir="false" afterPath="$PROJECT_DIR$/RealityWeb/RealityWeb/templates/home/base.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/RealityWeb/RealityWeb/templates/home/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/RealityWeb/RealityWeb/templates/home/index.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/RealityWeb/RealityWeb/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/RealityWeb/RealityWeb/urls.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/RealityWeb/RealityWeb/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/RealityWeb/RealityWeb/views.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/RealityWeb/db.sqlite3" beforeDir="false" afterPath="$PROJECT_DIR$/RealityWeb/db.sqlite3" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -20,8 +26,8 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="Python Script" />
         <option value="HTML File" />
+        <option value="Python Script" />
       </list>
     </option>
   </component>
@@ -39,7 +45,7 @@
     <property name="DefaultHtmlFileTemplate" value="HTML File" />
     <property name="TODO_SCOPE" value="All Places" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$/RealityWeb/RealityWeb" />
-    <property name="settings.editor.selected.configurable" value="configurable.group.tools" />
+    <property name="settings.editor.selected.configurable" value="PyConsoleConfigurable.Python Console" />
   </component>
   <component name="PyConsoleOptionsProvider">
     <option name="myPythonConsoleState">
@@ -376,7 +382,14 @@
       <option name="project" value="LOCAL" />
       <updated>1597493034230</updated>
     </task>
-    <option name="localTasksCounter" value="33" />
+    <task id="LOCAL-00033" summary="RealITy 0.2020.03.03 (added app - RealityWeb)">
+      <created>1597515285264</created>
+      <option name="number" value="00033" />
+      <option name="presentableId" value="LOCAL-00033" />
+      <option name="project" value="LOCAL" />
+      <updated>1597515285264</updated>
+    </task>
+    <option name="localTasksCounter" value="34" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -450,5 +463,16 @@
     <MESSAGE value="RealITy 0.2020.03.02 (added Django framework + Apache webserver)" />
     <MESSAGE value="RealITy 0.2020.03.03 (added app - RealityWeb)" />
     <option name="LAST_COMMIT_MESSAGE" value="RealITy 0.2020.03.03 (added app - RealityWeb)" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://D:/Anaconda3/envs/RealityEnv/Lib/site-packages/jinja2/environment.py</url>
+          <line>4</line>
+          <option name="timeStamp" value="1" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
 </project>

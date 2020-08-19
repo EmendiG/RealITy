@@ -113,4 +113,5 @@ def get_data(miasto, serwis):
 
 # PostgreSQLModifier.osmApi_DataFrame_ToSQL('warszawa', 'Tourism', 'Node', onepoint=False)
 
+
 # TODO: Znaleźć najblizsze amenities dla kazdego z rekordu (wystepowanie, nie cecha??) => Wykonac nowy db (relacyjny)  -- cross tables
