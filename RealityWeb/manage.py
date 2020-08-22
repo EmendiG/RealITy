@@ -2,7 +2,7 @@
 """Django's command-line utility for administrative tasks."""
 import os
 import sys
-
+from RealityWeb.api.sklearnModel import ItemUnSelector, ItemSelector
 
 def main():
     """Run administrative tasks."""
@@ -22,3 +22,5 @@ def main():
 
 if __name__ == '__main__':
     main()
+    ItemUnSelector()
+    ItemSelector()

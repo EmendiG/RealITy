@@ -2,26 +2,32 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="edc9251b-a03a-493d-8db3-6662d61b7a60" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/RealityWeb/RealityWeb/forms.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/RealityWeb/RealityWeb/templates/miasta/map.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/RealityWeb/RealityWeb/api/__init__.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/RealityWeb/RealityWeb/api/serializers.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/RealityWeb/RealityWeb/api/sklearnModel.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/RealityWeb/RealityWeb/api/urls.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/RealityWeb/RealityWeb/api/views.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/analityka.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/analityka.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/RealityWeb/RealityDjango/settings.py" beforeDir="false" afterPath="$PROJECT_DIR$/RealityWeb/RealityDjango/settings.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/RealityWeb/RealityDjango/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/RealityWeb/RealityDjango/urls.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/RealityWeb/RealityWeb/admin.py" beforeDir="false" afterPath="$PROJECT_DIR$/RealityWeb/RealityWeb/admin.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/RealityWeb/RealityWeb/migrations/0001_initial.py" beforeDir="false" afterPath="$PROJECT_DIR$/RealityWeb/RealityWeb/migrations/0001_initial.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/RealityWeb/RealityWeb/forms.py" beforeDir="false" afterPath="$PROJECT_DIR$/RealityWeb/RealityWeb/forms.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/RealityWeb/RealityWeb/migrations/0002_getpricemodel.py" beforeDir="false" afterPath="$PROJECT_DIR$/RealityWeb/RealityWeb/migrations/0002_getpricemodel.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/RealityWeb/RealityWeb/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/RealityWeb/RealityWeb/models.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/RealityWeb/RealityWeb/templates/home/base.html" beforeDir="false" afterPath="$PROJECT_DIR$/RealityWeb/RealityWeb/templates/home/base.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/RealityWeb/RealityWeb/templates/home/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/RealityWeb/RealityWeb/templates/home/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/RealityWeb/RealityWeb/templates/miasta/map.html" beforeDir="false" afterPath="$PROJECT_DIR$/RealityWeb/RealityWeb/templates/miasta/map.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/RealityWeb/RealityWeb/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/RealityWeb/RealityWeb/urls.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/RealityWeb/RealityWeb/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/RealityWeb/RealityWeb/views.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/RealityWeb/db.sqlite3" beforeDir="false" afterPath="$PROJECT_DIR$/RealityWeb/db.sqlite3" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/RealityWeb/manage.py" beforeDir="false" afterPath="$PROJECT_DIR$/RealityWeb/manage.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FavoritesManager">
+    <favorites_list name="analityka" />
   </component>
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
@@ -45,20 +51,20 @@
     <property name="DefaultHtmlFileTemplate" value="HTML File" />
     <property name="TODO_SCOPE" value="All Places" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$/RealityWeb/RealityWeb" />
-    <property name="settings.editor.selected.configurable" value="PyConsoleConfigurable.Python Console" />
+    <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
   </component>
   <component name="PyConsoleOptionsProvider">
     <option name="myPythonConsoleState">
       <console-settings module-name="analityka" sdk-home="D:\Anaconda3\envs\RealityEnv\python.exe" working-directory="$PROJECT_DIR$">
         <envs>
-          <env key="PATH" value="D:\Anaconda3\envs\RealityEnv;D:\Anaconda3\envs\RealityEnv\Library\mingw-w64\bin;D:\Anaconda3\envs\RealityEnv\Library\usr\bin;D:\Anaconda3\envs\RealityEnv\Library\bin;D:\Anaconda3\envs\RealityEnv\Scripts;D:\Anaconda3\envs\RealityEnv\bin;D:\Anaconda3\condabin;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0;C:\WINDOWS\System32\OpenSSH;C:\Program Files (x86)\NVIDIA Corporation\PhysX\Common;C:\Program Files\dotnet;C:\Program Files\Microsoft SQL Server\Client SDK\ODBC\170\Tools\Binn;D:\Git\cmd;C:\Program Files\Microsoft SQL Server\130\Tools\Binn;D:\Python 385\Scripts;D:\Python 385" />
+          <env key="PATH" value="PATH=D:\Anaconda3\envs\RealityEnv\\; D:\Anaconda3\envs\RealityEnv\Library\mingw-w64\bin\\; D:\Anaconda3\envs\RealityEnv\Library\usr\bin\\; D:\Anaconda3\envs\RealityEnv\Library\bin\\; D:\Anaconda3\envs\RealityEnv\Library\\; D:\Anaconda3\envs\RealityEnv\Scripts\\; D:\Anaconda3\envs\RealityEnv\bin\\; D:\Anaconda3\condabin\\; C:\WINDOWS\system32\\; C:\WINDOWS\\; C:\WINDOWS\System32\Wbem\\; C:\WINDOWS\System32\WindowsPowerShell\v1.0\\; C:\WINDOWS\System32\OpenSSH\\; C:\Program Files (x86)\NVIDIA Corporation\PhysX\Common\\; C:\Program Files\dotnet\\; C:\Program Files\Microsoft SQL Server\Client SDK\ODBC\170\Tools\Binn\\; D:\Git\cmd\\; C:\Program Files\Microsoft SQL Server\130\Tools\Binn\\; D:\Python 385\Scripts\\; D:\Python 385\\; D:\Anaconda3\envs\RealityEnv\Lib\site-packages\\" />
         </envs>
         <option name="useSoftWraps" value="true" />
         <option name="mySdkHome" value="D:\Anaconda3\envs\RealityEnv\python.exe" />
         <option name="myModuleName" value="analityka" />
         <option name="myEnvs">
           <map>
-            <entry key="PATH" value="D:\Anaconda3\envs\RealityEnv;D:\Anaconda3\envs\RealityEnv\Library\mingw-w64\bin;D:\Anaconda3\envs\RealityEnv\Library\usr\bin;D:\Anaconda3\envs\RealityEnv\Library\bin;D:\Anaconda3\envs\RealityEnv\Scripts;D:\Anaconda3\envs\RealityEnv\bin;D:\Anaconda3\condabin;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0;C:\WINDOWS\System32\OpenSSH;C:\Program Files (x86)\NVIDIA Corporation\PhysX\Common;C:\Program Files\dotnet;C:\Program Files\Microsoft SQL Server\Client SDK\ODBC\170\Tools\Binn;D:\Git\cmd;C:\Program Files\Microsoft SQL Server\130\Tools\Binn;D:\Python 385\Scripts;D:\Python 385" />
+            <entry key="PATH" value="PATH=D:\Anaconda3\envs\RealityEnv\\; D:\Anaconda3\envs\RealityEnv\Library\mingw-w64\bin\\; D:\Anaconda3\envs\RealityEnv\Library\usr\bin\\; D:\Anaconda3\envs\RealityEnv\Library\bin\\; D:\Anaconda3\envs\RealityEnv\Library\\; D:\Anaconda3\envs\RealityEnv\Scripts\\; D:\Anaconda3\envs\RealityEnv\bin\\; D:\Anaconda3\condabin\\; C:\WINDOWS\system32\\; C:\WINDOWS\\; C:\WINDOWS\System32\Wbem\\; C:\WINDOWS\System32\WindowsPowerShell\v1.0\\; C:\WINDOWS\System32\OpenSSH\\; C:\Program Files (x86)\NVIDIA Corporation\PhysX\Common\\; C:\Program Files\dotnet\\; C:\Program Files\Microsoft SQL Server\Client SDK\ODBC\170\Tools\Binn\\; D:\Git\cmd\\; C:\Program Files\Microsoft SQL Server\130\Tools\Binn\\; D:\Python 385\Scripts\\; D:\Python 385\\; D:\Anaconda3\envs\RealityEnv\Lib\site-packages\\" />
           </map>
         </option>
         <option name="myWorkingDirectory" value="$PROJECT_DIR$" />
@@ -389,7 +395,14 @@
       <option name="project" value="LOCAL" />
       <updated>1597515285264</updated>
     </task>
-    <option name="localTasksCounter" value="34" />
+    <task id="LOCAL-00034" summary="RealITy 0.2020.03.04 (added map)">
+      <created>1597865309163</created>
+      <option name="number" value="00034" />
+      <option name="presentableId" value="LOCAL-00034" />
+      <option name="project" value="LOCAL" />
+      <updated>1597865309163</updated>
+    </task>
+    <option name="localTasksCounter" value="35" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -437,7 +450,6 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="CHECK_NEW_TODO" value="false" />
-    <MESSAGE value="Get data and send to mysql localhost" />
     <MESSAGE value="RealITy" />
     <MESSAGE value="RealITy 2" />
     <MESSAGE value="RealITy 0.2020.02" />
@@ -462,17 +474,7 @@
     <MESSAGE value="RealITy 0.2020.03.02 (added Django framework)" />
     <MESSAGE value="RealITy 0.2020.03.02 (added Django framework + Apache webserver)" />
     <MESSAGE value="RealITy 0.2020.03.03 (added app - RealityWeb)" />
-    <option name="LAST_COMMIT_MESSAGE" value="RealITy 0.2020.03.03 (added app - RealityWeb)" />
-  </component>
-  <component name="XDebuggerManager">
-    <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://D:/Anaconda3/envs/RealityEnv/Lib/site-packages/jinja2/environment.py</url>
-          <line>4</line>
-          <option name="timeStamp" value="1" />
-        </line-breakpoint>
-      </breakpoints>
-    </breakpoint-manager>
+    <MESSAGE value="RealITy 0.2020.03.04 (added map)" />
+    <option name="LAST_COMMIT_MESSAGE" value="RealITy 0.2020.03.04 (added map)" />
   </component>
 </project>

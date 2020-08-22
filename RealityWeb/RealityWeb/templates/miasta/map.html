@@ -1,6 +1,7 @@
 {% extends "home/base.html" %}
-{% block content %}
+{% load crispy_forms_tags %}
 
+{% block content %}
     <meta name="viewport" content="width=\, initial-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
     <link
@@ -19,6 +20,7 @@
         height: 500px;
       }
     </style>
+    <script src="https://cdn.jsdelivr.net/npm/js-cookie@rc/dist/js.cookie.min.js"></script>
 
     <h1>RealityWeb Start Page</h1>
     <p> choose wisely </p>
@@ -26,66 +28,66 @@
 
     <div id="mapka">mapka</div>
     <p>
-      latitude: <span id="id_lat"></span>°<br />
-      longitude: <span id="id_lon"></span>°
+      latitude: <span id="idd_lat"></span>°<br />
+      longitude: <span id="idd_lon"></span>°
     </p>
 
     <div class="content-section">
-        <form method="POST">
+        <form method="post">
             {% csrf_token %}
             <fieldset>
                 <legend class="border-bottom mb-4">Dane do mapy</legend>
-                {{ form }}
+                {{ form | crispy }}
+
             </fieldset>
             <div class="form-group">
-                <button class="btn btn-outline-info" type="sumbit"> Submit </button>
+                <button class="btn btn-outline-info" type="sumbit"> Get the price </button>
             </div>
         </form>
     </div>
 
-    <script language="javascript">
-            const mymap = L.map('mapka').setView([0, 0], 6);
-            const attribution =
-                '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors';
+<script language="javascript" >
+    const mymap = L.map('mapka').setView([0, 0], 6);
+    const attribution =
+        '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors';
 
-            const tileUrl = 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
-            const tiles = L.tileLayer(tileUrl, { attribution });
-            tiles.addTo(mymap);
+    const tileUrl = 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
+    const tiles = L.tileLayer(tileUrl, { attribution });
+    tiles.addTo(mymap);
 
 
-            var DomIcon = L.Icon.extend({
-                                options: {
-                                   iconSize:     [30, 50],
-                                   iconAnchor:   [15, 50],
-                                   popupAnchor: [0, -50],
-                                }
-                            });
-            var domekIcon = new DomIcon({
-                iconUrl: 'static/images/domek.png'
-            });
+    var DomIcon = L.Icon.extend({
+                        options: {
+                           iconSize:     [30, 50],
+                           iconAnchor:   [15, 50],
+                           popupAnchor: [0, -50],
+                        }
+                    });
+    var domekIcon = new DomIcon({
+        iconUrl: 'static/images/domek.png'
+    });
 
-            mymap.setView([52.237, 21.017], 11);
+    mymap.setView([52.237, 21.017], 11);
 
-            var marker  = null;
+    var marker  = null;
 
-            mymap.on("contextmenu", async function (e) {
-                if (marker !== null) {
-                    mymap.removeLayer( marker );
-                }
-                marker = L.marker(e.latlng).setIcon(domekIcon).addTo( mymap );
-                marker.on('dblclick', function(e){ mymap.removeLayer(e.target)})
-                var lat = e.latlng.lat.toFixed(4),
-                    lng = e.latlng.lng.toFixed(4);
-                console.log('LAT:' + lat + ' LON: ' + lng );
+    mymap.on("click", async function (e) {
+        if (marker !== null) {
+            mymap.removeLayer( marker );
+        }
+        marker = L.marker(e.latlng).setIcon(domekIcon).addTo( mymap );
+        marker.on('dblclick', function(e){ mymap.removeLayer(e.target)})
+        var lat = e.latlng.lat.toFixed(4),
+            lng = e.latlng.lng.toFixed(4);
 
-                document.getElementById('id_lat').textContent = e.latlng.lat.toFixed(4);
-                document.getElementById('id_lon').textContent = e.latlng.lng.toFixed(4);
-                document.getElementById( '{{ form.lat.id_for_label }}' ).value = e.latlng.lat.toFixed(4);
-                document.getElementById( '{{ form.lon.id_for_label }}' ).value = e.latlng.lng.toFixed(4);
-                var a = document.getElementById( '{{ form.lat.id_for_label }}' ).value;
-                var b = document.getElementById( '{{ form.lon.id_for_label }}' ).value;
-                console.log('LAT:' + lat + ' LON: ' + lng + ' ' + a + ' ' + b );
-            });
-        </script>
+        document.getElementById('idd_lat').textContent = lat;
+        document.getElementById('idd_lon').textContent = lng;
+        document.getElementById( '{{ form.lat.id_for_label }}' ).value = lat;
+        document.getElementById( '{{ form.lon.id_for_label }}' ).value = lng;
 
+        var csrftokenek = Cookies.get('csrftoken');
+        document.getElementById( '{{ form.tagi.id_for_label }}' ).value = csrftokenek;
+    });
+</script>
 {% endblock content %}
+
