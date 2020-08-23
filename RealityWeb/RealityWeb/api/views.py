@@ -9,6 +9,7 @@ from rest_framework import status
 from rest_framework import viewsets
 
 from django.http import JsonResponse
+from django.contrib import messages
 
 import pandas as pd
 import pickle
@@ -43,16 +44,15 @@ class GetPriceApiModel(viewsets.ModelViewSet):
 def getprice(request):
     try:
         myData = request.data
-
         df = pd.DataFrame(myData, index=[0])
-        table_preparation()
+        print(table_preparation())
+        messages.success(request, table_preparation())
         return JsonResponse(myData, safe=False)
     except ValueError as e:
         return Response(e.args[0], status.HTTP_400_BAD_REQUEST)
 
 def table_preparation():
-
-    file = open('RealityWeb/api/finalized_model_warszawa.sav', 'rb')
+    file = open('RealityWeb/api/col_model_warszawa.sav', 'rb')
     pickle_loaded = pickle.load(file)
     #df_pickle = pd.read_pickle('RealityWeb/api/finalized_model_warszawa.sav')
     print(pickle_loaded)

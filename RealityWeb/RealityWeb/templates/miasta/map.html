@@ -27,10 +27,16 @@
     <div><h1>Here comes my folium map:</h1></div>
 
     <div id="mapka">mapka</div>
-    <p>
-      latitude: <span id="idd_lat"></span>°<br />
-      longitude: <span id="idd_lon"></span>°
-    </p>
+
+    {% if messages %}
+    <ul class="messages">
+        {% for message in messages %}
+        <li {% if message.tags %} class="{{message.tags }}" {% endif %}>
+            {{ message }}
+        </li>
+        {% endfor %}
+    </ul>
+    {% endif %}
 
     <div class="content-section">
         <form method="post">
@@ -45,6 +51,12 @@
             </div>
         </form>
     </div>
+
+
+    <p>
+      latitude: <span id="idd_lat"></span>°<br />
+      longitude: <span id="idd_lon"></span>°
+    </p>
 
 <script language="javascript" >
     const mymap = L.map('mapka').setView([0, 0], 6);

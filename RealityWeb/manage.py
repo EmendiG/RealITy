@@ -24,3 +24,9 @@ if __name__ == '__main__':
     main()
     ItemUnSelector()
     ItemSelector()
+
+
+    global varGlobal
+    varGlobal = 'varGlobal'
+    print(id(varGlobal))
+

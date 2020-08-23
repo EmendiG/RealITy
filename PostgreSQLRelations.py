@@ -31,7 +31,7 @@ def PostgreSQL_getrelations_WayRelmultprocess_checking(arr_feature_miasto, arr_o
                 elif poly[2].geom_type == 'MultiPolygon':
                     for r in poly[2]:
                         if r.exterior.distance(point[22]) < 0.004:
-                            if point[6] not in temp_relation_dict.keys():
+                            if point[6] not in temp_relation_dict.keys():  #czemu kurwa 6?? a nie 5
                                 temp_relation_dict[point[5]].append(poly[0])
                                 df_merged.loc[i] = [point[5], poly[0], miasto]
                                 i += 1
@@ -40,26 +40,6 @@ def PostgreSQL_getrelations_WayRelmultprocess_checking(arr_feature_miasto, arr_o
                                 df_merged.loc[i] = [point[5], poly[0], miasto]
                                 i += 1
     return df_merged
-
-def PostgreSQL_getrelations_Nodemultprocess_checking(arr_feature_miasto, arr_oferty_miasto, start, end, miasto, num_of_process):
-    df_merged = pd.DataFrame(columns=['Ident_oferty', 'Ident_feature', 'Miasto'])
-    i = 0
-    if end - start > 10:
-        howmanymore = round((end - start)/10)
-    else:
-        howmanymore = 1
-    approximation = (end - start)
-    print(f'Process {num_of_process} is ready')
-    for n, point in enumerate(arr_oferty_miasto):
-        if start <= n <= end:
-            if n % howmanymore == 0:
-                print(f'Process {num_of_process} is {round((n - start) / approximation * 100)} % done')
-            for node in arr_feature_miasto:
-                if point[22].distance(node[7]) < 0.004:
-                    df_merged.loc[i] = [point[5], node[0], miasto]
-                    i += 1
-    return df_merged
-
 
 def PostgreSQL_getrelations_WayRelmultprocess(miasto:str, tabletolookin:str, tablecompared:str):
     conn = PostgreSQLModifier.PostgreSQL_connectSQLalchemy()
@@ -86,6 +66,26 @@ def PostgreSQL_getrelations_WayRelmultprocess(miasto:str, tabletolookin:str, tab
     timeend = time.time()
     print(timeend - timestart)
     return f1.result().append(f2.result()).append(f3.result()).append(f4.result()).reset_index(drop=True)
+
+
+def PostgreSQL_getrelations_Nodemultprocess_checking(arr_feature_miasto, arr_oferty_miasto, start, end, miasto, num_of_process):
+    df_merged = pd.DataFrame(columns=['Ident_oferty', 'Ident_feature', 'Miasto'])
+    i = 0
+    if end - start > 10:
+        howmanymore = round((end - start)/10)
+    else:
+        howmanymore = 1
+    approximation = (end - start)
+    print(f'Process {num_of_process} is ready')
+    for n, point in enumerate(arr_oferty_miasto):
+        if start <= n <= end:
+            if n % howmanymore == 0:
+                print(f'Process {num_of_process} is {round((n - start) / approximation * 100)} % done')
+            for node in arr_feature_miasto:
+                if point[22].distance(node[7]) < 0.004:
+                    df_merged.loc[i] = [point[5], node[0], miasto]
+                    i += 1
+    return df_merged
 
 def PostgreSQL_getrelations_Nodemultprocess(miasto:str, tabletolookin:str, tablecompared:str):
     conn = PostgreSQLModifier.PostgreSQL_connectSQLalchemy()
@@ -138,7 +138,7 @@ def PostgreSQL_getrelations(tablecompared:str="oferty_merged"):
 
 
 def PostgreSQL_getfeatures_multprocess_checking(arr_Shop_Node_miasto, arr_Shop_Node_relation_miasto, start, end, num_of_process):
-
+    """ Check tables and return NAMES of features NOT Idents """
     temp_dict = defaultdict(list)
     howmanymore = round((end - start) / 10)
     approximation = end - start

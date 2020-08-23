@@ -41,7 +41,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'mapwidgets', # wtf is that?
     'rest_framework',
-    'crispy_forms',
+    'crispy_forms'
 ]
 
 MIDDLEWARE = [

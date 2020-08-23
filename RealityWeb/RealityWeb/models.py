@@ -100,4 +100,4 @@ class GetPriceModel(models.Model):
                                       ('wtorny', 'wtorny')
                              ]
     )
-    tagi =  models.TextField(max_length=200)
+    tagi =  models.CharField(max_length=200)

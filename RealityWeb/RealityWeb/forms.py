@@ -1,6 +1,6 @@
 from django import forms
 from .models import GetPriceModel
-from django.forms.widgets import HiddenInput
+from django.forms.widgets import HiddenInput, Textarea
 # from crispy_forms.helper import FormHelper
 # from crispy_forms.layout import Layout, Div, Field
 
@@ -27,8 +27,9 @@ class GetPriceForm(forms.ModelForm):
             'material': forms.Select(attrs={'class': 'form-control m-input form-control-sm'}),
             'okna': forms.Select(attrs={'class': 'form-control m-input form-control-sm'}),
             'rynek': forms.Select(attrs={'class': 'form-control m-input form-control-sm'}),
-            'opis': forms.Textarea(attrs={'class': 'form-control m-input form-control-sm'})
+            'tagi': forms.Textarea(attrs={'class': 'form-control m-input form-control-sm'})
         }
+
 
     def __init__(self, *args, **kwargs):
         super(GetPriceForm, self).__init__(*args, **kwargs)
