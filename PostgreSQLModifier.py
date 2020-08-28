@@ -22,6 +22,9 @@ class Strona:
         elif self.serwis == 'gratka':
             import gratkapy as serwer
             return serwer
+        elif self.serwis == 'morizon':
+            import morizonpy as serwer
+            return serwer
 
     def sqldbMaker(self):
         conn = PostgreSQL_connectSQLalchemy()

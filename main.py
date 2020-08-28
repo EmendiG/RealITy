@@ -14,8 +14,8 @@ miastaDict = {'warszawa': 'Warszawa', 'krakow': 'Kraków', 'lodz': 'Łódź', 'w
 
 now = datetime.datetime.now()
 
-def get_data(miasto, serwis):
-    """Serwis = otodom / gratka"""
+def get_data(miasto:str, serwis:str):
+    """Serwis = otodom / gratka / morizon"""
     urls_file = csv.reader(open(f"{serwis}/urls_{serwis}_{miasto}.csv", "r", encoding="utf-8"))
     urls = []
     for row in urls_file:
@@ -26,7 +26,7 @@ def get_data(miasto, serwis):
     conn = PostgreSQLModifier.PostgreSQL_connectSQLalchemy()
 
     for n, url in enumerate(urls):
-        if n < 30:
+        if n:
             try:
                 url = urls[n]
                 print(n)
@@ -91,7 +91,8 @@ def get_data(miasto, serwis):
     conn.close()
 
 
-# get_data('warszawa', 'otodom')
+get_data('warszawa', 'morizon')
+
 # help(postgresql_modifier.oferty_Merger)
 # postgresql_modifier.oferty_Merger('otodom', 'gratka', 'merged')
 

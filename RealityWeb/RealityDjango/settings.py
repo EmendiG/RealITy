@@ -26,20 +26,19 @@ SECRET_KEY = '41f29didj^r0hjxbyi*%mp89vn6*ll0l@o@8jja%t3($xtkei8'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['.localhost', '127.0.0.1']
+ALLOWED_HOSTS = ['localhost', '127.0.0.1']
 
 
 # Application definition
 
 INSTALLED_APPS = [
-    'RealityWeb.apps.RealitywebConfig',
+    'RealityWeb',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'mapwidgets', # wtf is that?
     'rest_framework',
     'crispy_forms'
 ]
@@ -152,5 +151,4 @@ REST_FRAMEWORK = {
             'rest_framework.parsers.JSONParser',
             'rest_framework.parsers.FormParser',
     )
-
 }

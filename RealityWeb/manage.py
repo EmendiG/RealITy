@@ -9,6 +9,7 @@ def main():
     root_path = os.path.abspath(os.path.split(__file__)[0])
     sys.path.append(root_path)
     os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'RealityDjango.settings')
+    os.environ['FOR_IGNORE_EXCEPTIONS'] = '1'
     try:
         from django.core.management import execute_from_command_line
     except ImportError as exc:
@@ -24,9 +25,4 @@ if __name__ == '__main__':
     main()
     ItemUnSelector()
     ItemSelector()
-
-
-    global varGlobal
-    varGlobal = 'varGlobal'
-    print(id(varGlobal))
 

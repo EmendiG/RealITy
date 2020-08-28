@@ -33,12 +33,7 @@ def about(request):
 
 
 def show_map(request):
-
-    # https://django-map-widgets.readthedocs.io/en/latest/
-    # https://stackoverflow.com/questions/21387432/add-marker-on-a-map-and-catch-the-point-value-to-a-django-form-ajax-geodjango
-    # https://stackoverflow.com/questions/21415765/passing-value-to-a-form-input-field-inside-a-jquery-dialogbox
-
-    form = GetPriceForm(request.POST or None)
+    form = GetPriceForm(request.POST)
     # print('sessionid: ', request.COOKIES)
     # print('\n_auth_user_hash: ', request.session.get('_auth_user_hash'))
 
@@ -62,13 +57,3 @@ def show_map(request):
 #         return JsonResponse(myData, safe=False)
 #     except ValueError as e:
 #         return Response(e.args[0], status.HTTP_400_BAD_REQUEST)
-#
-#
-# def table_preparation():
-#     file = open('RealityWeb/api/col_model_warszawa.sav', 'rb')
-#     pickle_loaded = pickle.load(file)
-#     return pickle_loaded
-#     #df_pickle = pd.read_pickle('RealityWeb/api/finalized_model_warszawa.sav')
-#     #print(pickle_loaded)
-#
-# # csrf = YcPMp3I2jW47t11ero6OymLkcGVmgcRG7ImyxEU0L00xEzTenD8yMOiQbU8Qkimk
