@@ -78,7 +78,10 @@ def get_lon_lat(soup):
     parses = soup.find_all("div", attrs={"class": "mz-card__item"})[1].find_all('div', attrs={'class': 'GoogleMap'})
     if parses:
         long = parses[0].get('data-lng')
+        long = round(float(long), 4)
         lati = parses[0].get('data-lat')
+        lati = round(float(lati), 4)
+
         return long, lati
 
 
@@ -109,40 +112,38 @@ def get_price_per_metr(soup):
     return price_per_metr
 
 def get_rynek(table):
-    try:
+    if table:
         for tr in table.table.find_all('tr'):
             if 'Rynek: ' in str(tr.th):
                 return str(tr.td.text).strip()
-    except:
         return 'NaN'
 
 def get_typzabudowy(table):
-    try:
+    if table:
         table_2 = table.find_all('table')[1]
         for tr in table_2.find_all('tr'):
             if 'Typ budynku: ' in str(tr.th):
                 return str(tr.td.text).strip().lower()
-    except:
         return 'NaN'
 
+
 def get_rokbudowy(table):
-    try:
+    if table:
         table_2 = table.find_all('table')[1]
         for tr in table_2.find_all('tr'):
             if 'Rok budowy: ' in str(tr.th):
                 return str(tr.td.text).strip()
-    except:
         return 'NaN'
 
 def get_liczbapokoi(soup):
-    try:
+    if soup:
         roomnumber = soup.find('li', attrs={'class': 'paramIconNumberOfRooms'})
         return  roomnumber.em.get_text()
-    except:
+    else:
         return 'NaN'
 
 def get_pietro(table):
-    try:
+    if table:
         for tr in table.table.find_all('tr'):
             if 'Piętro: ' in str(tr.th):
                 pietro = str(tr.td.text).strip()
@@ -150,11 +151,10 @@ def get_pietro(table):
                     return pietro.split('/')[0].strip()
                 else:
                     return pietro
-    except:
         return 'NaN'
 
 def get_maxliczbapieter(table):
-    try:
+    if table:
         for tr in table.table.find_all('tr'):
             if 'Liczba pięter: ' in str(tr.th):
                 return str(tr.td.text).strip()
@@ -162,61 +162,54 @@ def get_maxliczbapieter(table):
                 maxpietro = str(tr.td.text).strip()
                 if '/' in maxpietro:
                     return maxpietro.split('/')[1].strip()
-    except:
         return 'NaN'
 
 def get_parking(table):
-    try:
+    if table:
         for h3 in table.find_all('h3'):
             if 'Udogodnienia' in h3.text:
                 if re.findall('parking', h3.findNext('p').text):
                     return 'garaz'
-    except:
         return 'NaN'
 
 def get_kuchnia(table):
-    try:
+    if table:
         table_2 = table.find_all('table')[0]
         for tr in table_2.find_all('tr'):
             if 'Typ kuchni: ' in str(tr.th):
                 return str(tr.td.text).strip().lower()
-    except:
         return 'NaN'
 
 def get_wlasnosc(table):
-    try:
+    if table:
         table_2 = table.find_all('table')[0]
         for tr in table_2.find_all('tr'):
             if 'Forma własności: ' in str(tr.th):
                 return str(tr.td.text).strip().lower()
-    except:
         return 'NaN'
 
 def get_stan(table):
-    try:
+    if table:
         table_2 = table.find_all('table')[0]
         for tr in table_2.find_all('tr'):
             if 'Stan nieruchomości: ' in str(tr.th):
                 return str(tr.td.text).strip().lower()
-    except:
         return 'NaN'
 
 def get_material(table):
-    try:
+    if table:
         table_2 = table.find_all('table')[1]
         for tr in table_2.find_all('tr'):
             if 'Materiał budowlany: ' in str(tr.th):
                 return str(tr.td.text).strip().lower()
-    except:
         return 'NaN'
 
 def get_okna(table):
-    try:
+    if table:
         table_2 = table.find_all('table')[0]
         for tr in table_2.find_all('tr'):
             if 'Stolarka okienna: ' in str(tr.th):
                 return str(tr.td.text).strip().lower()
-    except:
         return 'NaN'
 
 def get_opis(soup):

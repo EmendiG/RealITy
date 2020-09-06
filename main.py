@@ -4,7 +4,7 @@ import PostgreSQLModifier
 import OpenStreetMapOverpass
 import datetime
 import RealityLearning
-
+from time import sleep
 
 miasta = ['warszawa', 'krakow', 'lodz',  'wroclaw', 'poznan', 'gdansk', 'szczecin', 'bydgoszcz', 'lublin','bialystok'] #
 
@@ -26,8 +26,9 @@ def get_data(miasto:str, serwis:str):
     conn = PostgreSQLModifier.PostgreSQL_connectSQLalchemy()
 
     for n, url in enumerate(urls):
-        if n:
+        if n > 18524:
             try:
+                sleep(1.8)
                 url = urls[n]
                 print(n)
                 print(url)

@@ -30,7 +30,7 @@ class Strona:
         conn = PostgreSQL_connectSQLalchemy()
         metadata = MetaData()
         users = Table('oferty_{}'.format(self.serwis), metadata,
-                      Column('index', Integer, autoincrement=True, primary_key=True),
+                      # Column('index', Integer, autoincrement=True, primary_key=True),
                       Column('Price', Float),
                       Column('Area', Float),
                       Column('Price_per_metr', Float),
@@ -82,7 +82,7 @@ def PosgreSQL_getcolumns(tablename):
     colnames = [desc[0] for desc in cursor.description]
     return colnames
 
-def oferty_Merger(bd_base: str, bd_comp: str, db_nowa: str):
+def oferty_Merger(db_base: str, db_comp: str, db_nowa: str):
     '''
        CHECK 2 DBs (bd_base + bd_comp) IF RECORDS DON'T OVERLAP THEN MERGE THEM INTO (db_nowa)
        IF (db_nowa) EXISTS THEN merging result of DBs (db_base + db_comp + db_nowa) IS APPENDED TO (db_nowa)
@@ -91,27 +91,27 @@ def oferty_Merger(bd_base: str, bd_comp: str, db_nowa: str):
     start = time.time()
     con = PostgreSQL_connectPsycopg2()
     conn = PostgreSQL_connectSQLalchemy()
-    df_get = pd.read_sql_query('SELECT * FROM oferty_{}'.format(bd_comp), con=conn)
+    df_get = pd.read_sql_query('SELECT * FROM oferty_{}'.format(db_comp), con=conn)
 
     for miasto in df_get['Miasto'].unique().tolist():
         arr_comp = np.empty((0, 5), float)
         arr_base = np.empty((0, 5), float)
         if miasto:
-            df_base = pd.read_sql_query("""SELECT * FROM oferty_{} WHERE "Miasto"='{}'""".format(bd_base, miasto),
+            df_base = pd.read_sql_query("""SELECT * FROM oferty_{} WHERE "Miasto"='{}'""".format(db_base, miasto),
                                         con=conn)
-            df_comp = pd.read_sql_query("""SELECT * FROM oferty_{} WHERE "Miasto"='{}'""".format(bd_comp, miasto),
+            df_comp = pd.read_sql_query("""SELECT * FROM oferty_{} WHERE "Miasto"='{}'""".format(db_comp, miasto),
                                         con=conn)
 
             for index, row in df_comp.iterrows():
                 if int(index) % 1000 == 0:
-                    print(f'Wprowadzam dane z db oferty_{bd_comp}', index, '/', df_comp.shape[0],
+                    print(f'Wprowadzam dane z db oferty_{db_comp}', index, '/', df_comp.shape[0],
                           'do tymczasowego array dla', miasto)
                 arr_comp = np.concatenate(
                     (arr_comp, [[index, row['Price_per_metr'], row['Area'], row['Latitude'], row['Longitude']]]),
                     axis=0)
             for xedni, wor in df_base.iterrows():
                 if int(xedni) % 1000 == 0:
-                    print(f'Wprowadzam dane z db oferty_{bd_base}', xedni, '/', df_base.shape[0],
+                    print(f'Wprowadzam dane z db oferty_{db_base}', xedni, '/', df_base.shape[0],
                           'do tymczasowego array dla', miasto)
                 arr_base = np.concatenate(
                     (arr_base, [[xedni, wor['Price_per_metr'], wor['Area'], wor['Latitude'], wor['Longitude']]]),
@@ -121,7 +121,7 @@ def oferty_Merger(bd_base: str, bd_comp: str, db_nowa: str):
             for row in arr_comp:
                 index = int(row[0])
                 if index % 1000 == 0:
-                    print(f'Sprawdzam dane z dbs {bd_base} i {bd_comp}', index, '/', arr_comp.shape[0])
+                    print(f'Sprawdzam dane z dbs {db_base} i {db_comp}', index, '/', arr_comp.shape[0])
                 for wor in arr_base:
                     if row[1] == wor[1] and row[2] == wor[2] and abs(float(wor[3]) - float(row[3])) < 0.001 \
                             and abs(float(wor[4]) - float(row[4])) < 0.001:
@@ -130,8 +130,8 @@ def oferty_Merger(bd_base: str, bd_comp: str, db_nowa: str):
             dobre = [row[0] for row in arr_comp if row[0] not in wyniki]
             print(f'Wprowadzam dane do db {db_nowa} = {len(dobre)} nowych rekordow')
             df_comp = \
-            pd.read_sql("""SELECT * FROM oferty_{} WHERE "Miasto"='{}'""".format(bd_comp, miasto), con=conn).iloc[dobre]
-            df_base = pd.read_sql("""SELECT * FROM oferty_{}""".format(bd_base), con=conn)
+            pd.read_sql("""SELECT * FROM oferty_{} WHERE "Miasto"='{}'""".format(db_comp, miasto), con=conn).iloc[dobre]
+            df_base = pd.read_sql("""SELECT * FROM oferty_{}""".format(db_base), con=conn)
             df_comp_len = df_comp.shape[0]
 
             tabela = PosgreSQL_gettables()

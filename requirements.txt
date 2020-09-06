@@ -1,0 +1,103 @@
+argon2-cffi==20.1.0
+asgiref @ file:///home/conda/feedstock_root/build_artifacts/asgiref_1592528583041/work
+attrs==19.3.0
+backcall @ file:///home/conda/feedstock_root/build_artifacts/backcall_1592338393461/work
+backports.functools-lru-cache==1.6.1
+beautifulsoup4==4.9.1
+bleach==3.1.5
+branca @ file:///home/conda/feedstock_root/build_artifacts/branca_1588860304135/work
+brotlipy==0.7.0
+certifi==2020.6.20
+cffi @ file:///D:/bld/cffi_1595805794566/work
+chardet==3.0.4
+click==7.1.2
+click-plugins==1.1.1
+cligj==0.5.0
+colorama==0.4.3
+cryptography @ file:///D:/bld/cryptography_1595349005639/work
+decorator==4.4.2
+defusedxml==0.6.0
+Django @ file:///home/conda/feedstock_root/build_artifacts/django_1596543024352/work
+django-crispy-forms==1.9.2
+django-filter==2.3.0
+django-map-widgets==0.3.0
+djangorestframework==3.11.1
+entrypoints==0.3
+Fiona==1.8.13
+folium @ file:///home/conda/feedstock_root/build_artifacts/folium_1588861378954/work
+geojson==2.5.0
+geopandas @ file:///tmp/build/80754af9/geopandas_1594937497867/work
+idna @ file:///home/conda/feedstock_root/build_artifacts/idna_1593328102638/work
+ipykernel @ file:///D:/bld/ipykernel_1595447084845/work/dist/ipykernel-5.3.4-py3-none-any.whl
+ipython @ file:///D:/bld/ipython_1596256504166/work
+ipython-genutils==0.2.0
+ipywidgets==7.5.1
+jedi @ file:///D:/bld/jedi_1595018491768/work
+Jinja2==2.11.2
+joblib @ file:///home/conda/feedstock_root/build_artifacts/joblib_1593624380152/work
+jsonschema==3.2.0
+jupyter==1.0.0
+jupyter-client @ file:///home/conda/feedstock_root/build_artifacts/jupyter_client_1594732094290/work
+jupyter-console==6.1.0
+jupyter-core==4.6.3
+lxml @ file:///D:/bld/lxml_1594322910610/work
+Markdown==3.2.2
+MarkupSafe==1.1.1
+mistune==0.8.4
+mkl-service==2.3.0
+mod-wsgi==4.7.1
+munch==2.5.0
+nbconvert==5.6.1
+nbformat==5.0.7
+nose==1.3.7
+notebook==6.1.3
+numpy==1.19.1
+overpass==0.7
+overpy==0.4
+packaging==20.4
+pandas @ file:///D:/bld/pandas_1595958702229/work
+pandocfilters==1.4.2
+parso @ file:///home/conda/feedstock_root/build_artifacts/parso_1595548966091/work
+pickleshare==0.7.5
+prometheus-client==0.8.0
+prompt-toolkit @ file:///home/conda/feedstock_root/build_artifacts/prompt-toolkit_1597061474901/work
+psycopg2 @ file:///C:/ci/psycopg2_1594305172475/work
+psycopg2-binary==2.8.5
+pycparser @ file:///home/conda/feedstock_root/build_artifacts/pycparser_1593275161868/work
+Pygments==2.6.1
+pyOpenSSL==19.1.0
+pyparsing==2.4.7
+pyproj @ file:///D:/bld/pyproj_1595910733419/work
+pyrsistent==0.16.0
+PySocks==1.7.1
+python-dateutil==2.8.1
+pytz==2020.1
+pywin32==227
+pywinpty==0.5.7
+pyzmq==19.0.2
+qtconsole==4.7.6
+QtPy==1.9.0
+requests @ file:///tmp/build/80754af9/requests_1592841827918/work
+Rtree==0.9.4
+scikit-learn @ file:///D:/bld/scikit-learn_1596546339435/work
+scipy @ file:///C:/ci/scipy_1592916963468/work
+Send2Trash==1.5.0
+Shapely==1.7.0
+six @ file:///home/conda/feedstock_root/build_artifacts/six_1590081179328/work
+sklearn==0.0
+soupsieve @ file:///home/conda/feedstock_root/build_artifacts/soupsieve_1597680516047/work
+SQLAlchemy @ file:///D:/bld/sqlalchemy_1593116549410/work
+sqlparse==0.3.1
+style==1.1.0
+terminado==0.8.3
+testpath==0.4.4
+threadpoolctl @ file:///tmp/tmp79xdzxkt/threadpoolctl-2.1.0-py3-none-any.whl
+tornado==6.0.4
+traitlets==4.3.3
+update==0.0.1
+urllib3 @ file:///home/conda/feedstock_root/build_artifacts/urllib3_1595434816409/work
+wcwidth @ file:///home/conda/feedstock_root/build_artifacts/wcwidth_1595859607677/work
+webencodings==0.5.1
+widgetsnbextension==3.5.1
+win-inet-pton==1.1.0
+wincertstore==0.2
