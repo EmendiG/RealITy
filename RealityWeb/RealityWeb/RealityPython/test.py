@@ -11,7 +11,18 @@ from math import log2
 import gzip
 import re
 import time
-db_dane = {'name': 'RealITy', 'password': 'Reality1!', 'hostname': '127.0.0.1', 'db_name': 'realestate_zero'}
+import os 
+
+POSTGRES_HOST = os.environ.get('POSTGRES_HOST', default="postgres")
+POSTGRES_USER = os.environ.get('POSTGRES_USER', default="realityadmin")
+POSTGRES_PASSWORD = os.environ.get('POSTGRES_PASSWORD', default="Reality1!")
+
+db_dane = {
+            'name': POSTGRES_USER, 
+            'password': POSTGRES_PASSWORD, 
+            'hostname': POSTGRES_HOST, 
+            'db_name': 'realestate_zero'
+}
 
 def PostgreSQL_connectSQLalchemy():
     db_connection_str = 'postgresql://{name}:{password}@{hostname}/{db_name}'.format(**db_dane)

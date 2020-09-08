@@ -1,0 +1,76 @@
+version: "3.7"
+
+x-service-volumes: &service-volumes
+    - ./:/app/:rw,cached
+
+x-database-variables: &database-variables
+    POSTGRES_DB: RealityWeb
+    POSTGRES_USER: realityadmin
+    POSTGRES_PASSWORD: Reality1!
+
+x-app-variables: &app-variables
+    <<: *database-variables
+    POSTGRES_HOST: postgres
+
+services:
+    website:
+        image: realityweb:latest
+        command: python manage.py runserver 0.0.0.0:8000
+        volumes: *service-volumes
+        depends_on: 
+            - db_migrate
+        ports:
+            - "8000:8000"
+    db_migrate:
+        image: realityweb:latest
+        command: python manage.py migrate
+        volumes: *service-volumes
+        environment: *app-variables
+        depends_on: 
+            - postgres
+
+    postgres:
+        image: kartoza/postgis:latest
+        restart: always
+        environment:
+            POSTGRES_USER: realityadmin
+            POSTGRES_PASSWORD: Reality1!
+            POSTGRES_DB: RealityWeb,realestate_zero
+            POSTGRES_MULTIPLE_EXTENSIONS: postgis
+        ports: 
+            - "5432:5432"
+        #volumes:
+        #    -  ./create_second_db.sh:/docker-entrypoint-initdb.d/create_second_db.sh
+        #   - db-data:/var/lib/postgresql/data
+
+    # postgres2:
+    #     image: mdillon/postgis:latest
+    #     environment: 
+    #         POSTGRES_DB: realestate_zero
+    #         POSTGRES_USER: realityadmin
+    #         POSTGRES_PASSWORD: Reality1!
+    #     ports: 
+    #         - "5432:5432"
+    #     volumes:
+    #         - db-data2:/var/lib/postgresql/data
+
+
+    pgadmin:
+        image: dpage/pgadmin4:4.20
+        depends_on:
+            - postgres
+        ports:
+            - "5555:80"
+        environment:
+            PGADMIN_DEFAULT_EMAIL: pgadmin4@pgadmin.org
+            PGADMIN_DEFAULT_PASSWORD: admin
+        restart: unless-stopped
+            
+            
+
+#volumes:
+#    db-data:
+
+
+
+

@@ -77,23 +77,30 @@ WSGI_APPLICATION = 'RealityDjango.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/3.1/ref/settings/#databases
 
+
+
+POSTGRES_HOST = os.environ.get('POSTGRES_HOST', default="postgres")
+POSTGRES_DB = os.environ.get('POSTGRES_DB', default="RealityWeb")
+POSTGRES_USER = os.environ.get('POSTGRES_USER', default="realityadmin")
+POSTGRES_PASSWORD = os.environ.get('POSTGRES_PASSWORD', default="Reality1!")
+
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': 'RealityWeb',
-        'USER': 'realityadmin',
-        'PASSWORD': 'Reality1!',
-        'HOST': 'localhost',
-        'PORT': '',
+        'USER': POSTGRES_USER,
+        'PASSWORD': POSTGRES_PASSWORD,
+        'HOST': POSTGRES_HOST,
+        'PORT': 5432,
     },
 
     'realestate_zero': {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': 'realestate_zero',
-        'USER': 'realityadmin',
-        'PASSWORD': 'Reality1!',
-        'HOST': 'localhost',
-        'PORT': '',
+        'USER': POSTGRES_USER,
+        'PASSWORD': POSTGRES_PASSWORD,
+        'HOST': POSTGRES_HOST,
+        'PORT': 5432,
     },
 
     # 'default': {

@@ -1,13 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="edc9251b-a03a-493d-8db3-6662d61b7a60" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PostgreSQLModifier.py" beforeDir="false" afterPath="$PROJECT_DIR$/PostgreSQLModifier.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/RealityWeb/RealityDjango/settings.py" beforeDir="false" afterPath="$PROJECT_DIR$/RealityWeb/RealityDjango/settings.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/morizonpy.py" beforeDir="false" afterPath="$PROJECT_DIR$/morizonpy.py" afterDir="false" />
-    </list>
+    <list default="true" id="edc9251b-a03a-493d-8db3-6662d61b7a60" name="Default Changelist" comment="" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -411,7 +405,14 @@
       <option name="project" value="LOCAL" />
       <updated>1598602616019</updated>
     </task>
-    <option name="localTasksCounter" value="38" />
+    <task id="LOCAL-00038" summary="RealITy 0.2020.03.07 (docker preparing)">
+      <created>1599391011099</created>
+      <option name="number" value="00038" />
+      <option name="presentableId" value="LOCAL-00038" />
+      <option name="project" value="LOCAL" />
+      <updated>1599391011099</updated>
+    </task>
+    <option name="localTasksCounter" value="39" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -459,7 +460,6 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="CHECK_NEW_TODO" value="false" />
-    <MESSAGE value="RealITy 0.2020.02.01" />
     <MESSAGE value="RealITy 0.2020.02.03" />
     <MESSAGE value="RealITy 0.2020.02.03 (added gpd.gdf)" />
     <MESSAGE value="RealITy 0.2020.02.03 (changed mysql to postgresql, cuz of geometry(Polygons))" />
@@ -484,6 +484,7 @@
     <MESSAGE value="RealITy 0.2020.03.05 (added API)" />
     <MESSAGE value="RealITy 0.2020.03.06 (added API + ML price prediction)" />
     <MESSAGE value="RealITy 0.2020.03.06 (added morizonpy)" />
-    <option name="LAST_COMMIT_MESSAGE" value="RealITy 0.2020.03.06 (added morizonpy)" />
+    <MESSAGE value="RealITy 0.2020.03.07 (docker preparing)" />
+    <option name="LAST_COMMIT_MESSAGE" value="RealITy 0.2020.03.07 (docker preparing)" />
   </component>
 </project>
