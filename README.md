@@ -11,6 +11,6 @@
 
 
   Docker commands:
-> docker build --force-rm -t realityweb:latest . 
-> docker-compose up -d --remove-orphans
+> docker build --force-rm -t realityweb:latest . <br/>
+> docker-compose up -d --remove-orphans <br/>
 > docker-compose run website python manage.py makemigrations
