@@ -14,3 +14,4 @@
 > docker build --force-rm -t realityweb:latest . <br/>
 > docker-compose up -d --remove-orphans <br/>
 > docker-compose run website python manage.py makemigrations
+> (when setting up for first time, volumes should reloaded because of .sql file that is sourced)
