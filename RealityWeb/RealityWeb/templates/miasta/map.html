@@ -1,9 +1,8 @@
 {% extends "home/base.html" %}
 {% load crispy_forms_tags %}
+{% load static %}
 
-{% block content %}
-    <meta name="viewport" content="width=\, initial-scale=1.0" />
-    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+{% block mapka %}
     <link
       rel="stylesheet"
       href="https://unpkg.com/leaflet@1.4.0/dist/leaflet.css"
@@ -15,28 +14,65 @@
       integrity="sha512-QVftwZFqvtRNi0ZyCtsznlKSWOStnDORoefr1enyq5mVL4tmKB3S/EnC3rRJcxCPavG10IcrVGSmPh6Qw5lwrg=="
       crossorigin=""
     ></script>
-    <style>
-      #mapka {
-        height: 500px;
-      }
-    </style>
+    <style>#mapka {height: 500px;}</style>
     <script src="https://cdn.jsdelivr.net/npm/js-cookie@rc/dist/js.cookie.min.js"></script>
 
-    <h1>RealityWeb Start Page</h1>
-    <p> choose wisely </p>
-    <div><h1>Here comes my folium map:</h1></div>
+    <div><h1>Wybierz lokalizację i wprowadz dane:</h1></div>
 
     <div id="mapka">mapka</div>
 
-    {% if messages %}
-    <ul class="messages">
-        {% for message in messages %}
-        <li {% if message.tags %} class="{{message.tags }}" {% endif %}>
-            {{ message }}
-        </li>
-        {% endfor %}
-    </ul>
-    {% endif %}
+    <!-- Remove before production: -->
+    <p>
+        latitude: <span id="idd_lat"></span>°<br />
+        longitude: <span id="idd_lon"></span>°
+    </p>
+  
+    <script language="javascript" >
+        const mymap = L.map('mapka').setView([0, 0], 6);
+        const attribution =
+            '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors';
+
+        const tileUrl = 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
+        const tiles = L.tileLayer(tileUrl, { attribution });
+        tiles.addTo(mymap);
+
+        var DomIcon = L.Icon.extend({
+                            options: {
+                                iconSize:     [30, 50],
+                                iconAnchor:   [15, 50],
+                                popupAnchor: [0, -50],
+                            }
+                        });
+        var domekIcon = new DomIcon({
+            iconUrl: 'static/images/domek.png'
+        });
+
+        // change it accoring to chosen city!!
+        mymap.setView([52.237, 21.017], 11);
+
+        var marker  = null;
+        mymap.on("click", async function (e) {
+            if (marker !== null) {
+                mymap.removeLayer( marker );
+            }
+            marker = L.marker(e.latlng).setIcon(domekIcon).addTo( mymap );
+            marker.on('dblclick', function(e){ mymap.removeLayer(e.target)})
+            var lat = e.latlng.lat.toFixed(4),
+                lng = e.latlng.lng.toFixed(4);
+
+            document.getElementById('idd_lat').textContent = lat;
+            document.getElementById('idd_lon').textContent = lng;
+            document.getElementById( '{{ form.lat.id_for_label }}' ).value = lat;
+            document.getElementById( '{{ form.lon.id_for_label }}' ).value = lng;
+
+            var csrftokenek = Cookies.get('csrftoken');
+            document.getElementById( '{{ form.tagi.id_for_label }}' ).value = csrftokenek;
+        });
+    </script>
+
+{% endblock mapka %}
+
+{% block content %}
 
     <div class="content-section">
         <form method="post">
@@ -44,62 +80,13 @@
             <fieldset>
                 <legend class="border-bottom mb-4">Dane do mapy</legend>
                 {{ form | crispy }}
-
             </fieldset>
             <div class="form-group">
                 <button class="btn btn-outline-info" type="sumbit"> Get the price </button>
             </div>
         </form>
-    </div>
+        <script defer src="{% static 'thema/js/chosecity.js' %}"></script>
+    </div> 
 
-
-    <p>
-      latitude: <span id="idd_lat"></span>°<br />
-      longitude: <span id="idd_lon"></span>°
-    </p>
-
-<script language="javascript" >
-    const mymap = L.map('mapka').setView([0, 0], 6);
-    const attribution =
-        '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors';
-
-    const tileUrl = 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
-    const tiles = L.tileLayer(tileUrl, { attribution });
-    tiles.addTo(mymap);
-
-
-    var DomIcon = L.Icon.extend({
-                        options: {
-                           iconSize:     [30, 50],
-                           iconAnchor:   [15, 50],
-                           popupAnchor: [0, -50],
-                        }
-                    });
-    var domekIcon = new DomIcon({
-        iconUrl: 'static/images/domek.png'
-    });
-
-    mymap.setView([52.237, 21.017], 11);
-
-    var marker  = null;
-
-    mymap.on("click", async function (e) {
-        if (marker !== null) {
-            mymap.removeLayer( marker );
-        }
-        marker = L.marker(e.latlng).setIcon(domekIcon).addTo( mymap );
-        marker.on('dblclick', function(e){ mymap.removeLayer(e.target)})
-        var lat = e.latlng.lat.toFixed(4),
-            lng = e.latlng.lng.toFixed(4);
-
-        document.getElementById('idd_lat').textContent = lat;
-        document.getElementById('idd_lon').textContent = lng;
-        document.getElementById( '{{ form.lat.id_for_label }}' ).value = lat;
-        document.getElementById( '{{ form.lon.id_for_label }}' ).value = lng;
-
-        var csrftokenek = Cookies.get('csrftoken');
-        document.getElementById( '{{ form.tagi.id_for_label }}' ).value = csrftokenek;
-    });
-</script>
 {% endblock content %}
 

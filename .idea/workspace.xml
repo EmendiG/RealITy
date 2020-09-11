@@ -1,7 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="edc9251b-a03a-493d-8db3-6662d61b7a60" name="Default Changelist" comment="" />
+    <list default="true" id="edc9251b-a03a-493d-8db3-6662d61b7a60" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/RealityWeb/Makefile" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/RealityWeb/docker-compose.yml" beforeDir="false" afterPath="$PROJECT_DIR$/RealityWeb/docker-compose.yml" afterDir="false" />
+    </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -412,7 +416,14 @@
       <option name="project" value="LOCAL" />
       <updated>1599391011099</updated>
     </task>
-    <option name="localTasksCounter" value="39" />
+    <task id="LOCAL-00039" summary="RealITy 0.2020.03.08 (first runnable docker version)">
+      <created>1599597659641</created>
+      <option name="number" value="00039" />
+      <option name="presentableId" value="LOCAL-00039" />
+      <option name="project" value="LOCAL" />
+      <updated>1599597659641</updated>
+    </task>
+    <option name="localTasksCounter" value="40" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -460,7 +471,6 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="CHECK_NEW_TODO" value="false" />
-    <MESSAGE value="RealITy 0.2020.02.03" />
     <MESSAGE value="RealITy 0.2020.02.03 (added gpd.gdf)" />
     <MESSAGE value="RealITy 0.2020.02.03 (changed mysql to postgresql, cuz of geometry(Polygons))" />
     <MESSAGE value="RealITy 0.2020.02.04 (added Amenities Database from OpenStreetMap API)" />
@@ -485,6 +495,7 @@
     <MESSAGE value="RealITy 0.2020.03.06 (added API + ML price prediction)" />
     <MESSAGE value="RealITy 0.2020.03.06 (added morizonpy)" />
     <MESSAGE value="RealITy 0.2020.03.07 (docker preparing)" />
-    <option name="LAST_COMMIT_MESSAGE" value="RealITy 0.2020.03.07 (docker preparing)" />
+    <MESSAGE value="RealITy 0.2020.03.08 (first runnable docker version)" />
+    <option name="LAST_COMMIT_MESSAGE" value="RealITy 0.2020.03.08 (first runnable docker version)" />
   </component>
 </project>
