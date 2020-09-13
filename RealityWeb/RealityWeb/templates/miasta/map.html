@@ -2,6 +2,7 @@
 {% load crispy_forms_tags %}
 {% load static %}
 
+
 {% block mapka %}
     <link
       rel="stylesheet"
@@ -21,13 +22,22 @@
 
     <div id="mapka">mapka</div>
 
+    <!-- Print price -->
+    {% if price %}
+        {{ price }} 
+    {% endif %}
+
     <!-- Remove before production: -->
+    <script> 
+        console.log('map.html     ' + document.cookie)
+    </script>
     <p>
         latitude: <span id="idd_lat"></span>°<br />
         longitude: <span id="idd_lon"></span>°
     </p>
+
   
-    <script language="javascript" >
+    <script language="javascript" type="text/javascript" >
         const mymap = L.map('mapka').setView([0, 0], 6);
         const attribution =
             '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors';
@@ -44,11 +54,13 @@
                             }
                         });
         var domekIcon = new DomIcon({
-            iconUrl: 'static/images/domek.png'
+            iconUrl: 'static/images/domek.ico'
         });
 
-        // change it accoring to chosen city!!
-        mymap.setView([52.237, 21.017], 11);
+        // Warszawa [52.237, 21.017]
+        var latlon = {{ latlon|safe }};
+
+        mymap.setView([ latlon[0], latlon[1] ], 11);
 
         var marker  = null;
         mymap.on("click", async function (e) {
@@ -85,7 +97,6 @@
                 <button class="btn btn-outline-info" type="sumbit"> Get the price </button>
             </div>
         </form>
-        <script defer src="{% static 'thema/js/chosecity.js' %}"></script>
     </div> 
 
 {% endblock content %}

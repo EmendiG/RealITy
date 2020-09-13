@@ -12,16 +12,35 @@
   background-color: #E4B154;
 }
 
-.has-bg-lilac-pop-80{
+.has-bg-lilac-pop-200{
   background-color: #d4e279;
   height: 200px;
 }
+
+.has-bg-lilac-pop-200:hover{
+  background-color: #d4e279;
+  scale: 1.05;
+}
+
 @media (min-width: 992px) {
-    .has-bg-lilac-pop-80 {
-      height: 200px;
+    .has-bg-lilac-pop-200 {
+      height: 22vh;
   }
 }
 
+.has-bg-lilac-pop-400{
+  background-color: #d4e279;
+  height: 400px;
+}
+@media (min-width: 992px) {
+    .has-bg-lilac-pop-400 {
+      height: 400px;
+  }
+}
+
+.adjusted-height{
+  height: 100vh;
+}
 
 .panorama-miasta{
   height: 100%;

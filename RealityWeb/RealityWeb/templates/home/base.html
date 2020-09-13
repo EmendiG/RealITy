@@ -17,7 +17,7 @@
     <!-- <link rel="stylesheet" type="text/css" href="{% static 'home/main.css' %}"> -->
 
     <!-- Favicon-->
-    <link rel="shortcut icon" href="{% static 'images/favicon.png' %}" >
+    <link rel="shortcut icon" href="{% static 'images/favicon.ico' %}" >
 
     <!-- Font Awesome icons -->
     <script src="https://use.fontawesome.com/releases/v5.13.0/js/all.js" crossorigin="anonymous"></script>
@@ -30,7 +30,7 @@
     
     <title>{{ title }}</title>
   </head>
-<body>
+  <body>
     <header class="site-header">
       <!-- Navigation-->
       <main id='main'> 
@@ -42,40 +42,38 @@
                   <i class="fas fa-bars"></i>
               </button>
               <div class="collapse navbar-collapse" id="navbarResponsive">
-                  <ul class="navbar-nav ml-auto">
-                      <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger {% if request.path == index_map %}active{% endif %}" href="{{ index_map }}">Map</a></li>
-                      <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger {% if request.path == index_about %}active{% endif %}" href="{{ index_about }}">About</a></li>
-                  </ul>
-              </div>
+                <ul class="navbar-nav ml-auto">
+                  {% if request.COOKIES.city %}
+                    <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger {% if request.path == index_map %}active{% endif %}" href="{{ index_map }}">Map</a></li>
+                  {% endif %}
+                    <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger {% if request.path == index_about %}active{% endif %}" href="{{ index_about }}">About</a></li>
+                </ul>
+            </div>
           </div>
-      </nav>  
-    </main>
-  </header>
+        </nav>  
+      </main>
+    </header>
   {% if request.path == index_map %}
     {% block mapka %}{% endblock %}
   {% endif %} 
 
-  {% if request.path == index %}
-    {% block background %}{% endblock %}
-  {% endif %} 
-
-  <main role="main" class="container">
-    <div class="row">
-      <div class="col-md-12">
-        {% block content %}{% endblock %}
+    <main role="main" class="container">
+      <div class="row">
+        <div class="col-md-12">
+          {% block content %}{% endblock %}
+        </div>
       </div>
-    </div>
-  </main>
+    </main>
 
-  <!-- Bootstrap core JS-->
+    <!-- Bootstrap core JS-->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.bundle.min.js"></script>
     <!-- Third party plugin JS-->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.4.1/jquery.easing.min.js"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
     <!-- Core theme JS-->
     <script src="{% static 'thema/js/scripts.js' %}"></script>
     <!-- Other JS scripts -->
-    <script src="{% static 'thema/js/chosecity.js' %}"></script>
+    <!-- <script src="{% static 'thema/js/chosecity.js' %}"></script> -->
 
   </body>
 </html>
