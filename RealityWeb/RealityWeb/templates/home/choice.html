@@ -1,0 +1,77 @@
+{% extends "home/base.html" %}
+{% load static %}
+{% url 'index' as index %}
+{% url 'index-features' as index_features %}
+{% url 'index-map' as index_map %}
+
+{% block content %}
+    <div id='content-desktop'  class="adjusted-height"> 
+        <div class="container content-center-c">
+            <div class="row ">
+                <div class="col-md-4">
+                    <section class="rounded has-bg-lilac-pop-600 row-top-buffer">
+                        <div class="rounded img-responsive choice-service" style='background-image: url("/static/images/features.jpg") ; background-color:  rgb(28, 125, 155, 0.45);'>
+                            <a class="text-border panorama-miasta link-city rounded choice-service content-center d-flex align-items-center" href="{{ index_features }}" >Atrybuty</a>
+                        </div>
+                    </section>
+                </div>
+                <div class="col-md-4">
+                    <section class="rounded has-bg-lilac-pop-600 row-top-buffer">
+                        <div class="rounded img-responsive choice-service" style='background-image: url("/static/images/ml.jpg"); background-color:   rgb(245, 5, 255, 0.45);'>
+                            <a class="text-border panorama-miasta link-city rounded choice-service content-center d-flex align-items-center" href="{{ index_map }}" >Znajdź cenę</a>
+                        </div>
+                    </section>
+                </div>
+                <div class="col-md-4">
+                    <section class="rounded has-bg-lilac-pop-600 row-top-buffer">
+                        <div class="rounded img-responsive choice-service" style='background-image: url("/static/images/graph.jpg"); background-color: rgb(0, 68, 255, 0.45);'>
+                            <a class="text-border panorama-miasta link-city rounded choice-service content-center d-flex align-items-center" href="{{ index }}" >Wykresy</a>
+                        </div>
+                    </section>
+                </div>
+            </div>
+        </div>
+    </div>
+
+        <div id='content-mobile' class="adjusted-height"> 
+            <div class="container content-center-c">
+                <div id='content-mobile' class="row">
+                    <div class="col">
+                        <section class="rounded has-bg-lilac-pop-200 row-top-buffer">
+                            <div class="rounded img-responsive choice-service" style='background-image: url("/static/images/features.jpg") ; background-color:  rgb(28, 125, 155, 0.45);'>
+                                <a class="text-border panorama-miasta link-city rounded choice-service content-center d-flex align-items-center" href="{{ index_features }}" >Atrybuty</a>
+                            </div>
+                        </section>
+                    </div>
+                    <div class="col">
+                        <section class="rounded has-bg-lilac-pop-200 row-top-buffer">
+                            <div class="rounded img-responsive choice-service" style='background-image: url("/static/images/ml.jpg"); background-color:  rgb(245, 5, 255, 0.45);'>
+                                <a class="text-border panorama-miasta link-city rounded choice-service content-center d-flex align-items-center" href="{{ index_map }}" >Znajdź cenę</a>
+                            </div>
+                        </section>
+                    </div>
+                    <div class="col">
+                        <section class="rounded has-bg-lilac-pop-200 row-top-buffer">
+                            <div class="rounded img-responsive choice-service" style='background-image: url("/static/images/graph.jpg"); background-color:  rgb(0, 68, 255, 0.45);'>
+                                <a class="text-border panorama-miasta link-city rounded choice-service content-center d-flex align-items-center" href="{{ index }}" >Wykresy</a>
+                            </div>
+                        </section>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <script>
+            function reportWindowSize() {
+                const windowWidth = window.innerWidth;
+                const windowHeight = window.innerHeight;
+
+                document.getElementById('content-desktop').setAttribute('width', windowWidth)
+                document.getElementById('content-desktop').setAttribute('height', windowHeight)
+                
+            }
+            window.onresize = reportWindowSize();
+            window.addEventListener('resize', reportWindowSize);
+        </script>
+
+{% endblock content %}
