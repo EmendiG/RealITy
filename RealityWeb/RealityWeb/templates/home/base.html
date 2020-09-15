@@ -2,6 +2,8 @@
 {% load static %}
 {% url 'index-map' as index_map %}
 {% url 'index-about' as index_about %}
+{% url 'index-choice' as index_choice %}
+{% url 'index-features' as index_features %}
 {% url 'index' as index %}
 
 <html lang="en">
@@ -44,8 +46,10 @@
               <div class="collapse navbar-collapse" id="navbarResponsive">
                 <ul class="navbar-nav ml-auto">
                   {% if request.COOKIES.city %}
-                    <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger {% if request.path == index_map %}active{% endif %}" href="{{ index_map }}">Map</a></li>
+                    <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger {% if request.path == index_map %}active{% endif %}" href="{{ index_map }}">Poznaj cenę</a></li>
+                    <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger {% if request.path == index_features %}active{% endif %}" href="{{ index_features }}">Atrybuty</a></li>
                   {% endif %}
+                    <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger {% if request.path == index_choice %}active{% endif %}" href="{{ index_choice }}">Pick</a></li>
                     <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger {% if request.path == index_about %}active{% endif %}" href="{{ index_about }}">About</a></li>
                 </ul>
             </div>
@@ -53,7 +57,7 @@
         </nav>  
       </main>
     </header>
-  {% if request.path == index_map %}
+  {% if request.path == index_map or request.path == index_features  %}
     {% block mapka %}{% endblock %}
   {% endif %} 
 
@@ -74,6 +78,5 @@
     <script src="{% static 'thema/js/scripts.js' %}"></script>
     <!-- Other JS scripts -->
     <!-- <script src="{% static 'thema/js/chosecity.js' %}"></script> -->
-
   </body>
 </html>

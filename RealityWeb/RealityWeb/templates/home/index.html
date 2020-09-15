@@ -1,47 +1,23 @@
-
+{% extends "home/base.html" %}
 {% load static %}
 {% url 'index-map' as index_map %}
+{% url 'index-choice' as index_choice %}
 
-<html lang="en">
-  <head>
-    <!-- Required meta tags -->
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="description" content="" />
-    <meta name="author" content="emendig" />
-
-    <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-    <!-- <link rel="stylesheet" type="text/css" href="{% static 'home/main.css' %}"> -->
-
-    <!-- Favicon-->
-    <link rel="shortcut icon" href="{% static 'images/favicon.ico' %}" >
-
-    <!-- Font Awesome icons -->
-    <script src="https://use.fontawesome.com/releases/v5.13.0/js/all.js" crossorigin="anonymous"></script>
-    <!-- Google fonts-->
-    <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css" />
-    <link href="https://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic" rel="stylesheet" type="text/css" />
-    <!-- Core theme CSS -->
-    <link href="{% static 'thema/css/styles.css' %}" rel="stylesheet" />
-    <link href="{% static 'thema/css/main.css' %}" rel="stylesheet" />
-    
-    <title>{{ title }}</title>
-  </head>
-  <body class="background-color">
-    <div class="container adjusted-height"> 
+{% block content %}
+  <body>
+    <div class="adjusted-height"> 
         <div class="row">
             <div class="col-md-7">
                 <section class="rounded has-bg-lilac-pop-200 row-top-buffer">
                     <div class="rounded img-responsive panorama-miasta" style='background-image: url("/static/panorama/warszawa.png"); background-color: rgb(245, 5, 255, 0.45);'>
-                        <a class="link-city rounded panorama-miasta content-center d-flex align-items-center" href="{{ index_map }}" targetCity="warszawa" targetLink="yes">Warszawa</a>
+                        <a class="text-border link-city rounded panorama-miasta content-center d-flex align-items-center" href="{{ index_choice }}" targetCity="warszawa" targetLink="yes">Warszawa</a>
                     </div>
                 </section>
             </div>
             <div class="col-md-5">
                 <section class="rounded has-bg-lilac-pop-200 row-top-buffer">
                     <div class="rounded img-responsive panorama-miasta" style='background-image: url("/static/panorama/krakow.png"); background-color: rgb(0, 36, 240, 0.45);'>
-                        <a class="link-city rounded panorama-miasta content-center d-flex align-items-center" href="{{ index_map }}" targetCity="krakow" targetLink="yes">Krakow</a>
+                        <a class="text-border link-city rounded panorama-miasta content-center d-flex align-items-center" href="{{ index_choice }}" targetCity="krakow" targetLink="yes">Krakow</a>
                     </div>
                 </section>
             </div>
@@ -50,14 +26,14 @@
             <div class="col-md-6">
                 <section class="rounded has-bg-lilac-pop-200 row-top-buffer">
                     <div class="rounded img-responsive panorama-miasta" style='background-image: url("/static/panorama/wroclaw.png"); background-color: rgb(68, 0, 255, 0.45);'>
-                        <a class="link-city rounded panorama-miasta content-center d-flex align-items-center" href="{{ index_map }}" targetCity="wroclaw" targetLink="yes">Wroclaw</a>
+                        <a class="text-border link-city rounded panorama-miasta content-center d-flex align-items-center" href="{{ index_choice }}" targetCity="wroclaw" targetLink="yes">Wroclaw</a>
                     </div>
                 </section>
             </div>
             <div class="col-md-6">
                 <section class="rounded has-bg-lilac-pop-200 row-top-buffer">
                     <div class="rounded img-responsive panorama-miasta" style='background-image: url("/static/panorama/poznan.png"); background-color: rgb(0, 132, 255, 0.45);'>
-                        <a class=" rounded link-city panorama-miasta content-center d-flex align-items-center" href="{{ index_map }}" targetCity="poznan" targetLink="yes">Poznan</a>
+                        <a class="text-border rounded link-city panorama-miasta content-center d-flex align-items-center" href="{{ index_choice }}" targetCity="poznan" targetLink="yes">Poznan</a>
                     </div>
                 </section>
             </div>
@@ -66,21 +42,21 @@
             <div class="col-md-4">
                 <section class="rounded has-bg-lilac-pop-200 row-top-buffer">
                     <div class="rounded img-responsive panorama-miasta" style='background-image: url("/static/panorama/gdansk.png"); background-color: rgb(16, 20, 255, 0.45);'>
-                        <a class="link-city rounded panorama-miasta content-center d-flex align-items-center" href="{{ index_map }}" targetCity="gdansk" targetLink="yes">Gdansk</a>
+                        <a class="text-border link-city rounded panorama-miasta content-center d-flex align-items-center" href="{{ index_choice }}" targetCity="gdansk" targetLink="yes">Gdansk</a>
                     </div>
                 </section>
             </div>
             <div class="col-md-4">
                 <section class="rounded has-bg-lilac-pop-200 row-top-buffer">
                     <div class="rounded img-responsive panorama-miasta" style='background-image: url("/static/panorama/lodz.png"); background-color: rgb(0, 195, 255, 0.45);'>
-                        <a class=" rounded link-city panorama-miasta content-center d-flex align-items-center" href="{{ index_map }}" targetCity="lodz" targetLink="yes">Lodz</a>
+                        <a class="text-border rounded link-city panorama-miasta content-center d-flex align-items-center" href="{{ index_choice }}" targetCity="lodz" targetLink="yes">Lodz</a>
                     </div>
                 </section>
             </div>
             <div class="col-md-4">
                 <section class="rounded has-bg-lilac-pop-200 row-top-buffer">
                     <div class="rounded img-responsive panorama-miasta" style='background-image: url("/static/panorama/szczecin.png"); background-color: rgb(119, 0, 255, 0.45);'>
-                        <a class=" rounded link-city panorama-miasta content-center d-flex align-items-center" href="{{ index_map }}" targetCity="szczecin" targetLink="yes">Szczecin</a>
+                        <a class="text-border rounded link-city panorama-miasta content-center d-flex align-items-center" href="{{ index_choice }}" targetCity="szczecin" targetLink="yes">Szczecin</a>
                     </div>
                 </section>
             </div>
@@ -89,21 +65,21 @@
             <div class="col-md-3">
                 <section class="rounded has-bg-lilac-pop-200 row-top-buffer">
                     <div class="rounded img-responsive panorama-miasta" style='background-image: url("/static/panorama/bialystok.png"); background-color: rgb(25, 0, 255, 0.45);'>
-                        <a class="link-city rounded panorama-miasta content-center d-flex align-items-center" href="{{ index_map }}" targetCity="bialystok" targetLink="yes">Bialystok</a>
+                        <a class="text-border link-city rounded panorama-miasta content-center d-flex align-items-center" href="{{ index_choice }}" targetCity="bialystok" targetLink="yes">Bialystok</a>
                     </div>
                 </section>
             </div>
             <div class="col-md-3">
                 <section class="rounded has-bg-lilac-pop-200 row-top-buffer">
                     <div class="rounded img-responsive panorama-miasta" style='background-image: url("/static/panorama/lublin.png"); background-color: rgb(195, 0, 255, 0.45);'>
-                        <a class=" rounded link-city panorama-miasta content-center d-flex align-items-center" href="{{ index_map }}" targetCity="lublin" targetLink="yes">Lublin</a>
+                        <a class="text-border rounded link-city panorama-miasta content-center d-flex align-items-center" href="{{ index_map }}" targetCity="lublin" targetLink="yes">Lublin</a>
                     </div>
                 </section>
             </div>
             <div class="col-md-6">
                 <section class="rounded has-bg-lilac-pop-200 row-top-buffer">
                     <div class="rounded img-responsive panorama-miasta" style='background-image: url("/static/panorama/bydgoszcz.png"); background-color: rgb(0, 162, 255, 0.45);'>
-                        <a class=" rounded link-city panorama-miasta content-center d-flex align-items-center" href="{{ index_map }}" targetCity="bydgoszcz" targetLink="yes">Bydgoszcz</a>
+                        <a class="text-border rounded link-city panorama-miasta content-center d-flex align-items-center" href="{{ index_choice }}" targetCity="bydgoszcz" targetLink="yes">Bydgoszcz</a>
                     </div>
                 </section>
             </div>
@@ -112,3 +88,4 @@
                             
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
     <script src="{% static 'thema/js/chosecity.js' %}"></script>
+{% endblock content %}

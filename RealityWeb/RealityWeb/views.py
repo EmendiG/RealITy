@@ -29,6 +29,48 @@ def about(request):
     }
     return render(request, 'home/about.html', context)
 
+def choice(request):
+    context ={
+                'title':'Choose a service'
+    }
+    return render(request, 'home/choice.html', context)
+
+def features(request):
+    latlonDict = {
+                    'warszawa':[52.237, 21.017], 
+                    'krakow':[50.05, 19.945],
+                    'lodz': [51.76, 19.457],  
+                    'wroclaw': [51.108, 17.039], 
+                    'poznan': [52.409, 16.932], 
+                    'gdansk': [54.372, 18.638], 
+                    'szczecin': [53.428, 14.553], 
+                    'bydgoszcz': [53.123, 18.008], 
+                    'lublin': [51.246, 22.568],
+                    'bialystok': [53.118, 23.126]
+    }
+
+    if request.COOKIES['city']:
+        latlon = latlonDict[request.COOKIES['city']]
+
+    if request.method == 'POST':
+        form = GetPriceForm(request.POST)
+        if form.is_valid():
+            form.save()
+            context = {
+            'title': 'Map',
+            'form': form,
+            'latlon': latlon,
+            }
+            return render(request, 'home/features.html', context)
+    else:
+        form = GetPriceForm()
+
+    context = {
+            'title': 'Map',
+            'form': form,
+            'latlon': latlon
+    }
+    return render(request, 'home/features.html', context)
 
 def show_map(request):
 
@@ -72,13 +114,3 @@ def show_map(request):
             'latlon': latlon
     }
     return render(request, 'miasta/map.html', context)
-
-# @api_view(["POST"])
-# def getprice(request):
-#     try:
-#         myData = request.POST
-#         messages.success(request, myData['csrfmiddlewaretoken'])
-#         messages.success(request, table_preparation())
-#         return JsonResponse(myData, safe=False)
-#     except ValueError as e:
-#         return Response(e.args[0], status.HTTP_400_BAD_REQUEST)
