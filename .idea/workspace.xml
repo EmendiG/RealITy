@@ -1,9 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="edc9251b-a03a-493d-8db3-6662d61b7a60" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/RealityWeb/db.sqlite3" beforeDir="false" />
-    </list>
+    <list default="true" id="edc9251b-a03a-493d-8db3-6662d61b7a60" name="Default Changelist" comment="RealITy 0.2020.03.10 (developing 2nd service [features finding])" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -435,7 +433,21 @@
       <option name="project" value="LOCAL" />
       <updated>1600022013879</updated>
     </task>
-    <option name="localTasksCounter" value="42" />
+    <task id="LOCAL-00042" summary="RealITy 0.2020.03.10 (developing 2nd service [features finding])">
+      <created>1600197872904</created>
+      <option name="number" value="00042" />
+      <option name="presentableId" value="LOCAL-00042" />
+      <option name="project" value="LOCAL" />
+      <updated>1600197872904</updated>
+    </task>
+    <task id="LOCAL-00043" summary="RealITy 0.2020.03.10 (developing 2nd service [features finding])">
+      <created>1600197935126</created>
+      <option name="number" value="00043" />
+      <option name="presentableId" value="LOCAL-00043" />
+      <option name="project" value="LOCAL" />
+      <updated>1600197935126</updated>
+    </task>
+    <option name="localTasksCounter" value="44" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -483,7 +495,6 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="CHECK_NEW_TODO" value="false" />
-    <MESSAGE value="RealITy 0.2020.02.03 (changed mysql to postgresql, cuz of geometry(Polygons))" />
     <MESSAGE value="RealITy 0.2020.02.04 (added Amenities Database from OpenStreetMap API)" />
     <MESSAGE value="RealITy 0.2020.02.04 (added Amenities, Tourism and Leisure data from OpenStreetMap API)" />
     <MESSAGE value="RealITy 0.2020.02.05" />
@@ -508,6 +519,7 @@
     <MESSAGE value="RealITy 0.2020.03.07 (docker preparing)" />
     <MESSAGE value="RealITy 0.2020.03.08 (first runnable docker version)" />
     <MESSAGE value="RealITy 0.2020.03.09 (developing frontend css + html)" />
-    <option name="LAST_COMMIT_MESSAGE" value="RealITy 0.2020.03.09 (developing frontend css + html)" />
+    <MESSAGE value="RealITy 0.2020.03.10 (developing 2nd service [features finding])" />
+    <option name="LAST_COMMIT_MESSAGE" value="RealITy 0.2020.03.10 (developing 2nd service [features finding])" />
   </component>
 </project>
