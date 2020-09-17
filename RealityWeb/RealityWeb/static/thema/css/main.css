@@ -1,5 +1,20 @@
+#mapka{
+  height: 500px;
+}
+@media screen and (max-width: 768px) {
+  #mapka{
+    height: 400px;
+  }
+}
 
-
+#mapka_ff{
+  height: 80vh;
+}
+@media screen and (max-width: 768px) {
+  #mapka_ff{
+    height: 600px;
+  }
+}
 
 #main {
     padding-top: 78px;
@@ -170,7 +185,7 @@
   border-radius: 5px;
   outline: none;
   border: none;
-  z-index: 2222;
+  z-index: 2;
 }
 .range input::-webkit-slider-thumb{
   -webkit-appearance: none;
@@ -195,4 +210,5 @@
 .range input::-moz-range-progress{
   background: #402fa0;
   height: 9px;
+  z-index: -1;
 }

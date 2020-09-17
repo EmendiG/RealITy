@@ -15,18 +15,17 @@
     integrity="sha512-QVftwZFqvtRNi0ZyCtsznlKSWOStnDORoefr1enyq5mVL4tmKB3S/EnC3rRJcxCPavG10IcrVGSmPh6Qw5lwrg=="
     crossorigin=""
     ></script>
-    <style>#mapka {height: 500px;}</style>
     <script src="https://cdn.jsdelivr.net/npm/js-cookie@rc/dist/js.cookie.min.js"></script>
 
-    <div><h1>Wybierz lokalizację i znajdź pobliskie atrybuty:</h1></div>
+    <div id="content-desktop">
+        <h1>Wybierz lokalizację i znajdź wybrane atrybuty:</h1>
+    </div>
+    <div id="content-mobile" style="font-size: 4.5vw">
+        <span >Wybierz lokalizację i znajdź wybrane atrybuty:</span>
+    </div>
 
     <div id="mapka">mapka</div>
     
-    <p>
-        latitude: <span id="idd_lat"></span>°<br />
-        longitude: <span id="idd_lon"></span>°
-    </p>
-
     <script language="javascript" type="text/javascript" >
         const mymap = L.map('mapka').setView([0, 0], 6);
         const attribution =
@@ -36,23 +35,10 @@
         const tiles = L.tileLayer(tileUrl, { attribution });
         tiles.addTo(mymap);
 
-        var DomIcon = L.Icon.extend({
-                            options: {
-                                iconSize:     [30, 50],
-                                iconAnchor:   [15, 50],
-                                popupAnchor: [0, -50],
-                            }
-                        });
-        var domekIcon = new DomIcon({
-            iconUrl: 'static/images/questionmark.png'
-        });
-
         // Warszawa [52.237, 21.017]
         var latlon = {{ latlon|safe }};
 
         mymap.setView([ latlon[0], latlon[1] ], 11);
-
-
 
         var marker  = null;
         var mapka_radius=500
@@ -60,19 +46,12 @@
             if (marker !== null) {
                 mymap.removeLayer( marker );
             }
-
-            
-
             marker = L.circle([e.latlng.lat, e.latlng.lng], radius=mapka_radius).addTo( mymap );
             old_lat = e.latlng.lat
             old_lng = e.latlng.lng
 
             marker.on('click', function(e){ 
                 var zoom=mymap.getZoom()
-
-                console.log('marker radius', marker.getRadius())
-                console.log('zoom', zoom)
-                console.log('mapka', mapka_radius)
 
                 if(mapka_radius<700){
                     if(zoom<=14){
@@ -98,19 +77,56 @@
             var lat = e.latlng.lat.toFixed(4),
                 lng = e.latlng.lng.toFixed(4);
 
-            document.getElementById('idd_lat').textContent = lat;
-            document.getElementById('idd_lon').textContent = lng;
+            document.getElementById( '{{ form.mapka_radius.id_for_label }}' ).value = mapka_radius;          
             document.getElementById( '{{ form.lat.id_for_label }}' ).value = lat;
             document.getElementById( '{{ form.lon.id_for_label }}' ).value = lng;
+            document.getElementById( '{{ form.city.id_for_label }}' ).value = getCookie('city');
         });
 
     </script>
+    <script src="{% static 'thema/js/chosecity.js' %}"></script>
+
+    
 
 {% endblock mapka %}
 
 
 {% block content %}
-    <legend id="content-desktop" class="border-bottom mb-4">
+    {% if features %}
+        <script> 
+            console.log( {{ features|safe }} ) 
+
+            var DomIcon = L.Icon.extend({
+                            options: {
+                                iconSize:     [30, 50],
+                                iconAnchor:   [15, 50],
+                                popupAnchor: [0, -50],
+                            }
+                        });
+            var domekIcon = new DomIcon({
+                iconUrl: 'static/images/questionmark.png'
+            });
+
+            var ommitMapka = ['lat', 'lon', 'mapka_radius']
+            var tempDict = {{ features|safe }}
+            for(var i in tempDict){
+                if(ommitMapka.indexOf(i) === -1){
+                    // console.log(tempDict[i])
+                    for(var arr in tempDict[i]){
+                        console.log(tempDict[i][arr][0], tempDict[i][arr][1], tempDict[i][arr][2], tempDict[i][arr][3])
+                        L.marker([tempDict[i][arr][2], tempDict[i][arr][1] ]).setIcon(domekIcon).addTo( mymap );
+                    }
+                }
+            }
+            L.circle([parseFloat(tempDict['lat']), parseFloat(tempDict['lon'])], radius=parseInt(tempDict['mapka_radius']), {color:'black', fillColor: 'transparent'} ).addTo( mymap );
+            L.circle([parseFloat(tempDict['lat']), parseFloat(tempDict['lon'])], radius=4, {color:'black'} ).addTo( mymap );
+            console.log(parseFloat(tempDict['lat']) )
+            console.log(parseFloat(tempDict['lon']) )
+            console.log(parseInt(tempDict['mapka_radius']) )
+        </script>
+    {% endif %}
+
+    <legend id="content-desktop" class="border-bottom mb-4" style="padding-top: 20px;">
         Wybierz promień pomiaru: &nbsp 
         <span style="color: blue;" id="slidevalue"> 500 </span> 
     </legend> 
@@ -142,16 +158,31 @@
     </script>
     
 
-    <div class="content-section">
+    <div class="content-section" style="padding-top: 40px;">
         <form method="post">
             {% csrf_token %}
-            <fieldset>
-                <legend class="border-bottom mb-4">Dane do mapy</legend>
-                {{ form | crispy }}
-            </fieldset>
-            <div class="form-group">
-                <button class="btn btn-outline-info" type="sumbit"> Get the price </button>
+            <div class="col-md-12">
+                <div class="form-group">
+                    <button style="margin-left:80%;"class="btn btn-outline-info " type="sumbit"> Znajdź atrybuty </button>
+                </div>
             </div>
+            
+            <fieldset>
+                <legend class="border-bottom ">Wybierz szukane atrybuty: </legend>
+                <p class="mb-4" style="color: blue;"> Wciśnij CTRL, aby zaznaczyć więcej niż jedno pole</p>
+                {% for field in form.hidden_fields %}
+                    {{ field }}
+                {% endfor %}
+                <div class="row">
+                        {% for field in form.visible_fields %}
+                            <div class="col-md-6">
+                                {{ field | as_crispy_field }}
+                             </div>
+                        {% endfor %}
+                </div>
+                
+            </fieldset>
+            
         </form>
     </div> 
 

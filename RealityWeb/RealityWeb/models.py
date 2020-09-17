@@ -1,5 +1,6 @@
 from django.db import models
 from django.db import transaction
+from multiselectfield import MultiSelectField
 
 # Create your models here.
 class Post(models.Model):
@@ -101,3 +102,132 @@ class GetPriceModel(models.Model):
                              ]
     )
     tagi =  models.CharField(max_length=200)
+
+class FindFeaturesModel(models.Model):
+
+    lat = models.DecimalField( max_digits=7, decimal_places=4)
+    lon = models.DecimalField( max_digits=7, decimal_places=4)
+
+    mapka_radius = models.IntegerField()
+    city = models.CharField(max_length=40)
+
+    feature_shop = MultiSelectField(max_length=800,
+                                    default=('all_shop', 'WSZYSTKIE'),
+                                    choices=[
+                                            ('all_shop', 'WSZYSTKIE'),
+                                            ('mall', 'centrum handlowe'),
+                                            ('pastry', 'cukiernia'),
+                                            ('department_store', 'dom towarowy'),
+                                            ('chemist', 'drogeria'),
+                                            ('hairdresser', 'fryzjer'),
+                                            ('deli', 'garmażeria'),
+                                            ('kiosk', 'kiosk'),
+                                            ('florist', 'kwiaciarnia'),
+                                            ('ice_cream', 'lodziarnia'),
+                                            ('bakery', 'piekarnia'),
+                                            ('butcher', 'rzeźnik'),
+                                            ('beauty', 'salon piękności'),
+                                            ('jewelry', 'sklep jubilerski'),
+                                            ('alcohol', 'sklep monopolowy'),
+                                            ('convenience', 'sklep wielobranzowy'),
+                                            ('coffee', 'sklep z kawa'),
+                                            ('beverages', 'sklep z napojami'),
+                                            ('seafood', 'sklep z owocami morza'),
+                                            ('wine', 'sklep z winami'),
+                                            ('confectionery', 'sklep cukierniczy'),
+                                            ('art', 'sklep ze sztuka'),
+                                            ('supermarket', 'supermarket'),
+                                            ('greengrocer', 'warzywniak'),
+                                            ('none_shop', 'ZADNE')
+                                    ]
+    )
+
+    feature_amenity_fun = MultiSelectField(max_length=800,
+                                    default=('all_fun', 'WSZYSTKIE'),
+                                    choices=[
+                                            ('all_fun', 'WSZYSTKIE'),
+                                            ('vending_machine', 'automat vendingowy'),
+                                            ('bank', 'bank'),
+                                            ('atm', 'bankomat'),
+                                            ('bar', 'bar'),
+                                            ('fast_food', 'fast food'),
+                                            ('arts_centre', 'galeria sztuki'),
+                                            ('cafe', 'kawiarnia'),
+                                            ('cinema', 'kino'),
+                                            ('nightclub', 'klub nocny'),
+                                            ('post_office', 'poczta'),
+                                            ('police', 'policja'),
+                                            ('pub', 'pub'),
+                                            ('restaurant', 'restauracja'),
+                                            ('theatre', 'teatr'),
+                                            ('bicycle_rental', 'wypozyczalnia rowerow'),
+                                            ('none_fun', 'ZADNE')
+                                    ]
+    )
+
+    feature_amenity_healthcare = MultiSelectField(max_length=800,
+                                    default=('all_helthcare', 'WSZYSTKIE'),
+                                    choices=[
+                                            ('all_helthcare', 'WSZYSTKIE'),
+                                            ('pharmacy', 'apteka'),
+                                            ('dentist', 'dentysta'),
+                                            ('doctors', 'gabinet lekarski'),
+                                            ('clinic', 'klinika'),
+                                            ('hospital', 'szpital'),
+                                            ('none_helthcare', 'ZADNE')
+                                    ]
+    )
+
+    feature_amenity_schooling = MultiSelectField(max_length=800,
+                                    default=('all_schooling', 'WSZYSTKIE'),
+                                    choices=[
+                                            ('all_schooling', 'WSZYSTKIE'),
+                                            ('library', 'biblioteka'),
+                                            ('kindergarten', 'przedszkole'),
+                                            ('school', 'szkola'),
+                                            ('college', 'uczelnia'),
+                                            ('university', 'uniwersytet'),
+                                            ('none_schooling', 'ZADNE')
+                                    ]
+    )
+
+    feature_leisure = MultiSelectField(max_length=800,
+                                    default=('all_leisure', 'WSZYSTKIE'),
+                                    choices=[
+                                            ('all_leisure', 'WSZYSTKIE'),
+                                            ('fitness_centre', 'centrum fitness'),
+                                            ('sports_centre', 'ośrodek sportowy'),
+                                            ('park', 'park'),
+                                            ('playground', 'plac zabaw'),
+                                            ('nature_reserve', 'rezerwat przyrody'),
+                                            ('none_leisure', 'ZADNE')
+                                    ]
+    )
+
+    feature_transport = MultiSelectField(max_length=800,
+                                    default=('all_transport', 'WSZYSTKIE'),
+                                    choices=[
+                                            ('all_transport', 'WSZYSTKIE'),
+                                            ('bus', 'przystanek autobusowy'),
+                                            ('subway', 'metro'),
+                                            ('train', 'przystanek kolejowy'),
+                                            ('stop_position', 'przystanek'),
+                                            ('tram', 'przystanek tramwajowy'),
+                                            ('none_transport', 'ZADNE')
+                                    ]
+    )
+
+    feature_tourism = MultiSelectField(max_length=800,
+                                    default=('all_tourism', 'WSZYSTKIE'),
+                                    choices=[
+                                            ('all_tourism', 'WSZYSTKIE'),
+                                            ('attraction', 'atrakcje'),
+                                            ('artwork', 'dzieła sztuki'),
+                                            ('hotel', 'hotel'),
+                                            ('museum', 'muzeum'),
+                                            ('viewpoint', 'punkt widokowy'),
+                                            ('none_tourism', 'ZADNE')
+                                    ]
+    )
+
+    

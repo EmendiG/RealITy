@@ -7,5 +7,5 @@ urlpatterns = [
     path('about', views.about, name='index-about'),
     path('map', views.show_map, name='index-map'),
     path('choice', views.choice, name='index-choice'),
-    path('features',  views.features, name='index-features')
+    path('features',  views.features, name='index-features'),
 ]

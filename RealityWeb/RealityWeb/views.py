@@ -1,8 +1,9 @@
 from django.http import HttpResponse
 from django.shortcuts import render
 from .models import Post
-from .forms import GetPriceForm
+from .forms import GetPriceForm, FindFeaturesForm
 import requests
+import json
 
 from rest_framework.decorators import api_view
 import pandas as pd
@@ -12,7 +13,7 @@ from django.contrib import messages
 from rest_framework import status
 from rest_framework.response import Response
 
-from .RealityPython import test
+from .RealityPython import ml_engine, findfeatures
 # Create your views here.
 
 def index(request):
@@ -53,17 +54,20 @@ def features(request):
         latlon = latlonDict[request.COOKIES['city']]
 
     if request.method == 'POST':
-        form = GetPriceForm(request.POST)
+        form = FindFeaturesForm(request.POST)
         if form.is_valid():
             form.save()
+            features = findfeatures.FindNearFeatures(request)
+            features_js = json.dumps(features)
             context = {
             'title': 'Map',
             'form': form,
             'latlon': latlon,
+            'features': features_js
             }
-            return render(request, 'home/features.html', context)
+            return render(request, 'home/features_found.html', context)
     else:
-        form = GetPriceForm()
+        form = FindFeaturesForm()
 
     context = {
             'title': 'Map',
@@ -96,8 +100,7 @@ def show_map(request):
         form = GetPriceForm(request.POST)
         if form.is_valid():
             form.save()
-            price = test.RealityPython_MLREP_getPrice(request)
-            messages.success(request, f"Estymowana cena za metr kwadratowy wynosi {round(price,2)} PLN boghactwo :D ")
+            price = ml_engine.RealityPython_MLREP_getPrice(request)
             context = {
             'title': 'Map',
             'form': form,

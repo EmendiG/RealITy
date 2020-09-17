@@ -15,7 +15,7 @@
       integrity="sha512-QVftwZFqvtRNi0ZyCtsznlKSWOStnDORoefr1enyq5mVL4tmKB3S/EnC3rRJcxCPavG10IcrVGSmPh6Qw5lwrg=="
       crossorigin=""
     ></script>
-    <style>#mapka {height: 500px;}</style>
+    
     <script src="https://cdn.jsdelivr.net/npm/js-cookie@rc/dist/js.cookie.min.js"></script>
 
     <div><h1>Wybierz lokalizację i wprowadz dane:</h1></div>
@@ -26,15 +26,6 @@
     {% if price %}
         {{ price }} 
     {% endif %}
-
-    <!-- Remove before production: -->
-    <script> 
-        console.log('map.html     ' + document.cookie)
-    </script>
-    <p>
-        latitude: <span id="idd_lat"></span>°<br />
-        longitude: <span id="idd_lon"></span>°
-    </p>
 
   
     <script language="javascript" type="text/javascript" >
@@ -68,12 +59,9 @@
                 mymap.removeLayer( marker );
             }
             marker = L.marker(e.latlng).setIcon(domekIcon).addTo( mymap );
-            marker.on('dblclick', function(e){ mymap.removeLayer(e.target)})
             var lat = e.latlng.lat.toFixed(4),
                 lng = e.latlng.lng.toFixed(4);
 
-            document.getElementById('idd_lat').textContent = lat;
-            document.getElementById('idd_lon').textContent = lng;
             document.getElementById( '{{ form.lat.id_for_label }}' ).value = lat;
             document.getElementById( '{{ form.lon.id_for_label }}' ).value = lng;
 

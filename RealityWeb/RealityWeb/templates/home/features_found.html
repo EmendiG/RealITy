@@ -1,0 +1,124 @@
+{% extends "home/base.html" %}
+{% load crispy_forms_tags %}
+{% load static %}
+
+{% block mapka %}
+
+    <link
+    rel="stylesheet"
+    href="https://unpkg.com/leaflet@1.4.0/dist/leaflet.css"
+    integrity="sha512-puBpdR0798OZvTTbP4A8Ix/l+A4dHDD0DGqYW6RQ+9jxkRFclaxxQb/SJAWZfWAkuyeQUytO7+7N4QKrDh+drA=="
+    crossorigin=""
+    />
+    <script
+    src="https://unpkg.com/leaflet@1.4.0/dist/leaflet.js"
+    integrity="sha512-QVftwZFqvtRNi0ZyCtsznlKSWOStnDORoefr1enyq5mVL4tmKB3S/EnC3rRJcxCPavG10IcrVGSmPh6Qw5lwrg=="
+    crossorigin=""
+    ></script>
+    <script src="https://cdn.jsdelivr.net/npm/js-cookie@rc/dist/js.cookie.min.js"></script>
+
+    <div id="content-desktop">
+        <h1>Znalezione atrybuty:</h1>
+    </div>
+    <div id="content-mobile" style="font-size: 4.5vw">
+        <span >Znalezione atrybuty:</span>
+    </div>
+
+    <div id="mapka_ff">mapka</div>
+    
+    <script language="javascript" type="text/javascript" >
+
+        var tempDict = {{ features | safe }};
+
+        const mymap = L.map('mapka_ff').setView([0, 0], 6);
+        const attribution =
+            '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors';
+
+        const tileUrl = 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
+        const tiles = L.tileLayer(tileUrl, { attribution });
+        tiles.addTo(mymap);
+        if(parseInt(tempDict['mapka_radius']) >= 700){
+            zoom_mapka = 14
+        } else{
+            zoom_mapka = 15
+        }
+        mymap.setView([parseFloat(tempDict['lat']), parseFloat(tempDict['lon'])], zoom_mapka);
+        var DomIcon = L.Icon.extend({
+                        options: {
+                            iconSize:     [30, 50],
+                            iconAnchor:   [15, 50],
+                            popupAnchor: [0, -50],
+                        }
+                    });
+        var shopIcon = new DomIcon({
+            iconUrl: 'static/images/shop.png'
+        });
+        var funIcon = new DomIcon({
+            iconUrl: 'static/images/fun.png'
+        });
+        var healthcareIcon = new DomIcon({
+            iconUrl: 'static/images/healthcare.png'
+        });
+        var leisureIcon = new DomIcon({
+            iconUrl: 'static/images/leisure.png'
+        });
+        var schoolingIcon = new DomIcon({
+            iconUrl: 'static/images/schooling.png'
+        });
+        var tourismIcon = new DomIcon({
+            iconUrl: 'static/images/tourism.png'
+        });
+        var transportIcon = new DomIcon({
+            iconUrl: 'static/images/transport.png'
+        });
+        var questionIcon = new DomIcon({
+            iconUrl: 'static/images/questionmark.png'
+        });
+
+        var shops_all = ['centrum handlowe', 'cukiernia', 'dom towarowy', 'drogeria', 'fryzjer', 'garmażeria', 'kiosk',
+                'kwiaciarnia', 'lodziarnia', 'piekarnia', 'rzeźnik', 'salon piękności', 'sklep jubilerski', 'sklep monopolowy',
+                'sklep wielobranzowy', 'sklep z kawa', 'sklep z napojami', 'sklep z owocami morza', 'sklep z winami', 
+                'sklep cukierniczy', 'sklep ze sztuka', 'supermarket', 'warzywniak']
+        var fun_all = ['automat vendingowy', 'bank', 'bankomat', 'bar', 'fast food', 'galeria sztuki', 'kawiarnia', 'kino', 
+                'klub nocny', 'poczta', 'policja', 'pub', 'restauracja', 'teatr', 'wypozyczalnia rowerow']
+        var healthcare_all = ['apteka', 'dentysta', 'gabinet lekarski', 'klinika', 'szpital']
+        var schooling_all = ['biblioteka', 'przedszkole', 'szkola', 'uczelnia', 'uniwersytet']
+        var leisures_all = ['centrum fitness', 'ośrodek sportowy', 'park', 'plac zabaw', 'rezerwat przyrody']
+        var transports_all = ['przystanek autobusowy', 'metro', 'przystanek kolejowy', 'przystanek', 'przystanek tramwajowy']
+        var tourisms_all = ['atrakcje', 'dzieła sztuki', 'hotel', 'muzeum', 'punkt widokowy']
+
+        var ommitMapka = ['lat', 'lon', 'mapka_radius']
+        for(var i in tempDict){
+            if(ommitMapka.indexOf(i) === -1){
+                // console.log(tempDict[i])
+                for(var arr in tempDict[i]){
+                    console.log(tempDict[i][arr][0], tempDict[i][arr][1], tempDict[i][arr][2], tempDict[i][arr][3])
+                    if(shops_all.includes(tempDict[i][arr][0])){
+                        icon = shopIcon;
+                    }else if(fun_all.includes(tempDict[i][arr][0])){
+                        icon = funIcon;
+                    }else if(healthcare_all.includes(tempDict[i][arr][0])){
+                        icon = healthcareIcon;
+                    }else if(schooling_all.includes(tempDict[i][arr][0])){
+                        icon = schoolingIcon;
+                    }else if(leisures_all.includes(tempDict[i][arr][0])){
+                        icon = leisureIcon;
+                    }else if(transports_all.includes(tempDict[i][arr][0])){
+                        icon = transportIcon;
+                    }else if(tourisms_all.includes(tempDict[i][arr][0])){
+                        icon = tourismIcon;
+                    }else{
+                        icon = questionIcon;
+                    }
+                    L.marker([tempDict[i][arr][2], tempDict[i][arr][1] ]).setIcon(icon).bindPopup(" <center><b>"+tempDict[i][arr][3]+"</b><br>"+tempDict[i][arr][0]+"</center>").addTo( mymap );
+                    
+                }
+            }
+        }
+        L.circle([parseFloat(tempDict['lat']), parseFloat(tempDict['lon'])], radius=parseInt(tempDict['mapka_radius']), {color:'black', fillColor: 'transparent'} ).addTo( mymap );
+        L.circle([parseFloat(tempDict['lat']), parseFloat(tempDict['lon'])], radius=4, {color:'black'} ).addTo( mymap );
+        
+    </script>
+    <script src="{% static 'thema/js/chosecity.js' %}"></script>
+    
+{% endblock mapka %}
