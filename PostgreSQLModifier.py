@@ -8,7 +8,7 @@ import time
 import OpenStreetMapOverpass
 
 
-db_dane = {'name': 'RealITy', 'password': 'Reality1!', 'hostname': '127.0.0.1', 'db_name': 'realestate_zero'}
+db_dane = {'name': 'realityadmin', 'password': 'Reality1!', 'hostname': '127.0.0.1', 'db_name': 'realestate_zero'}
 
 
 class Strona:

@@ -165,7 +165,6 @@ def FindNearFeatures(request):
     'attraction': 'atrakcje', 'artwork': 'dzieła sztuki', 'hotel': 'hotel', 'museum': 'muzeum', 'viewpoint': 'punkt widokowy'
     }
     for value in tempDict.values():
-        # print(tempDict.index(value))
         for v in value:
             v[0] = translation[v[0]]
 

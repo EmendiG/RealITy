@@ -20,5 +20,6 @@ urlpatterns = [
     path('', include('RealityWeb.urls')),
     path('admin/', admin.site.urls),
     path('api-auth/', include('rest_framework.urls')),
-    path('map/api/', include("RealityWeb.api.urls"))
+    path('map/api/', include("RealityWeb.api.urls")),
+    path('django_plotly_dash/', include('django_plotly_dash.urls'))
 ]

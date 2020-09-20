@@ -1,0 +1,16 @@
+{% extends "home/base.html" %}
+{% load static %}
+{% load plotly_dash %}
+
+{% block mapka %}
+    <main role="main" class="container">
+      <div class="row">
+        <div class="col-md-12">
+            <div class="{% plotly_class name="MapGraph" %}" style="height:60vh; width:auto"> 
+                {% plotly_app name='MapGraph' ratio=0.95 initial_arguments=map_context  %}
+            </div>
+        </div>
+      </div>
+    </main>
+    
+{% endblock mapka %}

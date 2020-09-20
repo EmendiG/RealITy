@@ -26,7 +26,7 @@ def get_data(miasto:str, serwis:str):
     conn = PostgreSQLModifier.PostgreSQL_connectSQLalchemy()
 
     for n, url in enumerate(urls):
-        if n > 18524:
+        if n:
             try:
                 sleep(1.8)
                 url = urls[n]
@@ -106,7 +106,7 @@ get_data('warszawa', 'morizon')
 #    PostgreSQLModifier.PosgreSQL_oferty_Merger_assignDistricts(miasto, 'oferty_merged_features_featuresN')
 #    PostgreSQLModifier.osmApi_DataFrame_ToSQL(miasto, 'Leisure')
 
-# PostgreSQLModifier.osmApi_DataFrame_ToSQL(miasto, 'Leisure', 'Way')
+# PostgreSQLModifier.osmApi_DataFrame_ToSQL(miasto, 'Shop', 'Node')
 
 #print(OpenStreetMapOverpass.MapFeatures('warszawa', 'Leisure', 'Rel').osmApi_getFeature_parseToDataFrame_rels())
 
@@ -114,6 +114,3 @@ get_data('warszawa', 'morizon')
 #    PostgreSQLModifier.osmApi_DataFrame_ToSQL(miasto, 'Public_transport', 'Node')
 
 # PostgreSQLModifier.osmApi_DataFrame_ToSQL('warszawa', 'Tourism', 'Node', onepoint=False)
-
-
-# TODO: Znaleźć najblizsze amenities dla kazdego z rekordu (wystepowanie, nie cecha??) => Wykonac nowy db (relacyjny)  -- cross tables

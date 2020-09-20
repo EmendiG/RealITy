@@ -1,6 +1,5 @@
 from django.http import HttpResponse
 from django.shortcuts import render
-from .models import Post
 from .forms import GetPriceForm, FindFeaturesForm
 import requests
 import json
@@ -18,8 +17,7 @@ from .RealityPython import ml_engine, findfeatures
 
 def index(request):
     context = {
-                'title': 'RealityWeb',
-                'nieruchomosci': Post.objects.all()
+                'title': 'RealityWeb'
     }
     return render(request, 'home/index.html', context)
 
@@ -75,6 +73,15 @@ def features(request):
             'latlon': latlon
     }
     return render(request, 'home/features.html', context)
+
+def graphs(request):
+    if request.COOKIES['city']:
+        city = request.COOKIES['city']
+    context ={
+                'title':'Graphs',
+                'map_context':{'city_name': {'value': city}}
+    }
+    return render(request, 'home/graphs.html', context)
 
 def show_map(request):
 

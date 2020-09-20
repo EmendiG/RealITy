@@ -41,7 +41,9 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'rest_framework',
     'crispy_forms',
-    'multiselectfield'
+    'multiselectfield',
+    'django_plotly_dash.apps.DjangoPlotlyDashConfig',
+    'channels'
 ]
 
 MIDDLEWARE = [
@@ -73,12 +75,19 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'RealityDjango.wsgi.application'
+ASGI_APPLICATION = 'RealityWeb.routing.application'
 
+CHANNEL_LAYERS = {
+    'default': {
+        'BACKEND': 'channels_redis.core.RedisChannelLayer',
+        'CONFIG': {
+            'hosts': [('127.0.0.1', 6379),],
+        },
+    },
+}
 
 # Database
 # https://docs.djangoproject.com/en/3.1/ref/settings/#databases
-
-
 
 POSTGRES_HOST = os.environ.get('POSTGRES_HOST', default="postgres")
 POSTGRES_DB = os.environ.get('POSTGRES_DB', default="RealityWeb")
@@ -102,12 +111,7 @@ DATABASES = {
         'PASSWORD': POSTGRES_PASSWORD,
         'HOST': POSTGRES_HOST,
         'PORT': 5432,
-    },
-
-    # 'default': {
-    #     'ENGINE': 'django.db.backends.sqlite3',
-    #     'NAME': BASE_DIR / 'db.sqlite3',
-    # }
+    }
 }
 
 
@@ -143,10 +147,19 @@ USE_L10N = True
 
 USE_TZ = True
 
+# Plotly dash options
+
+X_FRAME_OPTIONS = 'SAMEORIGIN'
+PLOTLY_COMPONENTS = [
+    'dash_core_components',
+    'dash_html_components',
+    'dash_renderer',
+
+    'dpd_components'
+]
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
-
 STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
