@@ -43,7 +43,8 @@ INSTALLED_APPS = [
     'crispy_forms',
     'multiselectfield',
     'django_plotly_dash.apps.DjangoPlotlyDashConfig',
-    'channels'
+    'bootstrap4',
+    # 'channels'
 ]
 
 MIDDLEWARE = [
@@ -54,6 +55,9 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+
+    'django_plotly_dash.middleware.BaseMiddleware',
+    'django_plotly_dash.middleware.ExternalRedirectionMiddleware',
 ]
 
 ROOT_URLCONF = 'RealityDjango.urls'
@@ -77,17 +81,16 @@ TEMPLATES = [
 WSGI_APPLICATION = 'RealityDjango.wsgi.application'
 ASGI_APPLICATION = 'RealityWeb.routing.application'
 
-CHANNEL_LAYERS = {
-    'default': {
-        'BACKEND': 'channels_redis.core.RedisChannelLayer',
-        'CONFIG': {
-            'hosts': [('127.0.0.1', 6379),],
-        },
-    },
-}
+# CHANNEL_LAYERS = {
+#     'default': {
+#         'BACKEND': 'channels_redis.core.RedisChannelLayer',
+#         'CONFIG': {
+#             'hosts': [('172.19.0.5', 6379),],
+#         },
+#     },
+# }
 
 # Database
-# https://docs.djangoproject.com/en/3.1/ref/settings/#databases
 
 POSTGRES_HOST = os.environ.get('POSTGRES_HOST', default="postgres")
 POSTGRES_DB = os.environ.get('POSTGRES_DB', default="RealityWeb")
@@ -147,15 +150,25 @@ USE_L10N = True
 
 USE_TZ = True
 
-# Plotly dash options
 
+# Plotly dash options
 X_FRAME_OPTIONS = 'SAMEORIGIN'
 PLOTLY_COMPONENTS = [
     'dash_core_components',
     'dash_html_components',
     'dash_renderer',
+    'dpd_static_support',
+    'dpd_components',
+    'dash_bootstrap_components'
+]
+STATICFILES_FINDERS = [
 
-    'dpd_components'
+    'django.contrib.staticfiles.finders.FileSystemFinder',
+    'django.contrib.staticfiles.finders.AppDirectoriesFinder',
+
+    'django_plotly_dash.finders.DashAssetFinder',
+    'django_plotly_dash.finders.DashComponentFinder',
+    'django_plotly_dash.finders.DashAppDirectoryFinder',
 ]
 
 # Static files (CSS, JavaScript, Images)

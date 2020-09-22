@@ -3,9 +3,11 @@
   <component name="ChangeListManager">
     <list default="true" id="edc9251b-a03a-493d-8db3-6662d61b7a60" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PostgreSQLModifier.py" beforeDir="false" afterPath="$PROJECT_DIR$/PostgreSQLModifier.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/RealityWeb/RealityWeb/RealityPython/findfeatures.py" beforeDir="false" afterPath="$PROJECT_DIR$/RealityWeb/RealityWeb/RealityPython/findfeatures.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/RealityWeb/RealityDjango/settings.py" beforeDir="false" afterPath="$PROJECT_DIR$/RealityWeb/RealityDjango/settings.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/RealityWeb/RealityWeb/RealityPython/example.py" beforeDir="false" afterPath="$PROJECT_DIR$/RealityWeb/RealityWeb/RealityPython/example.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/RealityWeb/RealityWeb/templates/home/graphs.html" beforeDir="false" afterPath="$PROJECT_DIR$/RealityWeb/RealityWeb/templates/home/graphs.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/RealityWeb/docker-compose.yml" beforeDir="false" afterPath="$PROJECT_DIR$/RealityWeb/docker-compose.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/RealityWeb/requirements.txt" beforeDir="false" afterPath="$PROJECT_DIR$/RealityWeb/requirements.txt" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -466,7 +468,14 @@
       <option name="project" value="LOCAL" />
       <updated>1600376484505</updated>
     </task>
-    <option name="localTasksCounter" value="46" />
+    <task id="LOCAL-00046" summary="RealITy 0.2020.03.12 (developing plotly.dash app)">
+      <created>1600629725607</created>
+      <option name="number" value="00046" />
+      <option name="presentableId" value="LOCAL-00046" />
+      <option name="project" value="LOCAL" />
+      <updated>1600629725607</updated>
+    </task>
+    <option name="localTasksCounter" value="47" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -514,7 +523,6 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="CHECK_NEW_TODO" value="false" />
-    <MESSAGE value="RealITy 0.2020.02.04 (added Amenities, Tourism and Leisure data from OpenStreetMap API)" />
     <MESSAGE value="RealITy 0.2020.02.05" />
     <MESSAGE value="RealITy 0.2020.02.06" />
     <MESSAGE value="RealITy 0.2020.02.06.1 (sending to PosgreSQL PostGIS enabled)" />
@@ -539,6 +547,7 @@
     <MESSAGE value="RealITy 0.2020.03.09 (developing frontend css + html)" />
     <MESSAGE value="RealITy 0.2020.03.10 (developing 2nd service [features finding])" />
     <MESSAGE value="RealITy 0.2020.03.11 (finished 2nd service)" />
-    <option name="LAST_COMMIT_MESSAGE" value="RealITy 0.2020.03.11 (finished 2nd service)" />
+    <MESSAGE value="RealITy 0.2020.03.12 (developing plotly.dash app)" />
+    <option name="LAST_COMMIT_MESSAGE" value="RealITy 0.2020.03.12 (developing plotly.dash app)" />
   </component>
 </project>

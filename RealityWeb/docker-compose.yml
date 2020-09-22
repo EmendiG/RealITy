@@ -44,10 +44,10 @@ services:
         #    - db-data:/var/lib/postgresql/data
         # command: bash -c "psql -U realityadmin [--password Reality1!] -a -f realestate_zero.sql"
 
-    redis:
-        image: redis:4
-        ports: 
-            - "6379:6379"
+    # redis:
+    #     image: redis:4
+    #     ports: 
+    #         - "6379:6379"
 
 
     pgadmin:
