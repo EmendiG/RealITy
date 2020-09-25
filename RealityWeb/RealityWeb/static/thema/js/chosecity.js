@@ -1,9 +1,13 @@
 // console.log('hello world')
+var ploty_width
+ploty_width = window.screen.width * window.devicePixelRatio;
+var ploty_height
+ploty_height = window.screen.height * window.devicePixelRatio;
 
 $(document).on("click", "a", function() {
     if($(this).attr("targetLink")=="yes"){
         document.cookie = "city="+$(this).attr("targetCity");
-        console.log(document.cookie)
+        console.log(document.cookie);
     }
 });
 

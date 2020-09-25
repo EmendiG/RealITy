@@ -3,16 +3,7 @@
 {% load plotly_dash %}
 
 {% block mapka %}
-  <div class="{% plotly_class name="MapGraph" %}" style="height:50vh; width:auto"> 
-                {% plotly_app_bootstrap  name='MapGraph' initial_arguments=map_context  %}
-            </div>
-      
-    <main role="main" class="container">
-      <div class="row">
-        <div class="col-md-12">
-            
-        </div>
-      </div>
-    </main>
-    
+    <div class="{% plotly_class name="MapGraph" %}" style="height:100%; margin:0; width:auto; overflow:hidden; "> 
+      {% plotly_app_bootstrap name='MapGraph' initial_arguments=map_context aspect="1by1" %} 
+    </div>
 {% endblock mapka %}

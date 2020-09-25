@@ -77,9 +77,12 @@ def features(request):
 def graphs(request):
     if request.COOKIES['city']:
         city = request.COOKIES['city']
+    
     context ={
                 'title':'Graphs',
-                'map_context':{'city_name': {'value': city}}
+                'map_context':{
+                                'city_name': {'value': city}
+                },
     }
     return render(request, 'home/graphs.html', context)
 
