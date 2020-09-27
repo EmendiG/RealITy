@@ -12,6 +12,8 @@ import pandas as pd
 import geopandas as gpd
 import numpy as np
 import re
+import numpy as np
+from pandas.api.types import is_numeric_dtype
 
 from sqlalchemy import create_engine
 import psycopg2
@@ -48,6 +50,7 @@ app = DjangoDash(
                 'MapGraph', 
                 id='city_name', 
                 add_bootstrap_links=True,  
+
                 config={
                     'responsive': True
                 },
@@ -56,33 +59,53 @@ app = DjangoDash(
                     "overflow":"hidden",   
                     "overflow-y":"hidden"
                 },
-                external_stylesheets=[dbc.themes.SLATE],
+                external_stylesheets=[dbc.themes.SLATE], 
                 meta_tags=[{
-                            "name": "viewport", 
-                            "content": "width=device-width, initial-scale=1"
-                }]
+                        "name": "viewport", 
+                        "content": "width=device-width, initial-scale=1"
+                }
+                ]
 )
-app.css.append_css(dict(external_url='https://fonts.googleapis.com/css?family=Montserrat:400,700'))
+
+external_stylesheets = [{
+'external_url': 'https://fonts.googleapis.com/css?family=Montserrat:400,700',
+'external_url': '/static/thema/css/main.css', 
+# 'external_url': '../static/thema/css/main.css', 
+},
+]
+for stylesheet in external_stylesheets:
+	app.css.append_css(stylesheet)
 
 app.layout = html.Div(
     [   
         dcc.Input(id='city_name', type='hidden', value='warszawa'),
-        html.H1('Wybierz dzielnicę i sprawdź informacje:', style={
-                                                                    "font-weight": "700", 
-                                                                    "margin-bottom":"0.5rem", 
-                                                                    "font-size":"2.5rem", 
-                                                                    "line-height":"1.2", 
-                                                                    "font-family":'"Montserrat", sans-serif, Segoe UI'
-                                                            }
+        html.H1('Wybierz dzielnicę i sprawdź informacje:',  
+                id="content-desktop",
+                style={
+                        "font-weight": "700", 
+                        "margin-bottom":"0.5rem", 
+                        "font-size":"2.5rem", 
+                        "line-height":"1.2", 
+                        "font-family":'"Montserrat", sans-serif, Segoe UI'
+                }
+        ),
+        html.H1('Wybierz dzielnicę i sprawdź informacje:',  
+                id="content-mobile",
+                style={
+                        "font-size":"4vw",
+                        "font-weight":"700",
+                        "line-height":"1.2", 
+                        "font-family":'"Montserrat", sans-serif, Segoe UI'
+                }
         ),
 
         html.Div(
             dcc.Graph(
                 id='map-graph',
+                className="mapka_plotly",
                 style={
                     "backgroundColor": "#1a2d46", 
                     'color': '#ffffff', 
-                    "height":"500px",
                     "width":"auto"
                 },
             )
@@ -100,7 +123,7 @@ app.layout = html.Div(
                                     {'label': 'Powierzchnia', 'value': 'Area'},
                                     {'label': 'Cena calkowita', 'value': 'Price'},
                                     {'label': 'Rok', 'value': 'Rok_zabudowy'},
-                                    {'label': 'Liczba_pokoi', 'value': 'Liczba_pokoi'},
+                                    {'label': 'Liczba pokoi', 'value': 'Liczba_pokoi'},
                                     {'label': 'Pietro', 'value': 'Pietro'}
                                 ],
                                 value='Price_per_metr'
@@ -159,7 +182,7 @@ app.layout = html.Div(
                                         {'label': 'Powierzchnia', 'value': 'Area'},
                                         {'label': 'Cena calkowita', 'value': 'Price'},
                                         {'label': 'Rok', 'value': 'Rok_zabudowy'},
-                                        {'label': 'Liczba_pokoi', 'value': 'Liczba_pokoi'},
+                                        {'label': 'Liczba pokoi', 'value': 'Liczba_pokoi'},
                                         {'label': 'Pietro', 'value': 'Pietro'}
                                     ],
                                     value='Price_per_metr'
@@ -176,10 +199,27 @@ app.layout = html.Div(
                                         {'label': 'Powierzchnia', 'value': 'Area'},
                                         {'label': 'Cena calkowita', 'value': 'Price'},
                                         {'label': 'Rok', 'value': 'Rok_zabudowy'},
-                                        {'label': 'Liczba_pokoi', 'value': 'Liczba_pokoi'},
+                                        {'label': 'Liczba pokoi', 'value': 'Liczba_pokoi'},
                                         {'label': 'Pietro', 'value': 'Pietro'}
                                     ],
                                     value='Area'
+                                )
+                            ],
+                            width=4
+                        ),
+                        dbc.Col(
+                            [
+                                dcc.Dropdown(
+                                    id='scatter_color',
+                                options=[
+                                        {'label': 'Cena za m2', 'value': 'Price_per_metr'},
+                                        {'label': 'Powierzchnia', 'value': 'Area'},
+                                        {'label': 'Cena calkowita', 'value': 'Price'},
+                                        {'label': 'Rok', 'value': 'Rok_zabudowy'},
+                                        {'label': 'Liczba pokoi', 'value': 'Liczba_pokoi'},
+                                        {'label': 'Pietro', 'value': 'Pietro'}
+                                    ],
+                                    value='Price'
                                 )
                             ],
                             width=4
@@ -193,20 +233,22 @@ app.layout = html.Div(
             [
                 dcc.Graph(
                     id='scatter-graph',
+                    className="scatter_plotly",
+                    style={
+                            "backgroundColor": "#1a2d46", 
+                            'color': '#ffffff', 
+                            "width":"auto",
+                    },
                 )
-            ],  style={
-                "backgroundColor": "#1a2d46", 
-                'color': '#ffffff', 
-                # "height":"500px",
-                "width":"auto",
-                },
+            ],  
         ),
         
         
-    ], style={'width': 'auto', "height":"100%", "overflow-y":"hidden", "overflow-x":"hidden"}
+    ], style={'width': 'auto', "height":"100%",  } # "overflow-y":"hidden", "overflow-x":"hidden"
 )
 # TODO: I would suggest using dbc.Row and dbc.Col to control the layout rather than setting float property !!!!!!!
 # https://community.plotly.com/t/how-to-get-a-responsive-layout/18029/6
+
 
 @app.callback(
                 Output('map-graph', 'figure'),
@@ -224,6 +266,8 @@ def display_value(drop_type ,dropdown, accuracy, city):
     with open(abs_file_path) as response:
         counties = json.load(response)
     conn = PostgreSQL_connectSQLalchemy()
+    global how_many_times
+    how_many_times = 0
     global df_zero
     df_zero = pd.read_sql( f"""SELECT * FROM "oferty_merged" WHERE "oferty_merged"."Miasto"='{city}' """, con=conn )
     df_raw = df_zero.copy()
@@ -288,8 +332,6 @@ def display_value(drop_type ,dropdown, accuracy, city):
                                                        '<br><extra>%{customdata[3]:.' +f"{accuracy}" + "f}</extra>",
                                         customdata=df.loc[:, ['Dzielnica', 'min','median', 'max']],
                                         colorbar={ 
-                                            #'xanchor':'right', 
-                                            #'xpad':60,
                                             'x':0.04
                                         },                                        
                                         
@@ -309,32 +351,104 @@ def display_value(drop_type ,dropdown, accuracy, city):
                 [
                 Input('map-graph', 'clickData'),
                 Input('scatter_x', 'value'),
-                Input('scatter_y', 'value')
+                Input('scatter_y', 'value'), 
+                Input('scatter_color', 'value'),
                 ]
 )
-def change_value(selectedData, chosen_X, chosen_y):
-    district = selectedData['points'][0].get('location')
-    global df_zero
-    if chosen_X not in ['Price_per_metr', 'Area', 'Price']:
-        df_zero = df_zero[df_zero[f'{chosen_X}'].apply(lambda x: str(x).isdigit())]
-        df_zero[f'{chosen_X}'] = pd.to_numeric(df_zero[f'{chosen_X}'])
-    df_zero = df_zero[df_zero[f'{chosen_X}'] < np.percentile(df_zero[f'{chosen_X}'],99)]
-    df_zero = df_zero[df_zero[f'{chosen_X}'] > np.percentile(df_zero[f'{chosen_X}'], 2)]
-    
-    if chosen_y not in ['Price_per_metr', 'Area', 'Price']:
-        df_zero = df_zero[df_zero[f'{chosen_y}'].apply(lambda x: str(x).isdigit())]
-        df_zero[f'{chosen_y}'] = pd.to_numeric(df_zero[f'{chosen_y}'])
-    df_zero = df_zero[df_zero[f'{chosen_y}'] < np.percentile(df_zero[f'{chosen_y}'],99)]
-    df_zero = df_zero[df_zero[f'{chosen_y}'] > np.percentile(df_zero[f'{chosen_y}'], 2)]
+def change_value(selectedData, chosen_X, chosen_y, chosen_color):
+    if type(selectedData) is not type(None):
+        district = selectedData['points'][0].get('location')
+        global df_zero
+        global how_many_times
+        
+        how_many_times += 1
+        if how_many_times == 1:
+            df_zero = df_zero[df_zero[f'{chosen_X}'] < np.percentile(df_zero[f'{chosen_X}'],99)]
+            df_zero = df_zero[df_zero[f'{chosen_X}'] > np.percentile(df_zero[f'{chosen_X}'], 2)]
+            df_zero = df_zero[df_zero[f'{chosen_y}'] < np.percentile(df_zero[f'{chosen_y}'],99)]
+            df_zero = df_zero[df_zero[f'{chosen_y}'] > np.percentile(df_zero[f'{chosen_y}'], 2)]
+        
+        if not is_numeric_dtype(df_zero[f'{chosen_X}']):
+            df_zero = df_zero[df_zero[f'{chosen_X}'].apply(lambda x: str(x).isdigit())]
+            df_zero[f'{chosen_X}'] = pd.to_numeric(df_zero[f'{chosen_X}'])
+            df_zero = df_zero[df_zero[f'{chosen_X}'] < np.percentile(df_zero[f'{chosen_X}'],99)]
+            df_zero = df_zero[df_zero[f'{chosen_X}'] > np.percentile(df_zero[f'{chosen_X}'], 2)]
+        
+        if not is_numeric_dtype(df_zero[f'{chosen_y}']):
+            df_zero = df_zero[df_zero[f'{chosen_y}'].apply(lambda x: str(x).isdigit())]
+            df_zero[f'{chosen_y}'] = pd.to_numeric(df_zero[f'{chosen_y}'])
+            df_zero = df_zero[df_zero[f'{chosen_y}'] < np.percentile(df_zero[f'{chosen_y}'],99)]
+            df_zero = df_zero[df_zero[f'{chosen_y}'] > np.percentile(df_zero[f'{chosen_y}'], 2)]
 
-    fig = go.Figure(data=go.Scatter(
-                                    x=df_zero[df_zero['Dzielnica'] == district][f'{chosen_X}'],
-                                    y=df_zero[df_zero['Dzielnica'] == district][f'{chosen_y}'],
-                                    mode='markers',
-                    )
-    )
-    fig.update_layout(
-                    autosize=True,
-                    margin={"r":0,"t":20,"l":0,"b":20}
-    )
-    return fig
+        if not is_numeric_dtype(df_zero[f'{chosen_color}']):
+            df_zero = df_zero[df_zero[f'{chosen_color}'].apply(lambda x: str(x).isdigit())]
+            df_zero[f'{chosen_color}'] = pd.to_numeric(df_zero[f'{chosen_color}'])
+            df_zero = df_zero[df_zero[f'{chosen_color}'] < np.percentile(df_zero[f'{chosen_color}'],99)]
+            df_zero = df_zero[df_zero[f'{chosen_color}'] > np.percentile(df_zero[f'{chosen_color}'], 2)]
+
+        labeltrans={
+            'Price_per_metr':'Cena za m2',
+            'Area':'Powierzchnia',
+            'Price':'Cena calkowita',
+            'Rok_zabudowy':'Rok',
+            'Liczba_pokoi':'Liczba pokoi',
+            'Pietro':'Pietro'
+        }
+        labelsuffix = {
+            'Price_per_metr':'PLN/m2',
+            'Area':'m2',
+            'Price':'PLN',
+            'Rok_zabudowy':'rok',
+            'Liczba_pokoi':'pokoi',
+            'Pietro':'pietro'
+        }
+        fig = go.Figure(data=go.Scatter(
+                                        x=df_zero[df_zero['Dzielnica'] == district][f'{chosen_X}'],
+                                        y=df_zero[df_zero['Dzielnica'] == district][f'{chosen_y}'],
+                                        mode='markers',
+                                        marker={
+                                            'autocolorscale':True,
+                                            'color':df_zero[df_zero['Dzielnica'] == district][f'{chosen_color}'],
+                                            'colorscale':"YlOrRD",
+                                            'colorbar':{
+                                                'x':0.95
+                                            }
+                                        },
+                                        hovertemplate=
+                                                       '%{y:.1f}' + f' {labelsuffix.get(chosen_y)}'+
+                                                       '<br>%{x:.1f}' + f' {labelsuffix.get(chosen_X)}' +
+                                                       "<extra></extra>",
+                        )
+        )
+
+        fig.update_layout(
+                        autosize=True,
+                        margin={"r":0,"t":40,"l":0,"b":20},
+                        title={
+                            'text': '<b>'+ district +'</b>',
+                            'xanchor': 'center',
+                            'yanchor': 'top',
+                            'x':0.5,
+                            'font':{
+                                'size':20
+                            }
+                        },
+                        xaxis_title=labeltrans.get(chosen_X),
+                        yaxis_title=labeltrans.get(chosen_y),
+        )
+        fig.layout.plot_bgcolor = '#fff'
+        fig.layout.paper_bgcolor = '#fff'
+        fig.update_xaxes(showline=True, linewidth=2, linecolor='black', gridwidth=0.1, gridcolor='Lightgrey')
+        fig.update_yaxes(showline=True, linewidth=2, linecolor='black', gridwidth=0.1, gridcolor='Lightgrey')
+        return fig
+    else:
+        fig = go.Figure(data=go.Scatter())
+        fig.update_layout(
+                        autosize=True,
+                        margin={"r":0,"t":20,"l":0,"b":20}
+        )
+        fig.layout.plot_bgcolor = '#fff'
+        fig.layout.paper_bgcolor = '#fff'
+        fig.update_xaxes(showline=True, linewidth=2, linecolor='black')
+        fig.update_yaxes(showline=True, linewidth=2, linecolor='black')
+        return fig

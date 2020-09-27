@@ -7,7 +7,8 @@ ploty_height = window.screen.height * window.devicePixelRatio;
 $(document).on("click", "a", function() {
     if($(this).attr("targetLink")=="yes"){
         document.cookie = "city="+$(this).attr("targetCity");
-        console.log(document.cookie);
+        document.cookie = "my_width="+$(window).width();;
+        document.cookie = "my_height="+$(window).height();
     }
 });
 

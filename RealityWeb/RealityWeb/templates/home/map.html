@@ -18,13 +18,26 @@
     
     <script src="https://cdn.jsdelivr.net/npm/js-cookie@rc/dist/js.cookie.min.js"></script>
 
-    <div><h1>Wybierz lokalizację i wprowadz dane:</h1></div>
+    <div id="content-desktop">
+        <h1>Wybierz lokalizację i znajdź wybrane atrybuty:</h1>
+    </div>
+    <div id="content-mobile" style="font-size: 4vw; font-weight:700; line-height:1.2; font-family: 'Montserrat'">
+        <span >Wybierz lokalizację i znajdź wybrane atrybuty:</span>
+    </div>
 
     <div id="mapka">mapka</div>
 
     <!-- Print price -->
     {% if price %}
-        {{ price }} 
+    <main role="main" class="container" style="padding-top: 2vh;">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="alert alert-success" role="alert">
+                    Przewidywana cena za m2 wynosi {{ price }} PLN
+                </div>
+            </div>
+        </div>
+    </main>
     {% endif %}
 
   
@@ -64,9 +77,6 @@
 
             document.getElementById( '{{ form.lat.id_for_label }}' ).value = lat;
             document.getElementById( '{{ form.lon.id_for_label }}' ).value = lng;
-
-            var csrftokenek = Cookies.get('csrftoken');
-            document.getElementById( '{{ form.tagi.id_for_label }}' ).value = csrftokenek;
         });
     </script>
 
@@ -78,7 +88,7 @@
         <form method="post">
             {% csrf_token %}
             <fieldset>
-                <legend class="border-bottom mb-4">Dane do mapy</legend>
+                <legend class="border-bottom mb-4" style="padding-top: 20px">Dane do mapy</legend>
                 {{ form | crispy }}
             </fieldset>
             <div class="form-group">

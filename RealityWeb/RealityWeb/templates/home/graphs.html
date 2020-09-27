@@ -3,7 +3,14 @@
 {% load plotly_dash %}
 
 {% block mapka %}
-    <div class="{% plotly_class name="MapGraph" %}" style="height:100%; margin:0; width:auto; overflow:hidden; "> 
-      {% plotly_app_bootstrap name='MapGraph' initial_arguments=map_context aspect="1by1" %} 
+
+  <div id="content-desktop" class="{% plotly_class name="MapGraph" %}" style="height:100%; margin:0; width:auto; overflow:hidden "> 
+    {% plotly_app_bootstrap name='MapGraph' initial_arguments=map_context aspect="1by1" %} 
+  </div>
+  {% if is_mobile %}
+    <div id="content-mobile" class="{% plotly_class name="MapGraph" %}" style="height:100%; margin:0; width:auto; overflow:hidden"> 
+      {% plotly_app name='MapGraph' initial_arguments=map_context ratio=my_ratio %} 
     </div>
+  {% endif %}
+
 {% endblock mapka %}

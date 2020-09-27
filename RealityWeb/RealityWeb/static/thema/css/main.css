@@ -1,9 +1,27 @@
 #mapka{
-  height: 500px;
+  height: 60vh;
 }
 @media screen and (max-width: 768px) {
   #mapka{
     height: 400px;
+  }
+}
+
+.mapka_plotly{
+  height: 30vh;
+}
+@media screen and (max-height: 968px) {
+  .mapka_plotly{
+    height: 40vh;
+  }
+}
+
+.scatter_plotly{
+  height: 40vh;
+}
+@media screen and (max-height: 968px) {
+  .scatter_plotly{
+    height: 50vh;
   }
 }
 
@@ -21,7 +39,7 @@
   }
 @media (min-width: 992px) {
     #main {
-      padding-top: 104px;
+      padding-top: 78px;
     }
 }
 
@@ -38,9 +56,9 @@
   scale: 1.05;
 }
 
-@media (min-width: 992px) {
+@media (max-height: 1377px) {
     .has-bg-lilac-pop-200 {
-      height: 19vh;
+      height: 18vh;
   }
 }
 
@@ -58,6 +76,11 @@
 .has-bg-lilac-pop-600{
   background-color: #d4e279;
   height: 600px;
+}
+@media (max-height: 1337px) {
+  .has-bg-lilac-pop-600 {
+    height: 66vh;
+}
 }
 
 .has-bg-lilac-pop-600:hover{

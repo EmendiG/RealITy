@@ -38,7 +38,7 @@ services:
             POSTGRES_DB: realestate_zero,RealityWeb
             POSTGRES_MULTIPLE_EXTENSIONS: postgis
         ports: 
-            - "5432:5432"
+            - "5431:5432"
         volumes:
             - ./nowa.sql:/docker-entrypoint-initdb.d/nowa.sql
         #    - db-data:/var/lib/postgresql/data

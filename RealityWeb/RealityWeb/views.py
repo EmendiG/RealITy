@@ -75,16 +75,37 @@ def features(request):
     return render(request, 'home/features.html', context)
 
 def graphs(request):
+    def mobile(request):
+        import re
+        """Return True if the request comes from a mobile device."""
+
+        MOBILE_AGENT_RE=re.compile(r".*(iphone|mobile|androidtouch)",re.IGNORECASE)
+
+        if MOBILE_AGENT_RE.match(request.META['HTTP_USER_AGENT']):
+            return True
+        else:
+            return False
+
     if request.COOKIES['city']:
         city = request.COOKIES['city']
+        my_width = request.COOKIES['my_width']
+        my_height = request.COOKIES['my_height']
+        ratio = int(my_height)/int(my_width)
+        if mobile(request):
+            is_mobile = True
+        else:
+            is_mobile = False
+
+        context ={
+                    'title':'Graphs',
+                    'map_context':{
+                                    'city_name': {'value': city}
+                    },
+                    'my_ratio':ratio,
+                    'is_mobile': is_mobile,
+        }
+        return render(request, 'home/graphs.html', context)
     
-    context ={
-                'title':'Graphs',
-                'map_context':{
-                                'city_name': {'value': city}
-                },
-    }
-    return render(request, 'home/graphs.html', context)
 
 def show_map(request):
 
@@ -117,7 +138,7 @@ def show_map(request):
             'latlon': latlon,
             'price': round(price,2)
             }
-            return render(request, 'miasta/map.html', context)
+            return render(request, 'home/map.html', context)
     else:
         form = GetPriceForm()
 
@@ -126,4 +147,4 @@ def show_map(request):
             'form': form,
             'latlon': latlon
     }
-    return render(request, 'miasta/map.html', context)
+    return render(request, 'home/map.html', context)
