@@ -8,7 +8,7 @@
 }
 
 .mapka_plotly{
-  height: 30vh;
+  height: 40vh;
 }
 @media screen and (max-height: 968px) {
   .mapka_plotly{

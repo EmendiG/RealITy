@@ -9,17 +9,27 @@ class GetPriceForm(forms.ModelForm):
         model = GetPriceModel
         fields = '__all__'
         widgets = {
-            'area': forms.NumberInput(attrs={'class': 'form-control m-input form-control-sm',
-                                             'placeholder': 'Enter the area in m2 i.e. 61'}),
+            'area': forms.NumberInput(attrs={
+                                                'class': 'form-control m-input form-control-sm',
+                                                'placeholder': 'Wpisz powierzchnie mieszkania w m2 np.  62.8'
+                                        }),
             'typ_zabudowy': forms.Select(attrs={'class': 'form-control m-input form-control-sm'}),
-            'rok_zabudowy': forms.NumberInput(attrs={'class': 'form-control m-input form-control-sm',
-                                                     'placeholder': 'Enter the year of construction i.e. 2020'}),
-            'liczba_pokoi': forms.NumberInput(attrs={'class': 'form-control m-input form-control-sm',
-                                                     'placeholder': 'Enter number of rooms i.e. 2'}),
-            'pietro': forms.NumberInput(attrs={'class': 'form-control m-input form-control-sm',
-                                               'placeholder': 'Enter the floor number i.e. 0'}),
-            'max_liczba_pieter': forms.NumberInput(attrs={'class': 'form-control m-input form-control-sm',
-                                                          'placeholder': str('Enter the number of buidling' +"'" + 's floors i.e. 12')}),
+            'rok_zabudowy': forms.NumberInput(attrs={
+                                                        'class': 'form-control m-input form-control-sm',
+                                                        'placeholder': 'Wpisz rok wybudowania budynku np.  2020'
+                                                }),
+            'liczba_pokoi': forms.NumberInput(attrs={
+                                                        'class': 'form-control m-input form-control-sm',
+                                                        'placeholder': 'Wpisz licznę pomieszczen w mieszkaniu np.  2'
+                                                }),
+            'pietro': forms.NumberInput(attrs={
+                                                'class': 'form-control m-input form-control-sm',
+                                               'placeholder': 'Wpisz pietro, na ktorym znajduje sie mieszkanie np.  0'
+                                        }),
+            'max_liczba_pieter': forms.NumberInput(attrs={
+                                                            'class': 'form-control m-input form-control-sm',
+                                                            'placeholder': 'Wpisz maksymalna liczbe pieter w budynku np.  12'
+                                                    }),
             'parking': forms.Select(attrs={'class': 'form-control m-input form-control-sm'}),
             'kuchnia': forms.Select(attrs={'class': 'form-control m-input form-control-sm'}),
             'wlasnosc': forms.Select(attrs={'class': 'form-control m-input form-control-sm'}),
@@ -27,7 +37,10 @@ class GetPriceForm(forms.ModelForm):
             'material': forms.Select(attrs={'class': 'form-control m-input form-control-sm'}),
             'okna': forms.Select(attrs={'class': 'form-control m-input form-control-sm'}),
             'rynek': forms.Select(attrs={'class': 'form-control m-input form-control-sm'}),
-            'tagi': forms.Textarea(attrs={'class': 'form-control m-input form-control-sm'})
+            'tagi': forms.Textarea(attrs={
+                                            'class': 'form-control m-input form-control-sm',
+                                            'placeholder': 'Wpisz najważniejsze dane opisujące mieszkanie i okolice lub opis mieszkania w języku polskim, maksymalnie 2000 znaków'
+            })
         }
 
 
@@ -35,8 +48,19 @@ class GetPriceForm(forms.ModelForm):
         super(GetPriceForm, self).__init__(*args, **kwargs)
         self.fields['lat'].widget = HiddenInput()
         self.fields['lon'].widget = HiddenInput()
-        # self.fields['csrftoken'].widget = HiddenInput()
-
+        # self.fields['csrftoken'].widget = HiddenInput()        
+        self.fields['area'].label = "Powierzchnia"
+        self.fields['typ_zabudowy'].label = "Typ zabudowy"
+        self.fields['rok_zabudowy'].label = "Rok wybudowania"
+        self.fields['liczba_pokoi'].label = "Liczba pomieszczen"
+        self.fields['pietro'].label = "Pietro"
+        self.fields['max_liczba_pieter'].label = "Wysokosc budynku (liczba pieter)"
+        self.fields['parking'].label = "Parking"
+        self.fields['kuchnia'].label = "Typ kuchni"
+        self.fields['material'].label = "Material budynku"
+        self.fields['okna'].label = "Typ okien"
+        self.fields['rynek'].label = "Rynek"
+        self.fields['tagi'].label = "Tagi lub opis"
 class FindFeaturesForm(forms.ModelForm):
     class Meta:
         model = FindFeaturesModel

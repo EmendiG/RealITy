@@ -116,6 +116,9 @@ app.layout = html.Div(
                 [
                     dbc.Col(
                         [
+                            html.P(
+                                    'Wybierz szukaną cechę na powyższej mapie:'
+                                ),
                             dcc.Dropdown(
                                 id='df_dropdown_type',
                                 options=[
@@ -133,6 +136,9 @@ app.layout = html.Div(
                     ),
                     dbc.Col(
                         [
+                            html.P(
+                                    'Wybierz typ miarę cechy na powyższej mapie:'
+                                ),
                             dcc.Dropdown(
                                 id='df_dropdown_options',
                                 options=[
@@ -152,6 +158,9 @@ app.layout = html.Div(
                     ),
                     dbc.Col(
                         [
+                            html.P(
+                                    'Wybierz dokładność na powyższej mapie:'
+                                ),
                             dcc.Dropdown(
                                 id='df_dropdown_accuracy',
                                 options=[
@@ -175,6 +184,9 @@ app.layout = html.Div(
                     [
                         dbc.Col(
                             [
+                                html.P(
+                                    'Wybierz oś Y na poniższym grafie:'
+                                ),
                                 dcc.Dropdown(
                                     id='scatter_y',
                                     options=[
@@ -192,6 +204,9 @@ app.layout = html.Div(
                         ),
                         dbc.Col(
                             [
+                                html.P(
+                                    'Wybierz oś X na poniższym grafie:'
+                                ),
                                 dcc.Dropdown(
                                     id='scatter_x',
                                 options=[
@@ -209,6 +224,9 @@ app.layout = html.Div(
                         ),
                         dbc.Col(
                             [
+                                html.P(
+                                    'Wybierz zmienną koloru na poniższym grafie:'
+                                ),
                                 dcc.Dropdown(
                                     id='scatter_color',
                                 options=[
@@ -244,7 +262,7 @@ app.layout = html.Div(
         ),
         
         
-    ], style={'width': 'auto', "height":"100%",  } # "overflow-y":"hidden", "overflow-x":"hidden"
+    ], style={'width': 'auto', "height":"100%", "overflow-y":"hidden", "overflow-x":"hidden"} # 
 )
 # TODO: I would suggest using dbc.Row and dbc.Col to control the layout rather than setting float property !!!!!!!
 # https://community.plotly.com/t/how-to-get-a-responsive-layout/18029/6
@@ -407,9 +425,8 @@ def change_value(selectedData, chosen_X, chosen_y, chosen_color):
                                         y=df_zero[df_zero['Dzielnica'] == district][f'{chosen_y}'],
                                         mode='markers',
                                         marker={
-                                            'autocolorscale':True,
                                             'color':df_zero[df_zero['Dzielnica'] == district][f'{chosen_color}'],
-                                            'colorscale':"YlOrRD",
+                                            'colorscale':"Sunsetdark",
                                             'colorbar':{
                                                 'x':0.95
                                             }

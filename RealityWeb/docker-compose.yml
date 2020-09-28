@@ -21,6 +21,9 @@ services:
             - db_migrate
         ports:
             - "8000:8000"
+        networks:
+            - main_network
+
     db_migrate:
         image: realityweb:latest
         command: python manage.py migrate
@@ -28,6 +31,15 @@ services:
         environment: *app-variables
         depends_on: 
             - postgres
+        deploy:
+            restart_policy:
+                condition: on-failure
+                delay: 5s
+                max_attempts: 3
+                window: 120s
+        networks:
+            - main_network
+
 
     postgres:
         image: kartoza/postgis:12.0
@@ -41,13 +53,10 @@ services:
             - "5431:5432"
         volumes:
             - ./nowa.sql:/docker-entrypoint-initdb.d/nowa.sql
-        #    - db-data:/var/lib/postgresql/data
+            - db-data:/var/lib/postgresql/data
+        networks:
+            - main_network
         # command: bash -c "psql -U realityadmin [--password Reality1!] -a -f realestate_zero.sql"
-
-    # redis:
-    #     image: redis:4
-    #     ports: 
-    #         - "6379:6379"
 
 
     pgadmin:
@@ -60,12 +69,16 @@ services:
             PGADMIN_DEFAULT_EMAIL: pgadmin4@pgadmin.org
             PGADMIN_DEFAULT_PASSWORD: admin
         restart: unless-stopped
+        networks:
+            - main_network
             
-            
+    # redis:
+    #     image: redis:4
+    #     ports: 
+    #         - "6379:6379"
 
-# volumes:
-#     db-data:
+volumes:
+    db-data:
 
-
-
-
+networks:
+    main_network:
