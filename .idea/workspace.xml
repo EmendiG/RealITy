@@ -475,7 +475,14 @@
       <option name="project" value="LOCAL" />
       <updated>1600807463027</updated>
     </task>
-    <option name="localTasksCounter" value="48" />
+    <task id="LOCAL-00048" summary="RealITy 0.2020.03.15 (some changes)">
+      <created>1601328678579</created>
+      <option name="number" value="00048" />
+      <option name="presentableId" value="LOCAL-00048" />
+      <option name="project" value="LOCAL" />
+      <updated>1601328678579</updated>
+    </task>
+    <option name="localTasksCounter" value="49" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -523,7 +530,6 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="CHECK_NEW_TODO" value="false" />
-    <MESSAGE value="RealITy 0.2020.02.06" />
     <MESSAGE value="RealITy 0.2020.02.06.1 (sending to PosgreSQL PostGIS enabled)" />
     <MESSAGE value="RealITy 0.2020.02.07" />
     <MESSAGE value="RealITy 0.2020.02.07.1 (needs some functions merging and refactoring)" />
@@ -548,6 +554,7 @@
     <MESSAGE value="RealITy 0.2020.03.11 (finished 2nd service)" />
     <MESSAGE value="RealITy 0.2020.03.12 (developing plotly.dash app)" />
     <MESSAGE value="RealITy 0.2020.03.13 (still developing plotly.dash app)" />
-    <option name="LAST_COMMIT_MESSAGE" value="RealITy 0.2020.03.13 (still developing plotly.dash app)" />
+    <MESSAGE value="RealITy 0.2020.03.15 (some changes)" />
+    <option name="LAST_COMMIT_MESSAGE" value="RealITy 0.2020.03.15 (some changes)" />
   </component>
 </project>

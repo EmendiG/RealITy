@@ -33,3 +33,4 @@ django-plotly-dash==1.4.2
 dash-bootstrap-components==0.10.6
 dpd-static-support==0.0.5
 django-bootstrap4==2.2.0
+python-decouple==3.3

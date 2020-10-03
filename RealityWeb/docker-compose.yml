@@ -15,15 +15,18 @@ x-app-variables: &app-variables
 services:
     website:
         image: realityweb:latest
-        command: python manage.py runserver 0.0.0.0:8000
+        environment: *app-variables
+        command: ./website_bootcommand.sh
         volumes: *service-volumes
+        hostname: website
         depends_on: 
             - db_migrate
+            - postgres
         ports:
             - "8000:8000"
         networks:
             - main_network
-
+        
     db_migrate:
         image: realityweb:latest
         command: python manage.py migrate
@@ -34,16 +37,15 @@ services:
         deploy:
             restart_policy:
                 condition: on-failure
-                delay: 5s
+                delay: 60s
                 max_attempts: 3
-                window: 120s
+                window: 200s
         networks:
             - main_network
 
 
     postgres:
         image: kartoza/postgis:12.0
-        restart: always
         environment:
             POSTGRES_USER: realityadmin
             POSTGRES_PASSWORD: Reality1!
@@ -56,6 +58,9 @@ services:
             - db-data:/var/lib/postgresql/data
         networks:
             - main_network
+        deploy:
+            restart_policy:
+                condition: on-failure
         # command: bash -c "psql -U realityadmin [--password Reality1!] -a -f realestate_zero.sql"
 
 
@@ -68,9 +73,11 @@ services:
         environment:
             PGADMIN_DEFAULT_EMAIL: pgadmin4@pgadmin.org
             PGADMIN_DEFAULT_PASSWORD: admin
-        restart: unless-stopped
         networks:
             - main_network
+        deploy:
+            restart_policy:
+                condition: on-failure
             
     # redis:
     #     image: redis:4

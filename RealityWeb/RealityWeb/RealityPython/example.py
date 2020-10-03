@@ -338,7 +338,8 @@ def display_value(drop_type ,dropdown, accuracy, city):
                                         marker_opacity=0.5, 
                                         marker_line_width=0.5,
                                         hovertemplate= '<b>%{customdata[0]}</b>' + 
-                                                       f'<br><b>{labels[dropdown]}</b>:' +  
+                                                       f'<br><b>{labels[dropdown]}</b>:' + 
+                                                       '<br>Liczba pomiarow:' + 
                                                        '<br>Min:' +
                                                        '<br>Mediana:' +
                                                        '<br>Max:' +
@@ -347,8 +348,9 @@ def display_value(drop_type ,dropdown, accuracy, city):
                                                        '<extra><b>%{z:.' +f"{accuracy}" + "f}</b></extra>"+
                                                        '<br><extra>%{customdata[1]:.' +f"{accuracy}" + "f}</extra>"+
                                                        '<br><extra>%{customdata[2]:.' +f"{accuracy}" + "f}</extra>"+
-                                                       '<br><extra>%{customdata[3]:.' +f"{accuracy}" + "f}</extra>",
-                                        customdata=df.loc[:, ['Dzielnica', 'min','median', 'max']],
+                                                       '<br><extra>%{customdata[3]:.' +f"{accuracy}" + "f}</extra>"+
+                                                       '<br><extra>%{customdata[4]:.' +f"{accuracy}" + "f}</extra>",
+                                        customdata=df.loc[:, ['Dzielnica', 'count', 'min','median', 'max']],
                                         colorbar={ 
                                             'x':0.04
                                         },                                        

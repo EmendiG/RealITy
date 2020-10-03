@@ -47,8 +47,7 @@ class GetPriceForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super(GetPriceForm, self).__init__(*args, **kwargs)
         self.fields['lat'].widget = HiddenInput()
-        self.fields['lon'].widget = HiddenInput()
-        # self.fields['csrftoken'].widget = HiddenInput()        
+        self.fields['lon'].widget = HiddenInput()    
         self.fields['area'].label = "Powierzchnia"
         self.fields['typ_zabudowy'].label = "Typ zabudowy"
         self.fields['rok_zabudowy'].label = "Rok wybudowania"
@@ -60,7 +59,7 @@ class GetPriceForm(forms.ModelForm):
         self.fields['material'].label = "Material budynku"
         self.fields['okna'].label = "Typ okien"
         self.fields['rynek'].label = "Rynek"
-        self.fields['tagi'].label = "Tagi lub opis"
+        self.fields['tagi'].label = "Tagi i/lub opis"
 class FindFeaturesForm(forms.ModelForm):
     class Meta:
         model = FindFeaturesModel
