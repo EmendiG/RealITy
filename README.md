@@ -11,6 +11,6 @@
 
 
   Docker commands (deployment on local machine using docker swarm):
-> docker stack deploy --compose-file docker-compose.yml realityweb
+> docker stack deploy --compose-file docker-compose.yml realityweb <br>
 > before deployment make sure if you have "nowa.sql" db file inside project otherwise change docker-compose.yml > postgres > volume (line 57)
 
