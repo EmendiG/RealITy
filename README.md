@@ -4,14 +4,13 @@
 - Get data from gratka.pl  ==||==
 - Get data from morizon.pl ==||==
 - Merge filtered data into one database, dmbs= PostgreSQL
-- Added OpenStreetMap API to get Districts (Polygons), Amenities, Tourism, Leisture (Nodes, Ways, Rels)
-- Possible to send geometry to PostgreSQL (needed PostGIS installed inside docker db container)
-- Machine Learning alorithms predict price per square meter based on processed data (testing accuracy 72-80%, evaluations are based on a offer price NOT transaction price!)
-- Django framework + Docker
+- Added OpenStreetMap API call to get Citys' Districts (Polygons), Amenities, Tourism, Leisture (Nodes, Ways, Rels)
+- Machine Learning alorithms predict price per square meter based on processed data (testing accuracy 72-80%, evaluations are based on a offer prices NOT transaction prices!)
+- Possible to get nearest 
+- Django framework + Docker + AWS
 
 
-  Docker commands:
-> docker build --force-rm -t realityweb:latest . <br/>
-> docker-compose up -d --remove-orphans <br/>
-> docker-compose run website python manage.py makemigrations <br/>
-> (when setting up for first time, volumes should reloaded because of .sql file that is sourced)
+  Docker commands (deployment on local machine using docker swarm):
+> docker stack deploy --compose-file docker-compose.yml realityweb <br>
+> before deployment make sure if you have "nowa.sql" db file inside project otherwise change docker-compose.yml > postgres > volume (line 57)
+
