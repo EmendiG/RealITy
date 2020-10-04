@@ -26,9 +26,9 @@ import json
 import pathlib
 
 
-POSTGRES_HOST = os.environ.get('POSTGRES_HOST', default="postgres")
-POSTGRES_USER = os.environ.get('POSTGRES_USER', default="realityadmin")
-POSTGRES_PASSWORD = os.environ.get('POSTGRES_PASSWORD', default="Reality1!")
+POSTGRES_HOST = os.environ.get('POSTGRES_HOST')
+POSTGRES_USER = os.environ.get('POSTGRES_USER')
+POSTGRES_PASSWORD = os.environ.get('POSTGRES_PASSWORD')
 db_dane = {
             'name': POSTGRES_USER, 
             'password': POSTGRES_PASSWORD, 

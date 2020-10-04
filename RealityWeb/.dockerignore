@@ -1,2 +1,4 @@
 nowa.sql
 /static
+*.pem
+.env

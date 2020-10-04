@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/3.1/ref/settings/
 
 from pathlib import Path
 import os
+from decouple import config, Csv
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve(strict=True).parent.parent
@@ -21,10 +22,10 @@ BASE_DIR = Path(__file__).resolve(strict=True).parent.parent
 # See https://docs.djangoproject.com/en/3.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = '41f29didj^r0hjxbyi*%mp89vn6*ll0l@o@8jja%t3($xtkei8'
+SECRET_KEY = config('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = config('DEBUG', cast=bool)
 
 ALLOWED_HOSTS = ['localhost', '127.0.0.1', '*']
 
@@ -44,6 +45,7 @@ INSTALLED_APPS = [
     'multiselectfield',
     'django_plotly_dash.apps.DjangoPlotlyDashConfig',
     'bootstrap4',
+    # 'storages',
     # 'channels'
 ]
 
@@ -92,11 +94,9 @@ ASGI_APPLICATION = 'RealityWeb.routing.application'
 
 # Database
 
-POSTGRES_HOST = os.environ.get('POSTGRES_HOST', default="postgres")
-POSTGRES_DB = os.environ.get('POSTGRES_DB', default="RealityWeb")
-POSTGRES_USER = os.environ.get('POSTGRES_USER', default="realityadmin")
-POSTGRES_PASSWORD = os.environ.get('POSTGRES_PASSWORD', default="Reality1!")
-
+POSTGRES_HOST =config('POSTGRES_HOST')
+POSTGRES_USER = config('POSTGRES_USER')
+POSTGRES_PASSWORD = config('POSTGRES_PASSWORD')
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
@@ -172,6 +172,18 @@ STATICFILES_FINDERS = [
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
+
+# AWS_ACCESS_KEY_ID = config('aws_s3_access_key_id')
+# AWS_SECRET_ACCESS_KEY = config('aws_s3_secret_access_key')
+# AWS_STORAGE_BUCKET_NAME = 'realityweb-static'
+# AWS_S3_CUSTOM_DOMAIN = 'realityweb-static.s3-website.eu-central-1.amazonaws.com'
+# AWS_S3_OBJECT_PARAMETERS = { 'CacheControl': 'max-age=86400',}
+# AWS_LOCATION = ''
+# AWS_DEFAULT_ACL= None
+
+# STATIC_URL = 'https://realityweb-static.s3-website.eu-central-1.amazonaws.com/'
+# STATICFILES_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
+
 STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 

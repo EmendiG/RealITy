@@ -3,21 +3,19 @@ version: "3.7"
 x-service-volumes: &service-volumes
     - ./:/app/:rw,cached
 
-x-database-variables: &database-variables
-    POSTGRES_DB: RealityWeb
+x-app-variables: &app-variables
     POSTGRES_USER: realityadmin
     POSTGRES_PASSWORD: Reality1!
-
-x-app-variables: &app-variables
-    <<: *database-variables
+    POSTGRES_DB: RealityWeb
     POSTGRES_HOST: postgres
 
 services:
     website:
         image: realityweb:latest
-        environment: *app-variables
         command: ./website_bootcommand.sh
         volumes: *service-volumes
+        env_file: .env
+        environment: *app-variables
         hostname: website
         depends_on: 
             - db_migrate
@@ -30,6 +28,7 @@ services:
     db_migrate:
         image: realityweb:latest
         command: python manage.py migrate
+        env_file: .env
         volumes: *service-volumes
         environment: *app-variables
         depends_on: 
