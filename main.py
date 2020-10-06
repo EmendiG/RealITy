@@ -92,7 +92,7 @@ def get_data(miasto:str, serwis:str):
     conn.close()
 
 
-get_data('warszawa', 'morizon')
+# get_data('warszawa', 'morizon')
 
 # help(postgresql_modifier.oferty_Merger)
 # postgresql_modifier.oferty_Merger('otodom', 'gratka', 'merged')

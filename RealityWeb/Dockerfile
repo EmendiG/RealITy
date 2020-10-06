@@ -20,5 +20,9 @@ RUN pip install -r ./requirements.txt
 COPY manage.py ./manage.py
 COPY . .
 
+COPY ./website_bootcommand.sh /website_bootcommand.sh
+RUN chmod +x /website_bootcommand.sh
+ENTRYPOINT [ "/website_bootcommand.sh" ]
+
 EXPOSE 8000
 

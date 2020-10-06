@@ -2,20 +2,10 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="edc9251b-a03a-493d-8db3-6662d61b7a60" name="Default Changelist" comment="RealITy 0.2020.03.16 (before aws deployment)">
-      <change afterPath="$PROJECT_DIR$/RealityWeb/.env" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/RealityWeb/nowa.sql" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/RealityWeb/.dockerignore" beforeDir="false" afterPath="$PROJECT_DIR$/RealityWeb/.dockerignore" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/RealityWeb/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/RealityWeb/.gitignore" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/RealityWeb/RealityDjango/settings.py" beforeDir="false" afterPath="$PROJECT_DIR$/RealityWeb/RealityDjango/settings.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/RealityWeb/RealityWeb/RealityPython/example.py" beforeDir="false" afterPath="$PROJECT_DIR$/RealityWeb/RealityWeb/RealityPython/example.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/RealityWeb/RealityWeb/RealityPython/findfeatures.py" beforeDir="false" afterPath="$PROJECT_DIR$/RealityWeb/RealityWeb/RealityPython/findfeatures.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/RealityWeb/RealityWeb/RealityPython/ml_engine.py" beforeDir="false" afterPath="$PROJECT_DIR$/RealityWeb/RealityWeb/RealityPython/ml_engine.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/RealityWeb/docker-compose.yml" beforeDir="false" afterPath="$PROJECT_DIR$/RealityWeb/docker-compose.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/RealityWeb/requirements.txt" beforeDir="false" afterPath="$PROJECT_DIR$/RealityWeb/requirements.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/RealityWeb/website_bootcommand.sh" beforeDir="false" afterPath="$PROJECT_DIR$/RealityWeb/website_bootcommand.sh" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -160,13 +150,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1589723710178</updated>
-    </task>
-    <task id="LOCAL-00003" summary="RealITy">
-      <created>1591536798509</created>
-      <option name="number" value="00003" />
-      <option name="presentableId" value="LOCAL-00003" />
-      <option name="project" value="LOCAL" />
-      <updated>1591536798509</updated>
     </task>
     <task id="LOCAL-00004" summary="RealITy 0.2020.02">
       <created>1591648132371</created>
@@ -504,7 +487,14 @@
       <option name="project" value="LOCAL" />
       <updated>1601803457050</updated>
     </task>
-    <option name="localTasksCounter" value="52" />
+    <task id="LOCAL-00052" summary="RealITy 0.2020.03.16 (before aws deployment)">
+      <created>1601804074959</created>
+      <option name="number" value="00052" />
+      <option name="presentableId" value="LOCAL-00052" />
+      <option name="project" value="LOCAL" />
+      <updated>1601804074964</updated>
+    </task>
+    <option name="localTasksCounter" value="53" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
