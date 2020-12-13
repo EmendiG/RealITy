@@ -7,7 +7,7 @@
 - Added OpenStreetMap API call to get Citys' Districts (Polygons), Amenities, Tourism, Leisture (Nodes, Ways, Rels)
 - Machine Learning alorithms predict price per square meter based on processed data (testing accuracy 72-80%, evaluations are based on a offer prices NOT transaction prices!)
 - Possible to get nearest 
-- Django framework + Docker + AWS
+- Django framework + Docker + AWS / Azure
 
 
   Docker commands (deployment on local machine using docker swarm):
