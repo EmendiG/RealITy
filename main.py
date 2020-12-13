@@ -26,9 +26,9 @@ def get_data(miasto:str, serwis:str):
     conn = PostgreSQLModifier.PostgreSQL_connectSQLalchemy()
 
     for n, url in enumerate(urls):
-        if n:
+        if n > 13241:
             try:
-                sleep(1.8)
+                # sleep(1.8)
                 url = urls[n]
                 print(n)
                 print(url)
@@ -92,10 +92,14 @@ def get_data(miasto:str, serwis:str):
     conn.close()
 
 
+# 1 GET THE LATEST urls
+# import morizonpy / otodompy / gratkapy
+# morizonpy.write_urls(0)
+
 # get_data('warszawa', 'morizon')
 
 # help(postgresql_modifier.oferty_Merger)
-# postgresql_modifier.oferty_Merger('otodom', 'gratka', 'merged')
+PostgreSQLModifier.oferty_Merger('merged', 'morizon', 'merged')
 
 # for miasto in miasta:
 #    OpenStreetMapOverpass.District(miasto).osmApi_getDistricts_returnGeoDataFrame_toGeoJSON()

@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="edc9251b-a03a-493d-8db3-6662d61b7a60" name="Default Changelist" comment="RealITy 0.2020.03.16 (before aws deployment)">
-      <change afterPath="$PROJECT_DIR$/RealityWeb/nowa.sql" afterDir="false" />
+    <list default="true" id="edc9251b-a03a-493d-8db3-6662d61b7a60" name="Default Changelist" comment="RealITy 0.2020.05 (refactoring pre-preparation)">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/RealityWeb/docker-compose.yml" beforeDir="false" afterPath="$PROJECT_DIR$/RealityWeb/docker-compose.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PostgreSQLModifier.py" beforeDir="false" afterPath="$PROJECT_DIR$/PostgreSQLModifier.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/RealityWeb/RealityWeb/static/thema/css/styles.css" beforeDir="false" afterPath="$PROJECT_DIR$/RealityWeb/RealityWeb/static/thema/css/styles.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/morizonpy.py" beforeDir="false" afterPath="$PROJECT_DIR$/morizonpy.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -150,20 +151,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1589723710178</updated>
-    </task>
-    <task id="LOCAL-00004" summary="RealITy 0.2020.02">
-      <created>1591648132371</created>
-      <option name="number" value="00004" />
-      <option name="presentableId" value="LOCAL-00004" />
-      <option name="project" value="LOCAL" />
-      <updated>1591648132371</updated>
-    </task>
-    <task id="LOCAL-00005" summary="RealITy 0.2020.02.01">
-      <created>1591732986120</created>
-      <option name="number" value="00005" />
-      <option name="presentableId" value="LOCAL-00005" />
-      <option name="project" value="LOCAL" />
-      <updated>1591732986120</updated>
     </task>
     <task id="LOCAL-00006" summary="RealITy 0.2020.02.01">
       <created>1592085022052</created>
@@ -494,7 +481,21 @@
       <option name="project" value="LOCAL" />
       <updated>1601804074964</updated>
     </task>
-    <option name="localTasksCounter" value="53" />
+    <task id="LOCAL-00053" summary="RealITy 0.2020.04 (AWS deployment ready)">
+      <created>1602017038504</created>
+      <option name="number" value="00053" />
+      <option name="presentableId" value="LOCAL-00053" />
+      <option name="project" value="LOCAL" />
+      <updated>1602017038505</updated>
+    </task>
+    <task id="LOCAL-00054" summary="RealITy 0.2020.05 (refactoring pre-preparation)">
+      <created>1607884002377</created>
+      <option name="number" value="00054" />
+      <option name="presentableId" value="LOCAL-00054" />
+      <option name="project" value="LOCAL" />
+      <updated>1607884002378</updated>
+    </task>
+    <option name="localTasksCounter" value="55" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -541,9 +542,8 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
+    <option name="CHECK_CODE_CLEANUP_BEFORE_PROJECT_COMMIT" value="true" />
     <option name="CHECK_NEW_TODO" value="false" />
-    <MESSAGE value="RealITy 0.2020.02.07" />
-    <MESSAGE value="RealITy 0.2020.02.07.1 (needs some functions merging and refactoring)" />
     <MESSAGE value="RealITy 0.2020.02.08 (added relations checking between oferty table and Way table )" />
     <MESSAGE value="RealITy 0.2020.02.08.01 (added relations checking between oferty table and Way/Rel table )" />
     <MESSAGE value="RealITy 0.2020.02.08.02 (additional db_tables' relations added (oferty/features) )" />
@@ -567,6 +567,8 @@
     <MESSAGE value="RealITy 0.2020.03.13 (still developing plotly.dash app)" />
     <MESSAGE value="RealITy 0.2020.03.15 (some changes)" />
     <MESSAGE value="RealITy 0.2020.03.16 (before aws deployment)" />
-    <option name="LAST_COMMIT_MESSAGE" value="RealITy 0.2020.03.16 (before aws deployment)" />
+    <MESSAGE value="RealITy 0.2020.04 (AWS deployment ready)" />
+    <MESSAGE value="RealITy 0.2020.05 (refactoring pre-preparation)" />
+    <option name="LAST_COMMIT_MESSAGE" value="RealITy 0.2020.05 (refactoring pre-preparation)" />
   </component>
 </project>
