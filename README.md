@@ -14,3 +14,10 @@
 > docker stack deploy --compose-file docker-compose.yml realityweb <br>
 > before deployment make sure if you have "nowa.sql" db file inside project otherwise change docker-compose.yml > postgres > volume (line 57)
 
+![RealITy](./github-pics/first_page.JPG)
+![RealITy](./github-pics/atributes_before.JPG)
+![RealITy](./github-pics/atributes_after.JPG)
+![RealITy](./github-pics/price_ml.JPG)
+![RealITy](./github-pics/housing-warsaw.JPG)
+![RealITy](./github-pics/check_city.JPG)
+![RealITy](./github-pics/check_district.JPG)
