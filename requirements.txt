@@ -64,7 +64,7 @@ prompt-toolkit @ file:///home/conda/feedstock_root/build_artifacts/prompt-toolki
 psycopg2 @ file:///C:/ci/psycopg2_1594305172475/work
 psycopg2-binary==2.8.5
 pycparser @ file:///home/conda/feedstock_root/build_artifacts/pycparser_1593275161868/work
-Pygments==2.6.1
+Pygments==2.7.4
 pyOpenSSL==19.1.0
 pyparsing==2.4.7
 pyproj @ file:///D:/bld/pyproj_1595910733419/work
