@@ -21,7 +21,7 @@ Django @ file:///home/conda/feedstock_root/build_artifacts/django_1596543024352/
 django-crispy-forms==1.9.2
 django-filter==2.3.0
 django-map-widgets==0.3.0
-djangorestframework==3.11.1
+djangorestframework==3.11.2
 entrypoints==0.3
 Fiona==1.8.13
 folium @ file:///home/conda/feedstock_root/build_artifacts/folium_1588861378954/work
