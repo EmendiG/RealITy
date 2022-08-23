@@ -10,7 +10,7 @@ folium==0.11.0
 geojson==2.5.0
 geopandas==0.8.1
 Jinja2==2.11.2
-lxml==4.5.2
+lxml==4.9.1
 # mod-wsgi==4.7.1
 numpy==1.22.0
 overpass==0.7
