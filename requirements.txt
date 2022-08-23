@@ -19,7 +19,7 @@ decorator==4.4.2
 defusedxml==0.6.0
 Django @ file:///home/conda/feedstock_root/build_artifacts/django_1596543024352/work
 django-crispy-forms==1.9.2
-django-filter==2.3.0
+django-filter==2.4.0
 django-map-widgets==0.3.0
 djangorestframework==3.11.1
 entrypoints==0.3
