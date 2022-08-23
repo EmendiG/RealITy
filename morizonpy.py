@@ -12,7 +12,7 @@ miasta = ['warszawa', 'krakow','lodz', 'wroclaw', 'poznan', 'gdansk', 'szczecin'
 
 
 def get_urls(Pages, wybrane_miasto):
-    start_URL = 'https://www.morizon.pl/mieszkania/najwieksza-powierzchnia/'
+    start_URL = 'https://www.morizon.pl/mieszkania/najtansze/'
     mid_URL = '/?ps[price_from]=120000&ps[price_m2_to]=45000&page='
     urls = []
 

@@ -144,17 +144,18 @@ def oferty_Merger(db_base: str, db_comp: str, db_nowa: str):
                 df_base = pd.read_sql('SELECT * FROM oferty_{}'.format(db_nowa), con=conn)
                 df_base_max = df_base.shape[0]
 
+
             df_comp["index"] = range(df_base_max, df_base_max + df_comp_len)
             df_comp = df_comp.set_index("index")
 
 
             tabela = PosgreSQL_gettables()
             if f'oferty_{db_nowa}' not in tabela:
-                df_base = df_base.reset_index(drop=True)  # .drop('level_0', axis=1)
+                df_base = df_base.reset_index(drop=True) #.drop('level_0', axis=1)
                 Strona(db_nowa).sqldbMaker()
                 df_base.to_sql(f'oferty_{db_nowa}', if_exists='replace', con=conn)
 
-            df_comp.to_sql(f'oferty_{db_nowa}', con=conn, if_exists='append')
+            df_comp.to_sql(f'oferty_{db_nowa}', con=conn, if_exists='append', index=False)
 
             cursor = PostgreSQL_connectPsycopg2().cursor()
             cursor.execute(f"""Select * FROM "oferty_{db_nowa}" LIMIT 0""")
