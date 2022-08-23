@@ -50,8 +50,8 @@ munch==2.5.0
 nbconvert==6.5.1
 nbformat==5.0.7
 nose==1.3.7
-notebook==6.1.3
-numpy==1.22.0
+notebook==6.1.5
+numpy==1.22.
 overpass==0.7
 overpy==0.4
 packaging==20.4
